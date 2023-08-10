@@ -1,11 +1,12 @@
 // API Reference: https://www.wix.com/velo/reference/api-overview/introduction
 // “Hello, World!” Example: https://learn-code.wix.com/en/article/1-hello-world
 
-$w.onReady(function () {
+
     import wixUsers from 'wix-users';
     import wixLocation from 'wix-location';
     import wixWindow from 'wix-window';
     $w.onReady(function () {
+        $w("#webs").allowFullScreen();
             $w("#loadinggif").hide("fade", {duration: 200 });
             $w("#annsbg").show("fade", {duration: 200 });
             $w("#bountybg").show("fade", {duration: 200 });
@@ -91,4 +92,4 @@ $w.onReady(function () {
         }else{$w("#hoverbutto").collapse();}
       });
     });
-});
+
