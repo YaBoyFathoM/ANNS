@@ -44,7 +44,7 @@
             $w("#section4").onViewportLeave(function () {
                 $w("#blogfg").hide("fade", {duration: 200 });
             });
-            $w("#footer1").onViewportEnter(function () {
+            $w("#footer").onViewportEnter(function () {
                 setTimeout(() => {
                     $w("#blogfg").show("fade", {duration: 200 });
                 }, 500);
