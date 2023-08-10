@@ -2,9 +2,7 @@
 // “Hello, World!” Example: https://learn-code.wix.com/en/article/1-hello-world
 
 
-    import wixUsers from 'wix-users';
-    import wixLocation from 'wix-location';
-    import wixWindow from 'wix-window';
+
     $w.onReady(function () {
         $w("#webs").allowFullScreen();
             $w("#loadinggif").hide("fade", {duration: 200 });
