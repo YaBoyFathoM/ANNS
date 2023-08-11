@@ -2,7 +2,8 @@
 // “Hello, World!” Example: https://learn-code.wix.com/en/article/1-hello-world
 
 
-
+import wixUsers from 'wix-users';
+import wixWindow from 'wix-window';
     $w.onReady(function () {
         $w("#webs").allowFullScreen();
             $w("#loadinggif").hide("fade", {duration: 200 });
@@ -43,6 +44,7 @@
                 $w("#blogfg").hide("fade", {duration: 200 });
             });
             $w("#footer").onViewportEnter(function () {
+                $w("#rlfg").hide("fade", {duration: 200 });
                 setTimeout(() => {
                     $w("#blogfg").show("fade", {duration: 200 });
                 }, 500);
@@ -63,11 +65,6 @@
       // });
 
 
-    $w.onReady(function () {
-      if(wixWindow.formFactor === "Mobile") {
-        wixLocation.to("https://www.anns.ai/mhome"); // redirect to mobile page
-      }
-    });
     $w("#webs").allowFullScreen();
     $w("#webs").scrollTo()
       $w("#hoverbutto").onMouseIn (function () {
