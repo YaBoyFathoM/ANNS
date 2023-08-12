@@ -18,83 +18,7 @@ $w("#loadinggif").hide("fade",{duration:100});
 $w("#cwbutton").show("fade",{duration:100});
 $w("#ccwbutton").show("fade",{duration:100});
 $w("#modelwheel").show("fade",{duration:100});
-// const models = [
-//   {
-//     name: "bing",
-//     angle: 0,
-//     darksrc: bingdark,
-//     brightsrc: binglight,
-//     text: $w("#bingdark"),
-//     button: $w("#bingbutton")
-//   },
-//   {
-//     name: "mj",
-//     angle: 90,
-//     darksrc: mjdark,
-//     brightsrc: mjlight,
-//     text: $w("#mjdark"),
-//     button: $w("#mjbutton")
-//   },
-//   {
-//     name: "chatgpt",
-//     angle: 180,
-//     darksrc: chatdark,
-//     brightsrc: chatlight,
-//     text: $w("#chatgptdark"),
-//     button: $w("#chatgptbutton")
-//   }
-// ];
-// let currentmodel = models[0];
-// function nextModel(current, direction) {
-//   let index = models.findIndex(model => model.name === current.name);
-//   if (direction === "cw") {
-//     return models[(index + 1) % models.length];
-//   } else {
-//     return models[(index - 1 + models.length) % models.length];
-//   }
-// }
-// let wheelAngle = 0;
-// function rotateModelWheel(direction) {
-//     let next = nextModel(currentmodel, direction);
-//     currentmodel.button.hide("fade", {duration: 400});
-//     $w("#brighttext").src = next.brightsrc;
-//     const changemodel = timeline();
-//     let angleDiff = next.angle - currentmodel.angle;
-//     if (direction === "cw" && angleDiff < 0) {
-//       angleDiff += 360;
-//     } else if (direction === "ccw" && angleDiff > 0) {
-//       angleDiff -= 360;
-//     }
-//     wheelAngle += angleDiff;
-//     changemodel.add($w("#modelwheel"), {
-//       rotate: wheelAngle,
-//       easing: "easeInSine",
-//       duration: 1000
-//     });
-//     changemodel.play();
-//     setTimeout(() => {
-//       setTimeout(() => {
-//       changing = false;
-//       currentmodel = next;
-//       }, 600);
-//       $w("#brighttext").show("fade", {delay:500,duration: 200});
-//       next.button.show("fade", {delay:500,duration: 200});
-//     }, 500);
-// }
-// $w("#cwbutton").onMouseIn(function () {
-//   if (!changing){
-//     changing=true
-//   $w("#brighttext").hide();
-//   rotateModelWheel("cw");
-// }
-// });
-// $w("#ccwbutton").onMouseIn(function () {
-//   if (!changing){
-//     changing=true
-//   $w("#brighttext").hide();
-//   rotateModelWheel("ccw");
-// }
-// });
+
 //$w("#accountbox").show("fade",{duration:200});
 //$w("#openaibountybutton").show("fade",{duration:200});
 // $w("#bingdark").show("fade",{duration:100});
@@ -119,14 +43,14 @@ $w("#modelwheel").show("fade",{duration:100});
 //   $w("#homebutton").hide("roll",{direction:"top",duration: 200})
 // });
 // }
-//   function generateSrc(url, name, resolution) {
-//     let src = "wix:image://v1/";
-//     let urlId = url.split("/")[4];
-//     let width = resolution.split("x")[0];
-//     let height = resolution.split("x")[1];
-//     src += urlId + "/" + name + "#originWidth=" + width + "&originHeight=" + height; // append the id, name and resolution to the src
-//     return src;
-//   }
+  function generateSrc(url, name, resolution) {
+    let src = "wix:image://v1/";
+    let urlId = url.split("/")[4];
+    let width = resolution.split("x")[0];
+    let height = resolution.split("x")[1];
+    src += urlId + "/" + name + "#originWidth=" + width + "&originHeight=" + height; // append the id, name and resolution to the src
+    return src;
+  }
 //   let bgfoundation = generateSrc('https://static.wixstatic.com/media/cef1ec_9a5ddb378f934c1c8d6fab201b9d4c18~mv2.png','bg.png','1500x1500');
 //   let difffoundation = generateSrc('https://static.wixstatic.com/media/cef1ec_cabc1e8aefd7461f82b0ba0f87f95a07~mv2.png','diffbg.png','3000x3000');
 //   let easyload= generateSrc('https://static.wixstatic.com/media/cef1ec_7fc80f23505544eb89c5ea9d98362867~mv2.gif','easyload.gif','200x200');
@@ -158,12 +82,12 @@ $w("#modelwheel").show("fade",{duration:100});
 //   let meddark = generateSrc("https://static.wixstatic.com/media/cef1ec_8631bfa97e52483899e314301572acee~mv2.png",'middark.png','204x107');
 //   let hardlight = generateSrc("https://static.wixstatic.com/media/cef1ec_b13f49f69aeb48b98011a7b4090e3701~mv2.png",'hardlight.png','258x112');
 //   let harddark = generateSrc("https://static.wixstatic.com/media/cef1ec_8f1a6e1846e3445cba9a1f37e9f863c4~mv2.png",'harddark.png','258x112');
-//   let mjlight = generateSrc("https://static.wixstatic.com/media/cef1ec_9191c6b8f0e04b14942163074a25d0b0~mv2.png",'mjlight.png','613x262');
-//   let mjdark = generateSrc("https://static.wixstatic.com/media/cef1ec_6a96031542944866ab5f5db9d8c888a2~mv2.png",'mjdark.png','613x262');
+  let mjlight = generateSrc("https://static.wixstatic.com/media/cef1ec_9191c6b8f0e04b14942163074a25d0b0~mv2.png",'mjlight.png','613x262');
+  let mjdark = generateSrc("https://static.wixstatic.com/media/cef1ec_6a96031542944866ab5f5db9d8c888a2~mv2.png",'mjdark.png','613x262');
 //   let chatlight = generateSrc("https://static.wixstatic.com/media/cef1ec_40c894a85bef4ba88340a008ef260e02~mv2.png",'chatlight.png','225x192');
 //   let chatdark = generateSrc("https://static.wixstatic.com/media/cef1ec_f0c48cffdcaf4aebb4884ee55e2d5960~mv2.png",'chatdark.png','225x192');
-//   let bingdark = generateSrc("https://static.wixstatic.com/media/cef1ec_6d32706a633244f099dd77a31e0c7934~mv2.png",'bingdark.png','190x103');
-//   let binglight = generateSrc("https://static.wixstatic.com/media/cef1ec_cceb11cad6f94dfe96368f826f94c434~mv2.png",'binglight.png','190x103');
+  let bingdark = generateSrc("https://static.wixstatic.com/media/cef1ec_6d32706a633244f099dd77a31e0c7934~mv2.png",'bingdark.png','190x103');
+  let binglight = generateSrc("https://static.wixstatic.com/media/cef1ec_cceb11cad6f94dfe96368f826f94c434~mv2.png",'binglight.png','190x103');
 //   let spiderdark = generateSrc("https://static.wixstatic.com/media/cef1ec_85a90685ba8349ad891a3232e025c01f~mv2.png",'spiderdark.png','478x137');
 //   let spiderlight = generateSrc("https://static.wixstatic.com/media/cef1ec_6fa1071d6f6b4ad7830402cdbad4def1~mv2.png",'spiderlight.png','478x137');
 //   let description;
@@ -178,6 +102,82 @@ $w("#modelwheel").show("fade",{duration:100});
 //   let fileType;
 //   let submittedids;
 //   let previousDifficultystring = "_";
+const models = [
+    {
+      name: "bing",
+      angle: 0,
+      darksrc: bingdark,
+      brightsrc: binglight,
+      button: $w("#bingbutton")
+    },
+    {
+      name: "mj",
+      angle: 90,
+      darksrc: mjdark,
+      brightsrc: mjlight,
+      button: $w("#mjbutton")
+    }
+  ];
+  //   {
+  //     name: "chatgpt",
+  //     angle: 180,
+  //     darksrc: chatdark,
+  //     brightsrc: chatlight,
+  //     text: $w("#chatgptdark"),
+  //     button: $w("#chatgptbutton")
+  //   }
+  // ];
+  let currentmodel = models[0];
+  function nextModel(current, direction) {
+    let index = models.findIndex(model => model.name === current.name);
+    if (direction === "cw") {
+      return models[(index + 1) % models.length];
+    } else {
+      return models[(index - 1 + models.length) % models.length];
+    }
+  }
+  let wheelAngle = 0;
+  function rotateModelWheel(direction) {
+      let next = nextModel(currentmodel, direction);
+      currentmodel.button.hide("fade", {duration: 400});
+      $w("#brighttext").src = next.brightsrc;
+      const changemodel = timeline();
+      let angleDiff = next.angle - currentmodel.angle;
+      if (direction === "cw" && angleDiff < 0) {
+        angleDiff += 360;
+      } else if (direction === "ccw" && angleDiff > 0) {
+        angleDiff -= 360;
+      }
+      wheelAngle += angleDiff;
+      changemodel.add($w("#modelwheel"), {
+        rotate: wheelAngle,
+        easing: "easeInSine",
+        duration: 1000
+      });
+      changemodel.play();
+      setTimeout(() => {
+        setTimeout(() => {
+        changing = false;
+        currentmodel = next;
+        }, 600);
+        $w("#brighttext").show("fade", {delay:500,duration: 200});
+        next.button.show("fade", {delay:500,duration: 200});
+      }, 500);
+  }
+  $w("#cwbutton").onMouseIn(function () {
+    if (!changing){
+      changing=true
+    $w("#brighttext").hide();
+    rotateModelWheel("cw");
+  }
+  });
+  $w("#ccwbutton").onMouseIn(function () {
+    if (!changing){
+      changing=true
+    $w("#brighttext").hide();
+    rotateModelWheel("ccw");
+  }
+  });
 // let bountybuttons = [
 //   $w(`#bounty01`),
 //   $w(`#bounty02`),
