@@ -1,0 +1,199 @@
+import wixData from 'wix-data';
+export function updateglobalkarma() {
+  wixData.query("Forum/Posts")
+    .find()
+    .then((results) => {
+      let userLikes = {};
+      results.items.forEach((post) => {
+        let ownerId = post._ownerId;
+        let likeCount = post.likeCount;
+        if (Object.prototype.hasOwnProperty.call(userLikes, ownerId)) {
+          userLikes[ownerId] += likeCount;
+        } else {
+          userLikes[ownerId] = likeCount;
+        }
+      });
+      console.log("User likes:", userLikes);
+      return userLikes;
+    })
+    .then((userLikes) => {
+      wixData.query("Userbadges")
+        .find()
+        .then((results) => {
+          let badges = [];
+          results.items.forEach((badge) => {
+            badges.push(badge);
+          });
+          badges.sort((a, b) => b.badgelevel - a.badgelevel);
+          return { badges: badges, userLikes: userLikes };
+        })
+        .then(({ badges, userLikes }) => {
+          let sortedUserLikes = Object.entries(userLikes).sort((a, b) => b[1] - a[1]);
+          let rank = 1;
+          let prevKarma = null;
+
+          for (let [userId, karma] of sortedUserLikes) {
+            if (prevKarma && karma < prevKarma) {
+              rank++;
+            }
+            prevKarma = karma;
+            let badge = null;
+            for (let i = 0; i < badges.length; i++) {
+              if (karma >= badges[i].KarmaThresh) {
+                badge = badges[i];
+                break;
+              }
+            }
+            if (badge) {
+              wixData.query("Userkarma")
+                .eq("UserID", userId)
+                .find()
+                .then((results) => {
+                  const item = results.items[0];
+                  // If there is no Userkarma item for this user, create one with default values
+                  if (!item) {
+                    console.log(`No Userkarma item found for user ${userId}, creating one`);
+                    let newItem = {
+                      UserID: userId,
+                      Karma: 0,
+                      likes: 0,
+                      badge: badge.badgeimage,
+                      title: badge.Badgename,
+                      profile:userId,
+                      URL: "https://www.anns.ai/profile/" + userId + "/profile",
+                      rank: rank
+                    };
+                    wixData.insert("Userkarma", newItem)
+                      .then((item) => {
+                        console.log("Userkarma item created");
+                      })
+                      .catch((err) => {
+                        console.log(err);
+                      });
+                    return;
+                  }
+                  // Otherwise, update the existing Userkarma item with the new values
+                  let previousLikes = item.likes || 0;
+                  let newLikes = userLikes[userId];
+                  let likesDifference = newLikes - previousLikes;
+                  console.log(item.karma);
+                  console.log(item.likes);
+                  item.Karma += likesDifference;
+                  item.likes = newLikes||0;
+                  item.badge = badge.badgeimage;
+                  item.title = badge.Badgename;
+                  item.profile = userId,
+                  item.URL = "https://www.anns.ai/profile/" + userId + "/profile";
+                  item.rank = rank;
+                  wixData.update("Userkarma", item)
+                    .then((item) => {
+                      console.log(item.karma);
+                      console.log(item.likes);
+                      console.log("Userkarma item updated");
+                    })
+                    .catch((err) => {
+                      console.log(err);
+                    });
+                })
+                .catch((err) => {
+                  console.log(err);
+                });
+            }
+
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+});
+    }
+
+export function adduser(userid) {
+  wixData.query("Userkarma")
+    .eq("UserID", userid)
+    .find()
+    .then((results) => {
+      if (results.items.length > 0) {
+        console.log(`User ${userid} already exists`);
+        return;
+      }
+      wixData.query("Userkarma")
+        .descending("rank")
+        .limit(1)
+        .find()
+        .then((results) => {
+          const item = results.items[0];
+          let newRank = item ? item.rank + 1 : 1;
+          let newItem = {
+            UserID: userid,
+            Karma: 0,
+            likes: 0,
+            title: "newbie",
+            profile: userid,
+            badge: "https://static.wixstatic.com/shapes/cef1ec_a7ed00ab80414153934d1f76e99cd28c.svg",
+            url: "https://www.anns.ai/profile/" + userid + "/profile",
+            rank: newRank
+          };
+          wixData.insert("Userkarma", newItem)
+            .then((item) => {
+              console.log("Userkarma item created");
+            });
+        });
+    });
+}
+export function newsubmision(modelstring, newbountysubmission,spentkarma,currentUserid) {
+  wixData.query("Userkarma")
+  .eq("UserID", currentUserid)
+  .find()
+  .then((results) => {
+    const item = results.items[0];
+    let currentkarma = item.Karma.toString();
+    if (results.length > 0) {
+      wixData.update(modelstring, newbountysubmission)
+      .then( (item) => {
+        console.log("Bounty Request item inserted");
+        let newkarma = (currentkarma -= spentkarma);
+        item.Karma = newkarma;
+        wixData.update("Userkarma", item)
+        .catch( (err) => {
+          console.log(err);
+        });
+      });
+    }
+  });
+}
+
+export function claimBounty(collection, claim, userid) {
+  console.log(claim.bounty)
+  wixData.insert(collection, claim)
+    .then((item) => {
+      console.log("Claim item inserted");
+      const newkarma = Number(claim.reward);
+      return wixData.query("Userkarma")
+        .eq("UserID", userid)
+        .find()
+        .then((results) => {
+          const item = results.items[0];
+          if (results.length > 0) {
+            item.Karma += newkarma;
+            return wixData.update("Userkarma", item)
+              .then((item) => {
+                console.log("User karma updated");
+                return item.Karma;
+              })
+              .catch((err) => {
+                console.log(err);
+              });
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+}

@@ -44,14 +44,6 @@ $w("#modelwheel").show("fade",{duration:100});
 //     brightsrc: chatlight,
 //     text: $w("#chatgptdark"),
 //     button: $w("#chatgptbutton")
-//   },
-//   {
-//     name: "spider",
-//     angle: 270,
-//     darksrc: spiderdark,
-//     brightsrc: spiderlight,
-//     text: $w("#spiderdark"),
-//     button: $w("#spiderbutton")
 //   }
 // ];
 // let currentmodel = models[0];

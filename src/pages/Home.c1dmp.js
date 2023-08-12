@@ -7,66 +7,34 @@ import wixWindow from 'wix-window';
     $w.onReady(function () {
         $w("#webs").allowFullScreen();
             $w("#loadinggif").hide("fade", {duration: 200 });
-            $w("#annsbg").show("fade", {duration: 200 });
-            $w("#bountybg").show("fade", {duration: 200 });
-            $w("#rlbg").show("fade", {duration: 200 });
-            $w("#blogbg").show("fade", {duration: 200 });
-            $w("#section1").onViewportEnter(function () {
-                setTimeout(() => {
-                    $w("#annsfg").show("fade", {duration: 200 });
-                }, 500);
+            if(!wixUsers.currentUser.loggedIn) {
+                $w("#annsbg").show("fade", {duration: 200 });
+                $w("#annsbg").onClick(function () {
+                    $w("#bountycard").show("glide",{direction:"left",duration: 800 });
+                    $w("#profilecard").show("glide",{direction:"right",duration: 800 });
             });
-            $w("#section1").onViewportLeave(function () {
-                $w("#annsfg").hide("fade", {duration: 200 });
-            });
-            $w("#section2").onViewportEnter(function () {
-                setTimeout(() => {
-                    $w("#bountyfg").show("fade", {duration: 200 });
-                }, 500);
-            });
-            $w("#section2").onViewportLeave(function () {
-                $w("#bountyfg").hide("fade", {duration: 200 });
-            });
-            $w("#section3").onViewportEnter(function () {
-                setTimeout(() => {
-                    $w("#rlfg").show("fade", {duration: 200 });
-                }, 500);
-            });
-            $w("#section3").onViewportLeave(function () {
-                $w("#rlfg").hide("fade", {duration: 200 });
-            });
-            $w("#section4").onViewportEnter(function () {
-                setTimeout(() => {
-                    $w("#blogfg").show("fade", {duration: 200 });
-                }, 500);
-            });
-            $w("#section4").onViewportLeave(function () {
-                $w("#blogfg").hide("fade", {duration: 200 });
-            });
-            $w("#footer").onViewportEnter(function () {
-                $w("#rlfg").hide("fade", {duration: 200 });
-                setTimeout(() => {
-                    $w("#blogfg").show("fade", {duration: 200 });
-                }, 500);
-            });
-    // $w("#rlbutton").onClick(function () {
+        }else{
+            $w("#bountycard").show("glide",{duration: 800,angle: 90 });
+            $w("#profilecard").show("glide",{duration: 800,angle: 270 });
+            $w("#activatorl1").show("glide",{duration: 400,delay: 800,angle: 90 });
+            $w("#activatorl2").show("glide",{duration: 400,delay: 800,angle: 90 });
+            $w("#activatorr1").show("glide",{duration: 400,delay: 800,angle: 270 });
+            $w("#activatorr2").show("glide",{duration: 400,delay: 800,angle: 270 });
+    }
+    // $w("#blogfg").onClick(function () {
     //     $w("#loadinggif").show("fade",{duration:200});
     //     $w("#annsbutton").hide("fade",{duration:200});
     //     setTimeout(() => {
     //         wixLocation.to("https://www.anns.ai/post/adversarial-neural-network-security");
     //     }, 200);
     // });
-      // $w("#bountybutton").onClick(function () {
+      // $w("#bountyfg").onClick(function () {
       //   $w("#loadinggif").show("fade",{duration:200});
       //   $w("#annsbutton").hide("fade",{duration:200});
       //       setTimeout(() => {
       //       wixLocation.to("https://www.anns.ai/Bounties");
       //   }, 200);
       // });
-
-
-    $w("#webs").allowFullScreen();
-    $w("#webs").scrollTo()
       $w("#hoverbutto").onMouseIn (function () {
         if(wixUsers.currentUser.loggedIn) {
             $w("#accountbo").expand();
