@@ -8,13 +8,13 @@ import wixWindow from 'wix-window';
     $w.onReady(function () {
           $w("#loadinggif").hide("fade", {duration: 200 });
           $w("#buttonbg").show("fade", {duration: 200 });
-          $w("#bountybutton").onMouseIn (function () {
-          $w("#annsfg").hide("fade", {duration: 200 });
-          $w("#bountyfg").show("fade", {duration: 200 });
+          $w("#buttonbg").onMouseIn(function () {
+          $w("#annsfg").show("fade",{duration:500});
+          $w("#bountynav").show("float",{delay: 500,duration:200});
           });
-          $w("#bountyfg").onClick(function () {
-            $w("#bountywheel").show("fade", {duration: 200 });
-          });
+        $w("#bountynav").onClick(function () {
+          wixLocation.to("https://www.anns.ai/Bounties");
+        });
     // $w("#blogfg").onClick(function () {
     //     $w("#loadinggif").show("fade",{duration:200});
     //     $w("#annsbutton").hide("fade",{duration:200});

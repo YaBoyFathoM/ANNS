@@ -4,8 +4,6 @@ import {timeline} from 'wix-animations';
 import wixUsers from 'wix-users';
 import { authentication } from 'wix-members-frontend';
 import {newsubmision,claimBounty,adduser} from 'backend/karma'
-
-$w.onReady (function () {
 let userid=wixUsers.currentUser.id
 adduser(userid);
 $w("#bgvideo").mute();
@@ -785,6 +783,4 @@ $w("#modelwheel").show("fade",{duration:100});
 //         $w("#repeater1").hide("roll", {duration:1000,direction:"top"});
 // });
 });
-});
-
 
