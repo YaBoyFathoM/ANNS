@@ -13,6 +13,9 @@ adduser(userid);
 $w("#homebutton").onClick(function () {
     wixLocation.to ("/home");
 });
+$w("#bingbutton").onClick(function () {
+  wixLocation.to ("/bing");
+});
 $w("#bgvideo").mute();
 $w("#bgvideo").play();
 $w("#bgvideo").onEnded(function () {
