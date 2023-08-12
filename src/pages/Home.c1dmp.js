@@ -5,22 +5,11 @@
 import wixUsers from 'wix-users';
 import wixWindow from 'wix-window';
     $w.onReady(function () {
-        $w("#webs").allowFullScreen();
           $w("#loadinggif").hide("fade", {duration: 200 });
           $w("#buttonbg").show("fade", {duration: 200 });
           $w("#buttonbg").onMouseIn(function () {
           $w("#annsfg").show("fade", {duration: 200 });
-            $w("#bountycard").show("glide",{duration: 800,angle: 90,distance: 200 });
-            $w("#profilecard").show("glide",{duration: 800,angle: 270,distance: 200 });
-            $w("#activatorl1").show("glide",{duration: 400,delay: 800,angle: 90,distance: 200 });
-            $w("#activatorl2").show("glide",{duration: 400,delay: 800,angle: 90,distance: 200 });
-            $w("#activatorr1").show("glide",{duration: 400,delay: 800,angle: 270,distance: 200 });
-            $w("#activatorr2").show("glide",{duration: 400,delay: 800,angle: 270,distance: 200 });
             });
-          $w("#bountybutton").onClick(function () {
-            $w("#bountyfg").show("fade",{duration:200});
-            $w("#annsfg").hide("fade",{duration:200});
-          });
     // $w("#blogfg").onClick(function () {
     //     $w("#loadinggif").show("fade",{duration:200});
     //     $w("#annsbutton").hide("fade",{duration:200});
