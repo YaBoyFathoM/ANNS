@@ -10,7 +10,7 @@ import wixWindow from 'wix-window';
           $w("#buttonbg").show("fade", {duration: 200 });
           $w("#buttonbg").onMouseIn(function () {
           $w("#annsfg").show("fade",{duration:500});
-          $w("#bountynav").show("float",{delay: 500,duration:200});
+          $w("#bountynav").show("slide",{delay: 500,duration:500,direction:"bottom"});
           });
         $w("#bountynav").onClick(function () {
           wixLocation.to("https://www.anns.ai/Bounties");
