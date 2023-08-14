@@ -584,12 +584,12 @@ $w("#claimbountyupload").onChange(function() {
         for (let i = 0; i < bounties.length; i++) {
           bountybuttons[i].show("fade", { delay: (bounties.length - i) * delay, duration: delay });
           let element = bountybuttons[i];
-          if (submittedids.includes(bounties[i]._id)){
-            element.collapse();
-          }
-          if (bounties[i]._owner===userid){
-            element.collapse();
-          }
+          // if (submittedids.includes(bounties[i]._id)){
+          //   element.collapse();
+          // }
+          // if (bounties[i]._owner===userid){
+          //   element.collapse();
+          // }
           setTimeout(function () {
             element.text = "+";
             element.html = buildhtml("40", bright, "+");
