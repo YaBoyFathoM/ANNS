@@ -7,7 +7,7 @@ import wixLocation from 'wix-location';
 import wixWindow from 'wix-window';
     $w.onReady(function () {
       $w("#loadinggif").hide("fade",{duration:300});
-      $w("#bountynav").show("fade",{duration:300});
+      $w("#annsfg").show("fade",{duration:300});
         $w("#bountynav").onClick(function () {
           wixLocation.to("https://www.anns.ai/bounties");
         });
@@ -28,18 +28,18 @@ import wixWindow from 'wix-window';
       $w("#hoverbutto").onMouseIn (function () {
         if(wixUsers.currentUser.loggedIn) {
           $w("#hoverbutto").expand();
-            $w("#accountbo").expand();
+            $w("#accountbox").expand();
             $w("#logou").onClick( (event) => {
       wixUsers.logout()
     });
        $w("#hoverbutto").onMouseIn (function () {
-       $w("#badg").show("slide",{direction:"left",duration: 200})
-       $w("#currentkarm").show("slide",{direction:"right",duration: 200})
+       $w("#badge").show("slide",{direction:"left",duration: 200})
+       $w("#currentkarma").show("slide",{direction:"right",duration: 200})
        $w("#men").show("roll",{delay:200,direction:"top",duration: 200})
       });
-        $w("#accountbo").onMouseOut (function () {
-        $w("#badg").hide("slide",{delay:200,direction:"left",duration: 200})
-        $w("#currentkarm").hide("slide",{delay:200,direction:"right",duration: 200})
+        $w("#accountbox").onMouseOut (function () {
+        $w("#badge").hide("slide",{delay:200,direction:"left",duration: 200})
+        $w("#currentkarma").hide("slide",{delay:200,direction:"right",duration: 200})
         $w("#men").hide("roll",{direction:"top",duration: 200})
 
       });
