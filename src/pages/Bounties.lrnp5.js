@@ -501,7 +501,9 @@ $w("#claimbountyupload").onChange(function() {
   }
   function rotatedifficulties(difficultystring){
     if (difficultystring !== previousDifficultystring) {
+      if (selected!==$w("#bounty00")){
       selected.expand();
+    }
       const angles = {
         easy: 270,
         med:  315,
@@ -750,7 +752,7 @@ $w("#claimbountyupload").onChange(function() {
       $w("#bountyscreen").show("fade",{duration:500});
       if (selected.text ==="+"){
         newbounty(selected,difficultystring);
-      }else{claimbounty(selected);$w("#newbountybutton").hide();}
+      }else{claimbounty(selected);$w("#newbountybutton").hide();$w("#bounty00").collapse();}
       }
       }, 1400);
   });
