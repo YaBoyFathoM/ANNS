@@ -31,6 +31,7 @@ import wixWindow from 'wix-window';
       // });
       $w("#hoverbutto").onMouseIn (function () {
         if(wixUsers.currentUser.loggedIn) {
+          $w("#hoverbutto").expand();
             $w("#accountbo").expand();
             $w("#logou").onClick( (event) => {
       wixUsers.logout()
