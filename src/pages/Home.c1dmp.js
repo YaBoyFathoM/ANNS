@@ -6,12 +6,6 @@ import wixUsers from 'wix-users';
 import wixLocation from 'wix-location';
 import wixWindow from 'wix-window';
     $w.onReady(function () {
-          $w("#loadinggif").hide("fade", {duration: 200 });
-          $w("#buttonbg").show("fade", {duration: 200 });
-          $w("#buttonbg").onMouseIn(function () {
-          $w("#annsfg").show("fade",{duration:500});
-          $w("#bountynav").show("slide",{delay: 500,duration:500,direction:"bottom",distance: 300});
-          });
         $w("#bountynav").onClick(function () {
           wixLocation.to("https://www.anns.ai/bounties");
         });
