@@ -13,13 +13,30 @@ adduser(userid);
 $w("#homebutton").onClick(function () {
     wixLocation.to ("/home");
 });
-$w("#bingbutton").onClick(function () {
-  wixLocation.to ("/bing");
+$w("#hoverbutto").onMouseIn (function () {
+  if(wixUsers.currentUser.loggedIn) {
+      $w("#accountbo").expand();
+      $w("#logou").onClick( (event) => {
+wixUsers.logout()
+});
+ $w("#hoverbutto").onMouseIn (function () {
+ $w("#badg").show("slide",{direction:"left",duration: 200})
+ $w("#currentkarm").show("slide",{direction:"right",duration: 200})
+ $w("#men").show("roll",{delay:200,direction:"top",duration: 200})
+});
+  $w("#accountbo").onMouseOut (function () {
+  $w("#badg").hide("slide",{delay:200,direction:"left",duration: 200})
+  $w("#currentkarm").hide("slide",{delay:200,direction:"right",duration: 200})
+  $w("#men").hide("roll",{direction:"top",duration: 200})
+
+});
+  }else{$w("#hoverbutto").collapse();}
 });
 $w("#bgvideo").mute();
 $w("#bgvideo").play();
 $w("#bgvideo").onEnded(function () {
-    $w("#homebutton").show("slide",{delay: 500,duration:500,direction:"bottom",distance: 300});
+$w('#profilescreen').postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
+$w('#bountyscreen').postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
 $w("#bg").show("fade",{duration:200});
 let changing = false;
 $w("#bgvideo").delete();
@@ -96,8 +113,8 @@ $w("#modelwheel").show("fade",{duration:100});
 //   let harddark = generateSrc("https://static.wixstatic.com/media/cef1ec_8f1a6e1846e3445cba9a1f37e9f863c4~mv2.png",'harddark.png','258x112');
   let mjlight = generateSrc("https://static.wixstatic.com/media/cef1ec_9191c6b8f0e04b14942163074a25d0b0~mv2.png",'mjlight.png','613x262');
   let mjdark = generateSrc("https://static.wixstatic.com/media/cef1ec_6a96031542944866ab5f5db9d8c888a2~mv2.png",'mjdark.png','613x262');
-//   let chatlight = generateSrc("https://static.wixstatic.com/media/cef1ec_40c894a85bef4ba88340a008ef260e02~mv2.png",'chatlight.png','225x192');
-//   let chatdark = generateSrc("https://static.wixstatic.com/media/cef1ec_f0c48cffdcaf4aebb4884ee55e2d5960~mv2.png",'chatdark.png','225x192');
+  let chatlight = generateSrc("https://static.wixstatic.com/media/cef1ec_40c894a85bef4ba88340a008ef260e02~mv2.png",'chatlight.png','225x192');
+  let chatdark = generateSrc("https://static.wixstatic.com/media/cef1ec_f0c48cffdcaf4aebb4884ee55e2d5960~mv2.png",'chatdark.png','225x192');
   let bingdark = generateSrc("https://static.wixstatic.com/media/cef1ec_6d32706a633244f099dd77a31e0c7934~mv2.png",'bingdark.png','190x103');
   let binglight = generateSrc("https://static.wixstatic.com/media/cef1ec_cceb11cad6f94dfe96368f826f94c434~mv2.png",'binglight.png','190x103');
 //   let spiderdark = generateSrc("https://static.wixstatic.com/media/cef1ec_85a90685ba8349ad891a3232e025c01f~mv2.png",'spiderdark.png','478x137');
@@ -128,17 +145,15 @@ const models = [
       darksrc: mjdark,
       brightsrc: mjlight,
       button: $w("#mjbutton")
+    },
+    {
+      name: "chatgpt",
+      angle: 180,
+      darksrc: chatdark,
+      brightsrc: chatlight,
+      button: $w("#chatgptbutton")
     }
   ];
-  //   {
-  //     name: "chatgpt",
-  //     angle: 180,
-  //     darksrc: chatdark,
-  //     brightsrc: chatlight,
-  //     text: $w("#chatgptdark"),
-  //     button: $w("#chatgptbutton")
-  //   }
-  // ];
   let currentmodel = models[0];
   function nextModel(current, direction) {
     let index = models.findIndex(model => model.name === current.name);
