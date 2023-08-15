@@ -109,7 +109,7 @@ $w("#modelwheel").show("fade",{duration:100});
     return `<h3 class="wixui-rich-text__text" style="font-size:${fontsize}px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:${color}" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${text}</span></span></span></span></h3>`;
   }
   let bgfoundation = generateSrc('https://static.wixstatic.com/media/cef1ec_9a5ddb378f934c1c8d6fab201b9d4c18~mv2.png','bg.png','1500x1500');
-  let difffoundation = generateSrc('https://static.wixstatic.com/media/cef1ec_cabc1e8aefd7461f82b0ba0f87f95a07~mv2.png','diffbg.png','3000x3000');
+  let difffoundation = generateSrc('https://static.wixstatic.com/media/cef1ec_c5571e32565c46cf9263794206de26d1~mv2.png','diffbackground.png','3000x3000');
   let easyload= generateSrc('https://static.wixstatic.com/media/cef1ec_7fc80f23505544eb89c5ea9d98362867~mv2.gif','easyload.gif','200x200');
   let medload= generateSrc('https://static.wixstatic.com/media/cef1ec_a25005cadb9e4957b5d23e8ffebb88ff~mv2.gif','medload.gif','200x200');
   let hardload= generateSrc('https://static.wixstatic.com/media/cef1ec_ecdcaa7bf32340fda6f5fd06a176688a~mv2.gif','hardload.gif','200x200');
@@ -242,6 +242,7 @@ const models = [
     $w("#difficultywheel").show("fade",{duration:500});
     $w("#brighttext").hide("fade",{duration:500});
     $w('#bountyscreen').postMessage({bountytitle: "_", difficulty: previousDifficultystring, bountydescription: "_"});
+    $w('#profilescreen').postMessage({bountytitle: "_", difficulty: previousDifficultystring, bountyDescription: "_"});
     $w("#postbountyamount").hide("fade", {duration:100});
     $w("#diffbg").hide("roll",{direction:"left",duration:400});
     $w("#bountyscreen").hide();
@@ -250,7 +251,6 @@ const models = [
     $w("#claimbountyupload").hide("fade", { duration: 100 });
     $w("#newbountybutton").hide("fade", { duration: 100 });
     $w("#postbountydisc").hide("fade", { duration: 100 });
-  $w('#bountyscreen').postMessage({bountytitle: "_", difficulty: previousDifficultystring, bountyDescription: "_"});
   }
   $w("#chatgptbutton").onClick(function () {
     hidestuff();
@@ -282,6 +282,7 @@ const models = [
   $w("#easydark").onMouseIn(function () {
     if (!changing){
       $w('#bountyscreen').hide();
+      $w('#profilescreen').hide();
   $w("#meddark").src = meddark;
   $w("#harddark").src = harddark;
       $w("#easydark").src = easylight;
@@ -293,6 +294,7 @@ const models = [
 $w("#meddark").onMouseIn(function () {
     if (!changing){
       $w('#bountyscreen').hide();
+      $w('#profilescreen').hide();
         $w("#easydark").src = easydark;
   $w("#harddark").src = harddark;
       $w("#meddark").src = medlight;
@@ -304,6 +306,7 @@ $w("#meddark").onMouseIn(function () {
 $w("#harddark").onMouseIn(function () {
     if (!changing){
       $w('#bountyscreen').hide();
+      $w('#profilescreen').hide();
         $w("#easydark").src = easydark;
   $w("#meddark").src = meddark;
       $w("#harddark").src = hardlight;
@@ -367,6 +370,7 @@ $w("#harddark").onMouseIn(function () {
           $w("#postbountydisc").hide("fade", { duration: 100 });
           $w("#postbountyname").hide("roll",{direction:"left", duration: 100 });
           $w('#bountyscreen').postMessage({bountytitle: $w("#postbountyname").value, difficulty: difficultystring, bountydescription: $w("#postbountydisc").value});
+          $w('#profilescreen').postMessage({bountytitle: "_", difficulty: difficultystring, bountyDescription: "_"});
           element.show("roll", {delay:100,duration: 500 });
           $w("#currentkarma").html = `<h3 class="wixui-rich-text__text" style="text-align:right;font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:${bright}" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${tempwallet}</span></span></span></span></h3>`;
         $w("#bountyamounttext").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:${bright}" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${$w("#bountyamounttext").text}</span></span></span></span></h3>`;
@@ -407,8 +411,10 @@ $w("#postbountyamount").onChange(() => {
   function claimbounty(element,bounty) {
   let t=0
   element.hide();
-  $w('#bountyscreen').show()
+  $w('#bountyscreen').show();
+  $w('#profilescreen').show();
   $w('#bountyscreen').postMessage(bounty);
+  $w('#profilescreen').postMessage({bountytitle: "_", difficulty: previousDifficultystring, bountyDescription: "_"});
   $w("#claimbountyupload").enable();
   $w("#claimbountyupload").show();
   $w("#postbountydisc").hide();
@@ -439,6 +445,7 @@ $w('#bountyscreen').postMessage(bounty);
       $w("#loadinggif").hide();
       $w("#claimbountyupload").hide("roll",{direction:"top", duration: 200 });
 $w('#bountyscreen').postMessage({bountytitle: "_", difficulty: previousDifficultystring, bountyDescription: "_"});
+$w('#profilescreen').postMessage({bountytitle: "_", difficulty: previousDifficultystring, bountyDescription: "_"});
       $w("#bountyamounttext").hide("roll",{delay:600,direction:"right", duration: 100 });
       element.hide("roll",{delay:800,direction:"left", duration: 100 });
       setTimeout(function() {
@@ -446,6 +453,7 @@ $w('#bountyscreen').postMessage({bountytitle: "_", difficulty: previousDifficult
       element.collapse();
       setTimeout(function() {
       $w('#bountyscreen').postMessage({bountytitle: "_", difficulty: previousDifficultystring, bountyDescription: "_"});
+      $w('#profilescreen').postMessage({bountytitle: "_", difficulty: previousDifficultystring, bountyDescription: "_"});
       $w("#bountyscreen").hide("fade",{delay:2000,duration:200});
       connector.hide("roll",{delay:2000,duration:300,direction:"right"});
         }, 1200);
@@ -536,6 +544,7 @@ $w("#claimbountyupload").onChange(function() {
     $w("#newbountybutton").hide("fade", { delay:100,duration: 100 });
     $w("#postbountydisc").hide("fade", { delay:100,duration: 100 });
     $w('#bountyscreen').postMessage({bountytitle: "_", difficulty: difficultystring, bountydescription: "_"});
+    $w('#profilescreen').postMessage({bountytitle: "_", difficulty: difficultystring, bountyDescription: "_"});
     $w("#postbountyname").hide("roll", {delay:100,duration: 100,direction:"left"});
     $w("#accountbox").hide("fade", { duration: 100 });
     $w("#diffbg").hide("fade", { duration: 100 });
@@ -627,6 +636,7 @@ $w("#claimbountyupload").onChange(function() {
       $w("#diffbg").show("fade", { duration: 200 });
       connector.show("roll",{direction:"left",duration:300});
       $w("#bountyscreen").show("fade", {delay:200,duration: 300});
+      $w('#profilescreen').show("fade", {delay:200,duration: 300});
       $w("#bountyamounttext").html = buildhtml("50",bright,$w("#bountyamounttext").text);
       $w("#currentkarma").html = `<h3 class="wixui-rich-text__text" style="text-align:right;font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:${bright}" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${$w("#currentkarma").text}</span></span></span></span></h3>`;
       $w("#accountbox").show("roll", { duration: 500,direction:"right"});
@@ -663,6 +673,7 @@ $w("#claimbountyupload").onChange(function() {
         $w("#postbountydisc").hide();
         $w("#postbountyname").hide();
         $w('#bountyscreen').hide();
+        $w('#profilescreen').hide();
         $w("#badge").hide("slide",{direction:"left",duration: 200})
         $w("#currentkarma").hide("slide",{direction:"right",duration: 200})
         $w("#postbountyamount").hide("fade", {duration:100});
@@ -670,6 +681,7 @@ $w("#claimbountyupload").onChange(function() {
         $w("#claimbountyupload").hide("fade", { duration: 100 });
         $w("#newbountybutton").hide("fade", { duration: 100 });
         $w('#bountyscreen').postMessage({bountytitle: "_", difficulty: difficultystring, bountydescription: "_"});
+        $w('#profilescreen').postMessage({bountytitle: "_", difficulty: difficultystring, bountyDescription: "_"});
         $w("#postbountydisc").hide("fade", { duration: 100 });
         $w("#postbountyname").hide("roll",{delay:100,direction:"left", duration: 100 });
         connector.hide("roll",{direction:"left",duration:100});
@@ -715,6 +727,7 @@ $w("#claimbountyupload").onChange(function() {
         $w('#bountyscreen').postMessage(bounties[i])
         connector.show("roll",{direction:"left",duration:100});
         $w("#bountyscreen").show("fade",{duration:500});
+        $w('#profilescreen').show("fade", {duration: 500});
         if (element.text !="+"){
         claimbounty(element,bounties[i]);
         }else{
@@ -750,6 +763,7 @@ $w("#claimbountyupload").onChange(function() {
       $w("#accountbox").show("roll", { duration: 500,direction:"right"});
       $w("#bountyamounttext").show("roll", { duration: 500 });
       $w("#bountyscreen").show("fade",{duration:500});
+      $w('#profilescreen').show("fade", {duration: 500});
       if (selected.text ==="+"){
         newbounty(selected,difficultystring);
       }else{claimbounty(selected);$w("#newbountybutton").hide();$w("#bounty00").collapse();}

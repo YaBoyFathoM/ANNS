@@ -8,8 +8,12 @@ import wixWindow from 'wix-window';
     $w.onReady(function () {
       $w("#loadinggif").hide("fade",{duration:300});
       $w("#annsfg").show("fade",{duration:300});
+
         $w("#bountynav").onClick(function () {
+          $w("#writer").postMessage("Bounty\nhunting");
+          setTimeout(() => {
           wixLocation.to("https://www.anns.ai/bounties");
+      }, 4000);
         });
     // $w("#blogfg").onClick(function () {
     //     $w("#loadinggif").show("fade",{duration:200});
