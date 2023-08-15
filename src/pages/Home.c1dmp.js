@@ -8,8 +8,8 @@ import wixWindow from 'wix-window';
     $w.onReady(function () {
       $w("#loadinggif").hide("fade",{duration:300});
       $w("#annsfg").show("fade",{duration:300});
+      $w("#writer").postMessage("Under\nConstruction");
         $w("#bountynav").onClick(function () {
-          $w("#writer").postMessage("Welcome to\nThe deepfates\nProgram");
           wixLocation.to("https://www.anns.ai/bounties");
         });
     // $w("#blogfg").onClick(function () {
