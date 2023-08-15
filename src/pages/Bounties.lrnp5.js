@@ -242,10 +242,10 @@ const models = [
     $w("#difficultywheel").show("fade",{duration:500});
     $w("#brighttext").hide("fade",{duration:500});
     $w('#bountyscreen').postMessage({bountytitle: "_", difficulty: previousDifficultystring, bountydescription: "_"});
-    $w('#profilescreen').postMessage({bountytitle: "_", difficulty: previousDifficultystring, bountyDescription: "_"});
+    $w('#profilescreen').postMessage({bountytitle: "_", difficulty: "none", bountyDescription: "_"});
     $w("#postbountyamount").hide("fade", {duration:100});
     $w("#diffbg").hide("roll",{direction:"left",duration:400});
-    $w("#bountyscreen").hide();
+    $w('#bountyscreen').hide();
     $w("#accountbox").hide("fade", { duration: 100 });
     $w("#bountyamounttext").hide("fade", { duration: 100 });
     $w("#claimbountyupload").hide("fade", { duration: 100 });
@@ -673,7 +673,6 @@ $w("#claimbountyupload").onChange(function() {
         $w("#postbountydisc").hide();
         $w("#postbountyname").hide();
         $w('#bountyscreen').hide();
-        $w('#profilescreen').hide();
         $w("#badge").hide("slide",{direction:"left",duration: 200})
         $w("#currentkarma").hide("slide",{direction:"right",duration: 200})
         $w("#postbountyamount").hide("fade", {duration:100});
