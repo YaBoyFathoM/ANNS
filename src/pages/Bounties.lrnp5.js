@@ -645,7 +645,7 @@ $w("#claimbountyupload").onChange(function() {
       $w("#postbountydisc").style.color = bright;
       $w("#postbountydisc").style.borderColor = bright;
       $w("#postbountyname").style.color = bright;
-      $w("#postbountyname").style.backgroundColor = bright;
+      $w("#postbountyname").style.borderColor = bright;
       $w("#claimbountyupload").style.color = bright;
       $w("#claimbountyupload").style.borderColor = bright;
       }, delay * bounties.length);
