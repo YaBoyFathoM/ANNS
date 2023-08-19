@@ -68,7 +68,7 @@ $w("#bgvideo").delete();
 $w("#bgvideo").hide("fade",{duration:200});
 $w("#loadinggif").hide("fade",{duration:100});
 $w("#bingbutton").show("fade",{duration:500});
-//$w("#brighttext").show("fade",{duration:100});
+$w("#brighttext").show("fade",{duration:100});
 $w("#cwbutton").show("fade",{duration:100});
 $w("#ccwbutton").show("fade",{duration:100});
 $w("#modelwheel").show("fade",{duration:100});

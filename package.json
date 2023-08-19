@@ -1,5 +1,6 @@
 {
   "devDependencies": {
+    "@gradio/client": "^0.1.4",
     "@wix/cli": "^1.0.0",
     "@wix/eslint-plugin-cli": "^1.0.0",
     "eslint": "^8.25.0"
@@ -8,5 +9,10 @@
     "postinstall": "wix sync-types",
     "dev": "wix dev",
     "lint": "eslint ."
+  },
+  "dependencies": {
+    "@huggingface/agents": "^0.0.5",
+    "@huggingface/hub": "^0.8.4",
+    "@huggingface/inference": "^2.6.1"
   }
 }
