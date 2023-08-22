@@ -14,17 +14,18 @@ $w.onReady(function () {
   $w("#webs").postMessage("Under\nConstruction");
   $w("#bountyfg").onMouseIn(function () {
     $w("#bountybg").show("fade",{duration:100});
-    $w("#bountyfg").show("fade",{duration:100});
     $w("#logo").hide("fade",{duration:100});
     $w("#blogfg").show("slide",{direction:"right",duration:200});
   });
   $w("#blogfg").onClick(function () {
     wixLocation.to ("/blog");
+    $w("#blogfg").hide("fade",{duration:100});
   });
     $w("#bountyfg").onClick(function () {
-      $w("#blogfg").hide("fade",{duration:100});
-      $w("#webs").hide("fade",{duration:1000});
-      $w("#bountyfg").hide("fade",{duration:200});
+      $w("#blogfg").hide("fade",{duration:500});
+      $w("#webs").hide("fade",{duration:500});
+      $w("#bountyfg").show("fade",{duration:500});
+      $w("#bountyfg").hide("fade",{duration:500});
       $w("#foundation").expand();
       $w("#bgvideo").play();
     });
