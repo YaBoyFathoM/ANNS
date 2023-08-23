@@ -69,13 +69,10 @@ wixUsers.logout()
  $w("#hoverbutto").onMouseIn (function () {
  $w("#badge").show("slide",{direction:"left",duration: 200})
  $w("#currentkarma").show("slide",{direction:"right",duration: 200})
- $w("#men").show("roll",{delay:200,direction:"top",duration: 200})
 });
   $w("#accountbox").onMouseOut (function () {
   $w("#badge").hide("slide",{delay:200,direction:"left",duration: 200})
   $w("#currentkarma").hide("slide",{delay:200,direction:"right",duration: 200})
-  $w("#men").hide("roll",{direction:"top",duration: 200})
-
 });
   }else{$w("#hoverbutto").collapse();}
 });
@@ -111,6 +108,7 @@ $w('#bountyscreen').postMessage({bountytitle: "_", difficulty: "none", bountydes
 $w("#bg").show("fade",{duration:200});
 let changing = false;
 $w("#bgvideo").delete();
+$w("#leaderboarddown").show("fade",{duration:500});
 $w("#bgvideo").hide("fade",{duration:200});
 $w("#loadinggif").hide("fade",{duration:100});
 $w("#bingbutton").show("fade",{duration:500});
@@ -785,13 +783,10 @@ $w("#claimbountyupload").onChange(function() {
        $w("#hoverbutto").onMouseIn (function () {
        $w("#badge").show("slide",{direction:"left",duration: 200})
        $w("#currentkarma").show("slide",{direction:"right",duration: 200})
-       $w("#men").show("roll",{delay:200,direction:"top",duration: 200})
       });
         $w("#accountbox").onMouseOut (function () {
         $w("#badge").hide("slide",{delay:200,direction:"left",duration: 200})
         $w("#currentkarma").hide("slide",{delay:200,direction:"right",duration: 200})
-        $w("#men").hide("roll",{direction:"top",duration: 200})
-
       });
         }else{$w("#hoverbutto").collapse();}
       });
