@@ -3,10 +3,24 @@ $w.onReady(function () {
     $w("#name").postMessage("Cameron Smith");
     $w("#job").postMessage("AI researcher");
     }, 1000);
+    $w("#certbutton").onClick(() => {
+        $w("#work").hide("roll", { direction: "top", duration: 400 });
+        setTimeout(() => {
+            $w("#certs").show("roll", { direction: "top", duration: 400 });
+        }, 500);
+    });
+    $w("#workbutton").onClick(() => {
+        $w("#certs").hide("roll", { direction: "top", duration: 400 });
+        setTimeout(() => {
+            $w("#work").show("roll", { direction: "top", duration: 400 });
+            setTimeout(() => {
+                $w("#worktext").postMessage("I am a 25 year old AI researcher. I have been studying AI for 3 years and have been working with it for 2 years. I have worked with many different AI frameworks and have worked on many different projects. I have worked on projects such as a self driving car, a self driving boat, a self driving plane, a self driving drone");
+            }, 500);
+        }, 500);
+    });
     $w("#TFdevcert").onMouseIn(() => {
         $w("#certreader").show("roll", { "direction": "left", "duration":400 });
-        $w("#certreader").postMessage("Tensorflow Certified Developer");
-        // Hide the other elements
+        $w("#certreader").postMessage("Tensorflow Developer");
         $w("#certreader1").hide("roll", { "direction": "right", "duration":400 });
         $w("#certreader2").hide("roll", { "direction": "right", "duration":400 });
         $w("#certreader3").hide("roll", { "direction": "right", "duration":400 });

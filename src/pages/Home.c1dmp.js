@@ -15,16 +15,9 @@ $w.onReady(function () {
   $w("#bountyfg").onMouseIn(function () {
     $w("#bountybg").show("fade",{duration:100});
     $w("#logo").hide("fade",{duration:100});
-    $w("#blogfg").show("slide",{direction:"right",duration:200});
-  });
-  $w("#blogfg").onClick(function () {
-    wixLocation.to ("/blog");
-    $w("#blogfg").hide("fade",{duration:100});
   });
     $w("#bountyfg").onClick(function () {
-      $w("#blogfg").hide("fade",{duration:500});
       $w("#webs").hide("fade",{duration:500});
-      $w("#bountyfg").show("fade",{duration:500});
       $w("#bountyfg").hide("fade",{duration:500});
       $w("#foundation").expand();
       $w("#bgvideo").play();
@@ -67,9 +60,6 @@ $w.onReady(function () {
   let previousDifficultystring = "_";
 let userid=wixUsers.currentUser.id
 adduser(userid);
-$w("#homebutton").onClick(function () {
-    wixLocation.to ("/home");
-});
 $w("#hoverbutto").onMouseIn (function () {
   if(wixUsers.currentUser.loggedIn) {
       $w("#accountbox").expand();
@@ -805,5 +795,33 @@ $w("#claimbountyupload").onChange(function() {
       });
         }else{$w("#hoverbutto").collapse();}
       });
+      $w("#leaderboarddown").show("fade",{delay:1500,duration:200});
+$w("#leaderboarddown").onClick(function () {
+let dataset = $w("#dataset1");
+let sort = wixData.sort().ascending("rank"); // sort by ascending rank
+dataset.setSort(sort);
+dataset.refresh();
+// $w("#repeater1").onItemReady(($item, itemData, index) => {
+//   $item("#placing").text = itemData.rank.toString();
+//   $item("#username").text = itemData.profile;
+//   $item("#badgeimage").src = itemData.badge;
+//   $item("#karmatext").text = itemData.karma.toString();
+//   $item("#userlink").text = itemData.url;
+//   $item("#profilepic").src = itemData.profile;
+// });
+$w("#bountywheelbox").hide("fade",{duration:500});
+  $w("#leaderboarddown").hide("fade",{delay:1000,duration:500});
+  $w("#leaderboardup").show("fade",{delay:1000,duration:500});
+  $w("#leaderboardvideo").show();
+  $w("#leaderboardvideo").play();
+  $w("#repeater1").show("roll", {delay:1000,duration:1000,direction:"top"});
+});
+$w("#leaderboardup").onClick(function () {
+  $w("#bountywheelbox").show("fade",{duration:500,delay:1000});
+        $w("#leaderboardup").hide("fade",{delay:1000,duration:500});
+        $w("#leaderboarddown").show("fade",{delay:1000,duration:500});
+        $w("#leaderboardvideo").hide("roll", {duration:1000,direction:"top"});
+        $w("#repeater1").hide("roll", {duration:1000,direction:"top"});
+});
 });
 
