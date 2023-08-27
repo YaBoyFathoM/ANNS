@@ -12,16 +12,16 @@ $w.onReady(function () {
   $w("#logo").show("fade",{duration:500});
   $w("#loadinggif").hide("fade",{duration:300});
   $w("#webs").postMessage("Under\nConstruction");
-  $w("#bountyfg").onMouseIn(function () {
-    $w("#bountybg").show("fade",{duration:100});
-    $w("#logo").hide("fade",{duration:100});
-  });
-    $w("#bountyfg").onClick(function () {
-      $w("#webs").hide("fade",{duration:500});
-      $w("#bountyfg").hide("fade",{duration:500});
-      $w("#foundation").expand();
-      $w("#bgvideo").play();
-    });
+  // $w("#bountyfg").onMouseIn(function () {
+  //   $w("#bountybg").show("fade",{duration:100});
+  //   $w("#logo").hide("fade",{duration:100});
+  // });
+  //   $w("#bountyfg").onClick(function () {
+  //     $w("#webs").hide("fade",{duration:500});
+  //     $w("#bountyfg").hide("fade",{duration:500});
+  //     $w("#foundation").expand();
+  //     $w("#bgvideo").play();
+  //   });
   function generateSrc(url, name, resolution) {
     let src = "wix:image://v1/";
     let urlId = url.split("/")[4];
