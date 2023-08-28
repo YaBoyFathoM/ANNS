@@ -9,19 +9,22 @@ import {timeline} from 'wix-animations';
 import { authentication } from 'wix-members-frontend';
 import {newsubmision,claimBounty,adduser} from 'backend/karma'
 $w.onReady(function () {
-  $w("#logo").show("fade",{duration:500});
-  $w("#loadinggif").hide("fade",{duration:300});
+  $w("#bountyfg").show("fade",{delay:1000,duration:1000});
+  $w("#logo").show("fade",{duration:1000});
+  $w("#loadinggif").hide("fade",{duration:500});
   $w("#webs").postMessage("Under\nConstruction");
-  // $w("#bountyfg").onMouseIn(function () {
-  //   $w("#bountybg").show("fade",{duration:100});
-  //   $w("#logo").hide("fade",{duration:100});
-  // });
-  //   $w("#bountyfg").onClick(function () {
-  //     $w("#webs").hide("fade",{duration:500});
-  //     $w("#bountyfg").hide("fade",{duration:500});
-  //     $w("#foundation").expand();
-  //     $w("#bgvideo").play();
-  //   });
+  $w("#bountyfg").onMouseIn(function () {
+    $w("#bountybg").show("fade",{duration:400});
+    $w("#logo").hide("fade",{duration:100});
+  });
+    $w("#bountyfg").onClick(function () {
+      $w("#webs").hide("fade",{duration:500});
+      setTimeout(function(){
+      $w("#bountyfg").hide("fade",{delay:500,duration:500});
+      $w("#foundation").expand();
+      $w("#bgvideo").play();
+      },500);
+    });
   function generateSrc(url, name, resolution) {
     let src = "wix:image://v1/";
     let urlId = url.split("/")[4];
@@ -226,10 +229,12 @@ const models = [
     for (let i = 0; i < bountybuttons.length; i++) {
     bountybuttons[i].hide();
     }
+    $w("#easybutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#00ff00 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#00ff00" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">EASY</span></span></span></span></h3>`;
+    $w("#medbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">MED</span></span></span></span></h3>`;
+    $w("#hardbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">HARD</span></span></span></span></h3>`;
     $w("#bg").src=difffoundation;
-    $w("#easybutton").show("fade",{duration:200});
-    $w("#medbutton").show("fade",{delay:200,duration:200});
-    $w("#hardbutton").show("fade",{delay:400,duration:200});
+    $w("#brighttext").hide("fade",{duration:100});
+    $w("#difficultybox").show("fade",{delay:1500,duration:200});
     $w("#easydark").show();
     $w("#cwbutton").hide();
     $w("#ccwbutton").hide();
@@ -247,30 +252,27 @@ const models = [
     $w("#postbountydisc").hide("fade", { duration: 100 });
   }
   $w("#chatgptbutton").onClick(function () {
-    $w("#difficultybox").show("fade",{delay:1500,duration:200});
     hidestuff();
-    $w("#bingbutton").hide();
-    $w("#mjbutton").hide();
+    $w("#bingbutton").collapse();
+    $w("#mjbutton").collapse();
     modelstring = "chatgpt";
     collection = "ChatGPTSubmissions";
     fileType = "URL";
     showDifficulty("easy")
   });
   $w("#mjbutton").onClick(function () {
-    $w("#difficultybox").show("fade",{delay:1500,duration:200});
     hidestuff();
-    $w("#bingbutton").hide();
-    $w("#chatgptbutton").hide();
+    $w("#bingbutton").collapse();
+    $w("#chatgptbutton").collapse();
     modelstring = "mj";
     collection = "MJSubmissions";
     fileType = "Image";
     showDifficulty("easy")
   });
   $w("#bingbutton").onClick(function () {
-    $w("#difficultybox").show("fade",{delay:1500,duration:200});
     hidestuff();
-    $w("#mjbutton").hide();
-    $w("#chatgptbutton").hide();
+    $w("#mjbutton").collapse();
+    $w("#chatgptbutton").collapse();
     modelstring = "bing";
     collection = "BingSubmissions";
     fileType = "Document";
@@ -278,19 +280,24 @@ const models = [
   });
 $w("#easybutton").onClick(function () {
     if (!changing){
+      let difficultystring = "easy";
+      if (difficultystring !== previousDifficultystring) {
       $w("#easybutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#00ff00 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#00ff00" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">EASY</span></span></span></span></h3>`;
       $w("#medbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">MED</span></span></span></span></h3>`;
       $w("#hardbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">HARD</span></span></span></span></h3>`;
       $w("#bountyscreen").postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
       $w("#profilescreen").postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
-  $w("#meddark").hide();
-  $w("#harddark").hide();
+      $w("#meddark").hide();
+      $w("#harddark").hide();
       $w("#easydark").show();
-      showDifficulty("easy");
+      showDifficulty(difficultystring);
     }
+  }
 });
 $w("#medbutton").onClick(function () {
     if (!changing){
+      let difficultystring = "med";
+      if (difficultystring !== previousDifficultystring) {
       $w("#medbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#ffff00 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#ffff00" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">MED</span></span></span></span></h3>`;
       $w("#easybutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">EASY</span></span></span></span></h3>`;
       $w("#hardbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">HARD</span></span></span></span></h3>`;
@@ -299,11 +306,14 @@ $w("#medbutton").onClick(function () {
         $w("#easydark").hide();
   $w("#harddark").hide();
       $w("#meddark").show();
-      showDifficulty("med");
+      showDifficulty(difficultystring);
     }
+  }
 });
 $w("#hardbutton").onClick(function () {
     if (!changing){
+      let difficultystring = "hard";
+      if (difficultystring !== previousDifficultystring) {
       $w("#hardbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#ff0000 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#ff0000" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">HARD</span></span></span></span></h3>`;
       $w("#easybutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">EASY</span></span></span></span></h3>`;
       $w("#medbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">MED</span></span></span></span></h3>`;
@@ -312,7 +322,8 @@ $w("#hardbutton").onClick(function () {
         $w("#easydark").hide();
   $w("#meddark").hide();
       $w("#harddark").show();
-      showDifficulty("hard");
+      showDifficulty(difficultystring);
+      }
     }
 });
   function newbounty(element,difficultystring,bounty) {
@@ -505,7 +516,6 @@ $w("#claimbountyupload").onChange(function() {
     }
   }
   function rotatedifficulties(difficultystring){
-    if (difficultystring !== previousDifficultystring) {
       setTimeout(function(){
       if (selected!==$w("#bounty00")){
       selected.expand();
@@ -530,7 +540,6 @@ $w("#claimbountyupload").onChange(function() {
       }, 1380);
     }
     ,300);
-    }
   }
   function showDifficulty(difficultystring) {
     changing = true;
@@ -763,6 +772,17 @@ $w("#claimbountyupload").onChange(function() {
   });
   }
 });
+function numberToRGB(number) {
+  let max = 100; // maximum value of placing
+  let percentage = number / max; // calculate the percentage
+
+  let r = Math.floor(percentage * 255)*18; // calculate the red value
+  let g = 255; // green value remains constant at 255
+  let b = Math.floor(percentage * 255)*18; // calculate the blue value
+
+  return 'rgba(' + r + ',' + g + ',' + b + ',' + 0.5 + ')';
+}
+
     // $w("#blogfg").onClick(function () {
     //     $w("#loadinggif").show("fade",{duration:200});
     //     $w("#annsbutton").hide("fade",{duration:200});
@@ -800,7 +820,12 @@ let dataset = $w("#dataset1");
 let sort = wixData.sort().ascending("rank"); // sort by ascending rank
 dataset.setSort(sort);
 dataset.refresh();
-// $w("#repeater1").onItemReady(($item, itemData, index) => {
+$w("#leaderboardrepeater").expand();
+$w("#leaderboardvideo").expand();
+$w("#bingbutton").hide("fade",{duration:200});
+$w("#chatgptbutton").hide("fade",{duration:200});
+$w("#mjbutton").hide("fade",{duration:200});
+// $w("#leaderboardrepeater").onItemReady(($item, itemData, index) => {
 //   $item("#placing").text = itemData.rank.toString();
 //   $item("#username").text = itemData.profile;
 //   $item("#badgeimage").src = itemData.badge;
@@ -808,19 +833,61 @@ dataset.refresh();
 //   $item("#userlink").text = itemData.url;
 //   $item("#profilepic").src = itemData.profile;
 // });
+
 $w("#bountywheelbox").hide("fade",{duration:500});
   $w("#leaderboarddown").hide("fade",{delay:1200,duration:500});
   $w("#leaderboardup").show("fade",{delay:1200,duration:500});
   $w("#leaderboardvideo").show();
   $w("#leaderboardvideo").play();
-  $w("#repeater1").show("roll", {delay:1200,duration:1000,direction:"top"});
+  $w("#leaderboardrepeater").show("roll", {delay:1200,duration:1000,direction:"top"});
 });
 $w("#leaderboardup").onClick(function () {
+  $w("#bingbutton").show("fade",{duration:200});
+  $w("#chatgptbutton").show("fade",{duration:200});
+  $w("#mjbutton").show("fade",{duration:200});
   $w("#bountywheelbox").show("fade",{duration:500,delay:1200});
-        $w("#leaderboardup").hide("fade",{delay:1200,duration:500});
-        $w("#leaderboarddown").show("fade",{delay:1200,duration:500});
-        $w("#leaderboardvideo").hide("roll", {duration:1200,direction:"top"});
-        $w("#repeater1").hide("roll", {duration:1200,direction:"top"});
+  $w("#leaderboardup").hide("fade",{delay:1200,duration:500});
+  $w("#leaderboarddown").show("fade",{delay:1200,duration:500});
+  $w("#leaderboardvideo").hide("roll", {duration:1200,direction:"top"});
+  $w("#leaderboardrepeater").hide("roll", {duration:1200,direction:"top"});
+  setTimeout(function () {
+    $w("#leaderboardvideo").collapse();
+    $w("#leaderboardrepeater").collapse();
+  }, 1200);
+});
+
+$w("#leaderboardrepeater").onItemReady(($item,index) => {
+  $item("#placing").html = `<h3 class="wixui-rich-text__text" style="color: ${numberToRGB(index.rank+1)}; text-shadow: 2px 2px 4px ${numberToRGB(index.rank+1)};"><span class="wixui-rich-text__text">${index.rank+1}</span></h3>`;
+  $item("#leaderboarduser").onMouseIn(function () {
+    $item("#leaderboardname").show("roll", {direction:"left",duration: 100});
+    $item("#leaderboardkarma").show("roll", {direction:"right",duration: 200});
+    $item("#leaderboardbadge").show("roll", {direction:"left",duration: 200});
+    $item("#lbbg").show("fade",{duration:100});
+    const leftLineTimeline = timeline().add($item("#leftline"), {duration: 200, x: -10, easing: "easeInOutSine"});
+    const rightLineTimeline = timeline().add($item("#rightline"), {duration: 200, x: +10, easing: "easeInOutSine"});
+    leftLineTimeline.play();
+    rightLineTimeline.play();
+    setTimeout(function () {
+      leftLineTimeline.pause();
+      rightLineTimeline.pause();
+    }, 200);
+  });
+  $item("#leaderboarduser").onMouseOut(function () {
+    $item("#leaderboardname").hide("roll", {direction:"left",duration: 200});
+    $item("#leaderboardkarma").hide("roll", {direction:"right",duration: 200});
+    $item("#leaderboardbadge").hide("roll", {direction:"left",duration: 200});
+    $item("#lbbg").hide("fade",{duration:100});
+    const leftLineTimeline = timeline().add($item("#leftline"), {duration: 200, x: 0, easing: "easeInOutSine"});
+    const rightLineTimeline = timeline().add($item("#rightline"), {duration: 200, x: 0, easing: "easeInOutSine"});
+    leftLineTimeline.play();
+    rightLineTimeline.play();
+    setTimeout(function () {
+      leftLineTimeline.pause();
+      rightLineTimeline.pause();
+    }, 200);
+  });
 });
 });
+
+
 
