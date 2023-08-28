@@ -1,6 +1,3 @@
-
-
-
 import wixUsers from 'wix-users';
 import wixLocation from 'wix-location';
 import wixWindow from 'wix-window';
@@ -9,18 +6,21 @@ import {timeline} from 'wix-animations';
 import { authentication } from 'wix-members-frontend';
 import {newsubmision,claimBounty,adduser} from 'backend/karma'
 $w.onReady(function () {
-  $w("#logo").show("fade",{duration:500});
-  $w("#loadinggif").hide("fade",{duration:300});
+  $w("#bountyfg").show("fade",{delay:1000,duration:1000});
+  $w("#logo").show("fade",{duration:1000});
+  $w("#loadinggif").hide("fade",{duration:500});
   $w("#webs").postMessage("Under\nConstruction");
   $w("#bountyfg").onMouseIn(function () {
-    $w("#bountybg").show("fade",{duration:100});
+    $w("#bountybg").show("fade",{duration:400});
     $w("#logo").hide("fade",{duration:100});
   });
     $w("#bountyfg").onClick(function () {
       $w("#webs").hide("fade",{duration:500});
-      $w("#bountyfg").hide("fade",{duration:500});
+      setTimeout(function(){
+      $w("#bountyfg").hide("fade",{delay:500,duration:500});
       $w("#foundation").expand();
       $w("#bgvideo").play();
+      },500);
     });
   function generateSrc(url, name, resolution) {
     let src = "wix:image://v1/";
@@ -30,23 +30,23 @@ $w.onReady(function () {
     src += urlId + "/" + name + "#originWidth=" + width + "&originHeight=" + height; // append the id, name and resolution to the src
     return src;
   }
-  let difffoundation = generateSrc('https://static.wixstatic.com/media/cef1ec_d26b49973d6e43758e58940aa9fdbacb~mv2.png','diffbg.png','3000x3000');
-  let easyload= generateSrc('https://static.wixstatic.com/media/cef1ec_7fc80f23505544eb89c5ea9d98362867~mv2.gif','easyload.gif','200x200');
-  let medload= generateSrc('https://static.wixstatic.com/media/cef1ec_a25005cadb9e4957b5d23e8ffebb88ff~mv2.gif','medload.gif','200x200');
-  let hardload= generateSrc('https://static.wixstatic.com/media/cef1ec_ecdcaa7bf32340fda6f5fd06a176688a~mv2.gif','hardload.gif','200x200');
-  let easydiff= generateSrc('https://static.wixstatic.com/media/cef1ec_afb593aac8e7415da536a322f8b8692a~mv2.png','easydiff.png','714x736');
-  let meddiff= generateSrc('https://static.wixstatic.com/media/cef1ec_92619dc20d5f4ca6bc57db6ee74490f3~mv2.png','meddiff.png','1812x1868');
-  let harddiff= generateSrc('https://static.wixstatic.com/media/cef1ec_17716182358a444d804a1905d764d91b~mv2.png','harddiff.png','714x736');
-  let medscreen = generateSrc('https://static.wixstatic.com/media/cef1ec_aa1d2839f5b140cda2e7ef7160831b93~mv2.png','medscreen.png','1744x2389');
-  let easysrc = generateSrc("https://static.wixstatic.com/media/cef1ec_95ed5648d7fa45f2bc7089605143079d~mv2.png",'easywheel.png','1080x1080');
-  let medsrc = generateSrc("https://static.wixstatic.com/media/cef1ec_8d7ccaa7f2874aaf8368ae95b8f0e1c6~mv2.png",'medwheel.png', '1080x1080');
-  let hardsrc = generateSrc("https://static.wixstatic.com/media/cef1ec_f4bb8440dda548b78ee488bef0d63af8~mv2.png",'hardwheel.png', '1080x1080');
-  let mjlight = generateSrc("https://static.wixstatic.com/media/cef1ec_9191c6b8f0e04b14942163074a25d0b0~mv2.png",'mjlight.png','613x262');
-  let mjdark = generateSrc("https://static.wixstatic.com/media/cef1ec_6a96031542944866ab5f5db9d8c888a2~mv2.png",'mjdark.png','613x262');
-  let chatlight = generateSrc("https://static.wixstatic.com/media/cef1ec_40c894a85bef4ba88340a008ef260e02~mv2.png",'chatlight.png','225x192');
-  let chatdark = generateSrc("https://static.wixstatic.com/media/cef1ec_f0c48cffdcaf4aebb4884ee55e2d5960~mv2.png",'chatdark.png','225x192');
-  let bingdark = generateSrc("https://static.wixstatic.com/media/cef1ec_6d32706a633244f099dd77a31e0c7934~mv2.png",'bingdark.png','190x103');
-  let binglight = generateSrc("https://static.wixstatic.com/media/cef1ec_cceb11cad6f94dfe96368f826f94c434~mv2.png",'binglight.png','190x103');
+  const difffoundation = generateSrc('https://static.wixstatic.com/media/cef1ec_d26b49973d6e43758e58940aa9fdbacb~mv2.png','diffbg.png','3000x3000');
+  const easyload= generateSrc('https://static.wixstatic.com/media/cef1ec_7fc80f23505544eb89c5ea9d98362867~mv2.gif','easyload.gif','200x200');
+  const medload= generateSrc('https://static.wixstatic.com/media/cef1ec_a25005cadb9e4957b5d23e8ffebb88ff~mv2.gif','medload.gif','200x200');
+  const hardload= generateSrc('https://static.wixstatic.com/media/cef1ec_ecdcaa7bf32340fda6f5fd06a176688a~mv2.gif','hardload.gif','200x200');
+  const easydiff= generateSrc('https://static.wixstatic.com/media/cef1ec_afb593aac8e7415da536a322f8b8692a~mv2.png','easydiff.png','714x736');
+  const meddiff= generateSrc('https://static.wixstatic.com/media/cef1ec_92619dc20d5f4ca6bc57db6ee74490f3~mv2.png','meddiff.png','1812x1868');
+  const harddiff= generateSrc('https://static.wixstatic.com/media/cef1ec_17716182358a444d804a1905d764d91b~mv2.png','harddiff.png','714x736');
+  const medscreen = generateSrc('https://static.wixstatic.com/media/cef1ec_aa1d2839f5b140cda2e7ef7160831b93~mv2.png','medscreen.png','1744x2389');
+  const easysrc = generateSrc("https://static.wixstatic.com/media/cef1ec_95ed5648d7fa45f2bc7089605143079d~mv2.png",'easywheel.png','1080x1080');
+  const medsrc = generateSrc("https://static.wixstatic.com/media/cef1ec_8d7ccaa7f2874aaf8368ae95b8f0e1c6~mv2.png",'medwheel.png', '1080x1080');
+  const hardsrc = generateSrc("https://static.wixstatic.com/media/cef1ec_f4bb8440dda548b78ee488bef0d63af8~mv2.png",'hardwheel.png', '1080x1080');
+  const mjlight = generateSrc("https://static.wixstatic.com/media/cef1ec_9191c6b8f0e04b14942163074a25d0b0~mv2.png",'mjlight.png','613x262');
+  const mjdark = generateSrc("https://static.wixstatic.com/media/cef1ec_6a96031542944866ab5f5db9d8c888a2~mv2.png",'mjdark.png','613x262');
+  const chatlight = generateSrc("https://static.wixstatic.com/media/cef1ec_40c894a85bef4ba88340a008ef260e02~mv2.png",'chatlight.png','225x192');
+  const chatdark = generateSrc("https://static.wixstatic.com/media/cef1ec_f0c48cffdcaf4aebb4884ee55e2d5960~mv2.png",'chatdark.png','225x192');
+  const bingdark = generateSrc("https://static.wixstatic.com/media/cef1ec_6d32706a633244f099dd77a31e0c7934~mv2.png",'bingdark.png','190x103');
+  const binglight = generateSrc("https://static.wixstatic.com/media/cef1ec_cceb11cad6f94dfe96368f826f94c434~mv2.png",'binglight.png','190x103');
   let connector=$w("#easyconnector");
   let selected=$w("#bounty00");
   let bright;
@@ -102,13 +102,14 @@ let bountybuttons = [
   $w(`#bounty23`)
 ];
 $w("#bgvideo").onEnded(function () {
+$w("#logo").collapse();
 $w("#webs").collapse();
-$w('#profilescreen').postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
-$w('#bountyscreen').postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
+$w("#profilescreen").postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
+$w("#bountyscreen").postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
 $w("#bg").show("fade",{duration:200});
 let changing = false;
 $w("#bgvideo").delete();
-$w("#leaderboarddown").show("fade",{duration:500});
+$w("#leaderboard").show("fade",{duration:500});
 $w("#bgvideo").hide("fade",{duration:200});
 $w("#loadinggif").hide("fade",{duration:100});
 $w("#bingbutton").show("fade",{duration:500});
@@ -225,20 +226,23 @@ const models = [
     for (let i = 0; i < bountybuttons.length; i++) {
     bountybuttons[i].hide();
     }
+    $w("#easybutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#00ff00 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#00ff00" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">EASY</span></span></span></span></h3>`;
+    $w("#medbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">MED</span></span></span></span></h3>`;
+    $w("#hardbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">HARD</span></span></span></span></h3>`;
     $w("#bg").src=difffoundation;
-    $w("#easybutton").show("fade",{duration:200});
-    $w("#medbutton").show("fade",{delay:200,duration:200});
-    $w("#hardbutton").show("fade",{delay:400,duration:200});
+    $w("#leaderboarddown").show("fade",{delay:1500,duration:200});
+    $w("#brighttext").hide("fade",{duration:100});
+    $w("#difficultybox").show("fade",{delay:1500,duration:200});
     $w("#easydark").show();
     $w("#cwbutton").hide();
     $w("#ccwbutton").hide();
     $w("#currentkarma").show("fade",{duration:500});
     $w("#difficultywheel").show("fade",{duration:500});
-    $w('#bountyscreen').postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
-    $w('#profilescreen').postMessage({bountytitle: "_", difficulty: "none", bountyDescription: "_"});
+    $w("#bountyscreen").postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
+    $w("#profilescreen").postMessage({bountytitle: "_", difficulty: "none", bountyDescription: "_"});
     $w("#postbountyamount").hide("fade", {duration:100});
     $w("#diffbg").hide("roll",{direction:"left",duration:400});
-    $w('#bountyscreen').postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
+    $w("#bountyscreen").postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
     $w("#accountbox").hide("fade", { duration: 100 });
     $w("#bountyamounttext").hide("fade", { duration: 100 });
     $w("#claimbountyupload").hide("fade", { duration: 100 });
@@ -247,8 +251,8 @@ const models = [
   }
   $w("#chatgptbutton").onClick(function () {
     hidestuff();
-    $w("#bingbutton").hide();
-    $w("#mjbutton").hide();
+    $w("#bingbutton").collapse();
+    $w("#mjbutton").collapse();
     modelstring = "chatgpt";
     collection = "ChatGPTSubmissions";
     fileType = "URL";
@@ -256,8 +260,8 @@ const models = [
   });
   $w("#mjbutton").onClick(function () {
     hidestuff();
-    $w("#bingbutton").hide();
-    $w("#chatgptbutton").hide();
+    $w("#bingbutton").collapse();
+    $w("#chatgptbutton").collapse();
     modelstring = "mj";
     collection = "MJSubmissions";
     fileType = "Image";
@@ -265,8 +269,8 @@ const models = [
   });
   $w("#bingbutton").onClick(function () {
     hidestuff();
-    $w("#mjbutton").hide();
-    $w("#chatgptbutton").hide();
+    $w("#mjbutton").collapse();
+    $w("#chatgptbutton").collapse();
     modelstring = "bing";
     collection = "BingSubmissions";
     fileType = "Document";
@@ -274,41 +278,50 @@ const models = [
   });
 $w("#easybutton").onClick(function () {
     if (!changing){
+      let difficultystring = "easy";
+      if (difficultystring !== previousDifficultystring) {
       $w("#easybutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#00ff00 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#00ff00" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">EASY</span></span></span></span></h3>`;
       $w("#medbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">MED</span></span></span></span></h3>`;
       $w("#hardbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">HARD</span></span></span></span></h3>`;
-      $w('#bountyscreen').postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
-      $w('#profilescreen').postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
-  $w("#meddark").hide();
-  $w("#harddark").hide();
+      $w("#bountyscreen").postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
+      $w("#profilescreen").postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
+      $w("#meddark").hide();
+      $w("#harddark").hide();
       $w("#easydark").show();
-      showDifficulty("easy");
+      showDifficulty(difficultystring);
     }
+  }
 });
 $w("#medbutton").onClick(function () {
     if (!changing){
+      let difficultystring = "med";
+      if (difficultystring !== previousDifficultystring) {
       $w("#medbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#ffff00 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#ffff00" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">MED</span></span></span></span></h3>`;
       $w("#easybutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">EASY</span></span></span></span></h3>`;
       $w("#hardbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">HARD</span></span></span></span></h3>`;
-      $w('#bountyscreen').postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
-      $w('#profilescreen').postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
+      $w("#bountyscreen").postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
+      $w("#profilescreen").postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
         $w("#easydark").hide();
   $w("#harddark").hide();
       $w("#meddark").show();
-      showDifficulty("med");
+      showDifficulty(difficultystring);
     }
+  }
 });
 $w("#hardbutton").onClick(function () {
     if (!changing){
+      let difficultystring = "hard";
+      if (difficultystring !== previousDifficultystring) {
       $w("#hardbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#ff0000 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#ff0000" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">HARD</span></span></span></span></h3>`;
       $w("#easybutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">EASY</span></span></span></span></h3>`;
       $w("#medbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">MED</span></span></span></span></h3>`;
-      $w('#bountyscreen').postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
-      $w('#profilescreen').postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
+      $w("#bountyscreen").postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
+      $w("#profilescreen").postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
         $w("#easydark").hide();
   $w("#meddark").hide();
       $w("#harddark").show();
-      showDifficulty("hard");
+      showDifficulty(difficultystring);
+      }
     }
 });
   function newbounty(element,difficultystring,bounty) {
@@ -346,8 +359,8 @@ $w("#hardbutton").onClick(function () {
     t++
       let currentKarma = Number(tempwallet);
       let bountyAmount = Number($w("#bountyamounttext").text);
-      $w("#currentkarma").html = `<h3 class="wixui-rich-text__text" style="text-align:right;font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#000000" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${tempwallet}</span></span></span></span></h3>`;
-      $w("#bountyamounttext").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#000000" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${$w("#bountyamounttext").text}</span></span></span></span></h3>`;
+      $w("#currentkarma").html = `<h3 class="wixui-rich-text__text" style="text-align:right;font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#666666" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${tempwallet}</span></span></span></span></h3>`;
+      $w("#bountyamounttext").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#666666" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${$w("#bountyamounttext").text}</span></span></span></span></h3>`;
           currentKarma--;
           bountyAmount++;
           tempwallet = currentKarma.toString();
@@ -365,7 +378,7 @@ $w("#hardbutton").onClick(function () {
           $w("#newbountybutton").hide("fade", { duration: 100 });
           $w("#postbountydisc").hide("fade", { duration: 100 });
           $w("#postbountyname").hide("roll",{direction:"left", duration: 100 });
-          $w('#bountyscreen').postMessage({bountytitle: $w("#postbountyname").value, difficulty: difficultystring, bountydescription: $w("#postbountydisc").value});
+          $w("#bountyscreen").postMessage({bountytitle: $w("#postbountyname").value, difficulty: difficultystring, bountydescription: $w("#postbountydisc").value});
           element.show("roll", {delay:100,duration: 500 });
           $w("#currentkarma").html = `<h3 class="wixui-rich-text__text" style="text-align:right;font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:${bright}" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${tempwallet}</span></span></span></span></h3>`;
         $w("#bountyamounttext").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:${bright}" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${$w("#bountyamounttext").text}</span></span></span></span></h3>`;
@@ -378,8 +391,8 @@ $w("#postbountyamount").onChange(() => {
   if (Number(tempwallet) < Number($w("#bountyamounttext").text)) {
     $w("#newbountybutton").disable();
     tempwallet = Math.max(Number(tempwallet), 0).toString(); // set tempwallet to 0 if it is negative
-    $w("#currentkarma").html = `<h3 class="wixui-rich-text__text" style="text-align:right;font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#000000" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${tempwallet}</span></span></span></span></h3>`;
-    $w("#bountyamounttext").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#000000" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${$w("#bountyamounttext").text}</span></span></span></span></h3>`;
+    $w("#currentkarma").html = `<h3 class="wixui-rich-text__text" style="text-align:right;font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#666666" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${tempwallet}</span></span></span></span></h3>`;
+    $w("#bountyamounttext").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#666666" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${$w("#bountyamounttext").text}</span></span></span></span></h3>`;
   } else {
     $w("#newbountybutton").enable();
     $w("#currentkarma").html = `<h3 class="wixui-rich-text__text" style="text-align:right;font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:${bright}" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${tempwallet}</span></span></span></span></h3>`;
@@ -408,7 +421,7 @@ $w("#postbountyamount").onChange(() => {
   element.hide("roll",{direction:"right",duration:200});
   $w('#bountyscreen').show();
   $w('#profilescreen').show();
-  $w('#bountyscreen').postMessage(bounty);
+  $w("#bountyscreen").postMessage(bounty);
   $w("#claimbountyupload").enable();
   $w("#claimbountyupload").show();
   $w("#postbountydisc").hide();
@@ -417,7 +430,7 @@ $w("#postbountyamount").onChange(() => {
   $w("#currentkarma").show("slide",{direction:"right",duration: 200})
   $w("#accountbox").show("roll", { duration: 500,direction:"right"});
   $w("#bountyamounttext").show("roll", { duration: 500 });
-$w('#bountyscreen').postMessage(bounty);
+$w("#bountyscreen").postMessage(bounty);
   $w("#claimbountyupload").show("roll",{delay:200,duration:200});
   let tempwallet = Number($w("#currentkarma").text);
   let bountyAmount = Number($w("#bountyamounttext").text);
@@ -438,15 +451,15 @@ $w('#bountyscreen').postMessage(bounty);
   } else {
       $w("#loadinggif").hide();
       $w("#claimbountyupload").hide("roll",{direction:"top", duration: 200 });
-$w('#bountyscreen').postMessage({bountytitle: "_", difficulty: previousDifficultystring, bountyDescription: "_"});
+$w("#bountyscreen").postMessage({bountytitle: "_", difficulty: previousDifficultystring, bountyDescription: "_"});
       $w("#bountyamounttext").hide("roll",{delay:600,direction:"right", duration: 100 });
       element.hide("roll",{delay:800,direction:"left", duration: 100 });
       setTimeout(function() {
-      $w('#bountyscreen').postMessage({bountytitle: "_", difficulty: previousDifficultystring, bountyDescription: "Bounty Complete"});
+      $w("#bountyscreen").postMessage({bountytitle: "_", difficulty: previousDifficultystring, bountyDescription: "Bounty Complete"});
       element.collapse();
       setTimeout(function() {
-      $w('#bountyscreen').postMessage({bountytitle: "_", difficulty: previousDifficultystring, bountyDescription: "_"});
-      $w('#profilescreen').postMessage({bountytitle: "_", difficulty: previousDifficultystring, bountyDescription: "_"});
+      $w("#bountyscreen").postMessage({bountytitle: "_", difficulty: previousDifficultystring, bountyDescription: "_"});
+      $w("#profilescreen").postMessage({bountytitle: "_", difficulty: previousDifficultystring, bountyDescription: "_"});
       $w("#bountyscreen").hide("fade",{delay:2000,duration:200});
       connector.hide("roll",{delay:2000,duration:300,direction:"right"});
         }, 1200);
@@ -494,14 +507,13 @@ $w("#claimbountyupload").onChange(function() {
         } else if (bounties[i].bountytitle != "+") {
           bountybuttons[i].html = buildhtml(fontsize, dim, bounties[i].bountytitle);
         } else {
-          bountybuttons[i].html = buildhtml(fontsize, "#000000", "+");
+          bountybuttons[i].html = buildhtml(fontsize, "#666666", "+");
         }
       }
       }
     }
   }
   function rotatedifficulties(difficultystring){
-    if (difficultystring !== previousDifficultystring) {
       setTimeout(function(){
       if (selected!==$w("#bounty00")){
       selected.expand();
@@ -526,7 +538,6 @@ $w("#claimbountyupload").onChange(function() {
       }, 1380);
     }
     ,300);
-    }
   }
   function showDifficulty(difficultystring) {
     changing = true;
@@ -536,7 +547,7 @@ $w("#claimbountyupload").onChange(function() {
     $w("#claimbountyupload").hide("fade", { delay:100,duration: 100 });
     $w("#newbountybutton").hide("fade", { delay:100,duration: 100 });
     $w("#postbountydisc").hide("fade", { delay:100,duration: 100 });
-    $w('#profilescreen').postMessage({bountytitle: "_", difficulty: difficultystring, bountyDescription: "_"});
+    $w("#profilescreen").postMessage({bountytitle: "_", difficulty: difficultystring, bountyDescription: "_"});
     $w("#postbountyname").hide("roll", {delay:100,duration: 100,direction:"left"});
     $w("#accountbox").hide("fade", { duration: 100 });
     $w("#diffbg").hide("fade", { duration: 100 });
@@ -546,20 +557,20 @@ $w("#claimbountyupload").onChange(function() {
     $w("#wheelbg").show();
     if (difficultystring === "easy") {
       $w("#loadinggif").src=easyload
-      bright = "#00ff00";
-      dim = "#006600";
+      bright = "#11ff11";
+      dim = "#116611";
       $w("#diffbg").src = easydiff;
       connector = $w("#easyconnector");
     } else if (difficultystring === "med") {
       $w("#loadinggif").src=medload
-      bright = "#ffff00";
-      dim = "#646000";
+      bright = "#ffff11";
+      dim = "#646111";
       $w("#diffbg").src = meddiff;
       connector = $w("#medconnector");
     } else if (difficultystring === "hard") {
       $w("#loadinggif").src=hardload
-      bright = "#ff0000";
-      dim = "#520005";
+      bright = "#ff1111";
+      dim = "#521115";
       $w("#diffbg").src = harddiff;
       connector = $w("#hardconnector");
     }
@@ -610,7 +621,7 @@ $w("#claimbountyupload").onChange(function() {
                 element.show("fade");
                 element.html = buildhtml(fontsize, dim, bountytitle);
               } else {
-                element.html = buildhtml(fontsize, "#000000", bountytitle);
+                element.html = buildhtml(fontsize, "#666666", bountytitle);
               }
           }, delay * j);
         }
@@ -644,7 +655,7 @@ $w("#claimbountyupload").onChange(function() {
         let element = bountybuttons[i];
         if (element === selected&&selected.text !== "+"){
         setTimeout(() => {
-        $w('#bountyscreen').postMessage(bounties[i]);
+        $w("#bountyscreen").postMessage(bounties[i]);
         }, 690);
         }
 
@@ -661,14 +672,14 @@ $w("#claimbountyupload").onChange(function() {
         $w("#currentkarma").text=($w("#currentkarma").text).toString();
         $w("#postbountydisc").hide();
         $w("#postbountyname").hide();
-        $w('#bountyscreen').postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
+        $w("#bountyscreen").postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
         $w("#badge").hide("slide",{direction:"left",duration: 200})
         $w("#currentkarma").hide("slide",{direction:"right",duration: 200})
         $w("#postbountyamount").hide("fade", {duration:100});
         $w("#bountyamounttext").hide("fade", { duration: 100 });
         $w("#claimbountyupload").hide("fade", { duration: 100 });
         $w("#newbountybutton").hide("fade", { duration: 100 });
-        $w('#bountyscreen').postMessage({bountytitle: "_", difficulty: difficultystring, bountydescription: "_"});
+        $w("#bountyscreen").postMessage({bountytitle: "_", difficulty: difficultystring, bountydescription: "_"});
         $w("#postbountydisc").hide("fade", { duration: 100 });
         $w("#postbountyname").hide("roll",{delay:100,direction:"left", duration: 100 });
         connector.hide("roll",{direction:"left",duration:100});
@@ -711,7 +722,7 @@ $w("#claimbountyupload").onChange(function() {
         setTimeout(() => {
         reward=Number(bounties[i].reward);
         $w("#bountyamounttext").html = buildhtml("50", bright, bounties[i].reward);
-        $w('#bountyscreen').postMessage(bounties[i])
+        $w("#bountyscreen").postMessage(bounties[i])
         connector.show("roll",{direction:"left",duration:100});
         $w("#bountyscreen").show("fade",{duration:500});
         $w('#profilescreen').show("fade", {duration: 500});
@@ -725,8 +736,8 @@ $w("#claimbountyupload").onChange(function() {
           element.hide("fade",{duration:200});
           if (Number($w("#currentkarma").text) < $w("#postbountyamount").selectedIndex) {
           $w("#newbountybutton").disable();
-          $w("#currentkarma").html = `<h3 class="wixui-rich-text__text" style="text-align:right;font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#000000" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${$w("#currentkarma").text}</span></span></span></span></h3>`;
-          $w("#bountyamounttext").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#000000" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${$w("#bountyamounttext").text}</span></span></span></span></h3>`;
+          $w("#currentkarma").html = `<h3 class="wixui-rich-text__text" style="text-align:right;font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#666666" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${$w("#currentkarma").text}</span></span></span></span></h3>`;
+          $w("#bountyamounttext").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#666666" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${$w("#bountyamounttext").text}</span></span></span></span></h3>`;
           } else {
           $w("#newbountybutton").enable();
           $w("#currentkarma").html = `<h3 class="wixui-rich-text__text" style="text-align:right;font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:${bright}" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${$w("#currentkarma").text}</span></span></span></span></h3>`;
@@ -753,12 +764,22 @@ $w("#claimbountyupload").onChange(function() {
       $w('#profilescreen').show("fade", {duration: 500});
       if (selected.text ==="+"){
         newbounty(selected,difficultystring);
-      }else{claimbounty(selected);$w("#newbountybutton").hide();$w("#bounty00").collapse();}
-      }else{$w('#bountyscreen').postMessage({bountytitle: "_", difficulty: difficultystring, bountydescription: "_"});}
+      }else{claimbounty(selected);$w("#newbountybutton").hide();}$w("#bounty00").collapse();
+      }else{$w("#bountyscreen").postMessage({bountytitle: "_", difficulty: difficultystring, bountydescription: "_"});}
       }, 1400);
   });
   }
 });
+function numberToRGB(number) {
+  let max = 100;
+  let percentage = number / max;
+  let r = Math.floor(percentage * 255) * 18;
+  let g = 255;
+  let b = Math.floor(percentage * 255) * 18;
+  let opacity = 110 - number*10;
+  return 'rgba(' + r + ',' + g + ',' + b + ',' + opacity + ')';
+}
+
     // $w("#blogfg").onClick(function () {
     //     $w("#loadinggif").show("fade",{duration:200});
     //     $w("#annsbutton").hide("fade",{duration:200});
@@ -790,13 +811,18 @@ $w("#claimbountyupload").onChange(function() {
       });
         }else{$w("#hoverbutto").collapse();}
       });
-      $w("#leaderboarddown").show("fade",{delay:1500,duration:200});
 $w("#leaderboarddown").onClick(function () {
 let dataset = $w("#dataset1");
 let sort = wixData.sort().ascending("rank"); // sort by ascending rank
 dataset.setSort(sort);
 dataset.refresh();
-// $w("#repeater1").onItemReady(($item, itemData, index) => {
+$w("#leaderboard").expand();
+$w("#leaderboardrepeater").expand();
+$w("#leaderboardvideo").expand();
+$w("#bingbutton").hide("fade",{duration:200});
+$w("#chatgptbutton").hide("fade",{duration:200});
+$w("#mjbutton").hide("fade",{duration:200});
+// $w("#leaderboardrepeater").onItemReady(($item, itemData, index) => {
 //   $item("#placing").text = itemData.rank.toString();
 //   $item("#username").text = itemData.profile;
 //   $item("#badgeimage").src = itemData.badge;
@@ -804,19 +830,74 @@ dataset.refresh();
 //   $item("#userlink").text = itemData.url;
 //   $item("#profilepic").src = itemData.profile;
 // });
+
 $w("#bountywheelbox").hide("fade",{duration:500});
-  $w("#leaderboarddown").hide("fade",{delay:1000,duration:500});
-  $w("#leaderboardup").show("fade",{delay:1000,duration:500});
+  $w("#leaderboarddown").hide("fade",{delay:1200,duration:500});
+  $w("#leaderboardup").show("fade",{delay:1200,duration:500});
   $w("#leaderboardvideo").show();
   $w("#leaderboardvideo").play();
-  $w("#repeater1").show("roll", {delay:1000,duration:1000,direction:"top"});
+  $w("#leaderboardrepeater").show("roll", {delay:1200,duration:1000,direction:"top"});
 });
 $w("#leaderboardup").onClick(function () {
-  $w("#bountywheelbox").show("fade",{duration:500,delay:1000});
-        $w("#leaderboardup").hide("fade",{delay:1000,duration:500});
-        $w("#leaderboarddown").show("fade",{delay:1000,duration:500});
-        $w("#leaderboardvideo").hide("roll", {duration:1000,direction:"top"});
-        $w("#repeater1").hide("roll", {duration:1000,direction:"top"});
-});
+  $w("#bingbutton").show("fade",{duration:200});
+  $w("#chatgptbutton").show("fade",{duration:200});
+  $w("#mjbutton").show("fade",{duration:200});
+  $w("#bountywheelbox").show("fade",{duration:500,delay:1200});
+  $w("#leaderboardup").hide("fade",{delay:1200,duration:500});
+  $w("#leaderboarddown").show("fade",{delay:1200,duration:500});
+  $w("#leaderboardvideo").hide("roll", {duration:1200,direction:"top"});
+  $w("#leaderboardrepeater").hide("roll", {duration:1200,direction:"top"});
+  setTimeout(function () {
+    $w("#leaderboardvideo").collapse();
+    $w("#leaderboardrepeater").collapse();
+    $w("#leaderboard").collapse();
+  }, 1200);
 });
 
+$w("#leaderboardrepeater").onItemReady(($item,index) => {
+  console.log(numberToRGB(index.rank+1));
+  $item("#placing").html = `<h3 class="wixui-rich-text__text" style="color: ${numberToRGB(index.rank+1)}; text-shadow: 2px 2px 4px ${numberToRGB(index.rank+1)};"><span class="wixui-rich-text__text">${index.rank+1}</span></h3>`;
+  $item("#leaderboarduser").onMouseIn(function () {
+    $item("#leaderboardname").show("roll", {direction:"left",duration: 100});
+    $item("#leaderboardkarma").show("roll", {direction:"right",duration: 200});
+    $item("#leaderboardbadge").show("roll", {direction:"left",duration: 200});
+    $item("#lbbg").show("fade",{duration:100});
+    const leftLineTimeline = timeline().add($item("#leftline"), {duration: 200, x: -10, easing: "easeInOutSine"});
+    const rightLineTimeline = timeline().add($item("#rightline"), {duration: 200, x: +10, easing: "easeInOutSine"});
+    leftLineTimeline.play();
+    rightLineTimeline.play();
+    setTimeout(function () {
+      leftLineTimeline.pause();
+      rightLineTimeline.pause();
+    }, 200);
+  });
+  $item("#leaderboarduser").onMouseOut(function () {
+    $item("#leaderboardname").hide("roll", {direction:"left",duration: 200});
+    $item("#leaderboardkarma").hide("roll", {direction:"right",duration: 200});
+    $item("#leaderboardbadge").hide("roll", {direction:"left",duration: 200});
+    $item("#lbbg").hide("fade",{duration:100});
+    const leftLineTimeline = timeline().add($item("#leftline"), {duration: 200, x: 0, easing: "easeInOutSine"});
+    const rightLineTimeline = timeline().add($item("#rightline"), {duration: 200, x: 0, easing: "easeInOutSine"});
+    leftLineTimeline.play();
+    rightLineTimeline.play();
+    setTimeout(function () {
+      leftLineTimeline.pause();
+      rightLineTimeline.pause();
+    }, 200);
+  });
+  $item("#lbbg").onMouseIn(function () {
+    $item("#leaderboardname").hide("roll", {direction:"left",duration: 200});
+    $item("#leaderboardkarma").hide("roll", {direction:"right",duration: 200});
+    $item("#leaderboardbadge").hide("roll", {direction:"left",duration: 200});
+    $item("#lbbg").hide("fade",{duration:100});
+    const leftLineTimeline = timeline().add($item("#leftline"), {duration: 200, x: 0, easing: "easeInOutSine"});
+    const rightLineTimeline = timeline().add($item("#rightline"), {duration: 200, x: 0, easing: "easeInOutSine"});
+    leftLineTimeline.play();
+    rightLineTimeline.play();
+    setTimeout(function () {
+      leftLineTimeline.pause();
+      rightLineTimeline.pause();
+    }, 200);
+  });
+});
+});
