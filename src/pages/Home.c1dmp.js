@@ -773,14 +773,14 @@ $w("#claimbountyupload").onChange(function() {
   }
 });
 function numberToRGB(number) {
-  let max = 100; // maximum value of placing
-  let percentage = number / max; // calculate the percentage
-
-  let r = Math.floor(percentage * 255)*18; // calculate the red value
-  let g = 255; // green value remains constant at 255
-  let b = Math.floor(percentage * 255)*18; // calculate the blue value
-
-  return 'rgba(' + r + ',' + g + ',' + b + ',' + 0.5 + ')';
+  let max = 100;
+  let percentage = number / max;
+  let r = Math.floor(percentage * 255) * 18;
+  let g = 255;
+  let b = Math.floor(percentage * 255) * 18;
+  //opacity should go down by 10 with wach number increase
+  let opacity = 110 - number*10;
+  return 'rgba(' + r + ',' + g + ',' + b + ',' + opacity + ')';
 }
 
     // $w("#blogfg").onClick(function () {
@@ -857,6 +857,7 @@ $w("#leaderboardup").onClick(function () {
 });
 
 $w("#leaderboardrepeater").onItemReady(($item,index) => {
+  console.log(numberToRGB(index.rank+1));
   $item("#placing").html = `<h3 class="wixui-rich-text__text" style="color: ${numberToRGB(index.rank+1)}; text-shadow: 2px 2px 4px ${numberToRGB(index.rank+1)};"><span class="wixui-rich-text__text">${index.rank+1}</span></h3>`;
   $item("#leaderboarduser").onMouseIn(function () {
     $item("#leaderboardname").show("roll", {direction:"left",duration: 100});
