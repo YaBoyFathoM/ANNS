@@ -271,6 +271,7 @@ const models = [
   });
   $w("#bingbutton").onClick(function () {
     hidestuff();
+    $w("#leaderboarddown").show();
     $w("#mjbutton").collapse();
     $w("#chatgptbutton").collapse();
     modelstring = "bing";
@@ -778,7 +779,6 @@ function numberToRGB(number) {
   let r = Math.floor(percentage * 255) * 18;
   let g = 255;
   let b = Math.floor(percentage * 255) * 18;
-  //opacity should go down by 10 with wach number increase
   let opacity = 110 - number*10;
   return 'rgba(' + r + ',' + g + ',' + b + ',' + opacity + ')';
 }
@@ -820,6 +820,7 @@ let dataset = $w("#dataset1");
 let sort = wixData.sort().ascending("rank"); // sort by ascending rank
 dataset.setSort(sort);
 dataset.refresh();
+$w("#leaderboard").expand();
 $w("#leaderboardrepeater").expand();
 $w("#leaderboardvideo").expand();
 $w("#bingbutton").hide("fade",{duration:200});
