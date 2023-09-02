@@ -13,6 +13,7 @@
   "dependencies": {
     "@huggingface/agents": "^0.0.5",
     "@huggingface/hub": "^0.8.4",
-    "@huggingface/inference": "^2.6.1"
+    "@huggingface/inference": "^2.6.1",
+    "@tensorflow/tfjs": "^4.10.0"
   }
 }

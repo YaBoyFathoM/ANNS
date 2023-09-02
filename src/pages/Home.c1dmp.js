@@ -17,14 +17,14 @@ $w.onReady(function () {
     $w("#bountybg").show("fade",{duration:400});
     $w("#logo").hide("fade",{duration:100});
   });
-    $w("#bountyfg").onClick(function () {
-      $w("#webs").hide("fade",{duration:500});
-      setTimeout(function(){
-      $w("#bountyfg").hide("fade",{delay:500,duration:500});
-      $w("#foundation").expand();
-      $w("#bgvideo").play();
-      },500);
-    });
+    // $w("#bountyfg").onClick(function () {
+    //   $w("#webs").hide("fade",{duration:500});
+    //   setTimeout(function(){
+    //   $w("#bountyfg").hide("fade",{delay:500,duration:500});
+    //   $w("#foundation").expand();
+    //   $w("#bgvideo").play();
+    //   },500);
+    // });
   function generateSrc(url, name, resolution) {
     let src = "wix:image://v1/";
     let urlId = url.split("/")[4];
@@ -233,6 +233,7 @@ const models = [
     $w("#medbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">MED</span></span></span></span></h3>`;
     $w("#hardbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">HARD</span></span></span></span></h3>`;
     $w("#bg").src=difffoundation;
+    $w("#leaderboarddown").show("fade",{delay:1500,duration:200});
     $w("#brighttext").hide("fade",{duration:100});
     $w("#difficultybox").show("fade",{delay:1500,duration:200});
     $w("#easydark").show();
@@ -271,7 +272,6 @@ const models = [
   });
   $w("#bingbutton").onClick(function () {
     hidestuff();
-    $w("#leaderboarddown").show();
     $w("#mjbutton").collapse();
     $w("#chatgptbutton").collapse();
     modelstring = "bing";
@@ -814,7 +814,6 @@ function numberToRGB(number) {
       });
         }else{$w("#hoverbutto").collapse();}
       });
-      $w("#leaderboarddown").show("fade",{delay:1500,duration:200});
 $w("#leaderboarddown").onClick(function () {
 let dataset = $w("#dataset1");
 let sort = wixData.sort().ascending("rank"); // sort by ascending rank
@@ -854,6 +853,7 @@ $w("#leaderboardup").onClick(function () {
   setTimeout(function () {
     $w("#leaderboardvideo").collapse();
     $w("#leaderboardrepeater").collapse();
+    $w("#leaderboard").collapse();
   }, 1200);
 });
 
@@ -875,6 +875,20 @@ $w("#leaderboardrepeater").onItemReady(($item,index) => {
     }, 200);
   });
   $item("#leaderboarduser").onMouseOut(function () {
+    $item("#leaderboardname").hide("roll", {direction:"left",duration: 200});
+    $item("#leaderboardkarma").hide("roll", {direction:"right",duration: 200});
+    $item("#leaderboardbadge").hide("roll", {direction:"left",duration: 200});
+    $item("#lbbg").hide("fade",{duration:100});
+    const leftLineTimeline = timeline().add($item("#leftline"), {duration: 200, x: 0, easing: "easeInOutSine"});
+    const rightLineTimeline = timeline().add($item("#rightline"), {duration: 200, x: 0, easing: "easeInOutSine"});
+    leftLineTimeline.play();
+    rightLineTimeline.play();
+    setTimeout(function () {
+      leftLineTimeline.pause();
+      rightLineTimeline.pause();
+    }, 200);
+  });
+  $item("#lbbg").onMouseIn(function () {
     $item("#leaderboardname").hide("roll", {direction:"left",duration: 200});
     $item("#leaderboardkarma").hide("roll", {direction:"right",duration: 200});
     $item("#leaderboardbadge").hide("roll", {direction:"left",duration: 200});
