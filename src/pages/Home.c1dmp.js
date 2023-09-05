@@ -9,22 +9,22 @@ import {timeline} from 'wix-animations';
 import { authentication } from 'wix-members-frontend';
 import {newsubmision,claimBounty,adduser} from 'backend/karma'
 $w.onReady(function () {
-  #$w("#bountyfg").show("fade",{delay:1000,duration:1000});
+  $w("#bountyfg").show("fade",{delay:1000,duration:1000});
   $w("#logo").show("fade",{duration:1000});
   $w("#loadinggif").hide("fade",{duration:500});
-  $w("#webs").postMessage("Under\nConstruction");
   $w("#bountyfg").onMouseIn(function () {
     $w("#bountybg").show("fade",{duration:400});
     $w("#logo").hide("fade",{duration:100});
   });
-    // $w("#bountyfg").onClick(function () {
+     $w("#bountyfg").onClick(function () {
+      $w("#webs").postMessage("Under\nConstruction");
     //   $w("#webs").hide("fade",{duration:500});
     //   setTimeout(function(){
     //   $w("#bountyfg").hide("fade",{delay:500,duration:500});
     //   $w("#foundation").expand();
     //   $w("#bgvideo").play();
     //   },500);
-    // });
+     });
   function generateSrc(url, name, resolution) {
     let src = "wix:image://v1/";
     let urlId = url.split("/")[4];
