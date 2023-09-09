@@ -17,14 +17,10 @@ $w.onReady(function () {
     $w("#logo").hide("fade",{duration:100});
   });
      $w("#bountyfg").onClick(function () {
-      const showFAQ = timeline().add($w("#FAQ"), {duration: 1000, x: -400 , easing: "easeInOutSine"});
-      setTimeout(function () {
-      showFAQ.play();
-      setTimeout(function () {
-        showFAQ.pause();
-      }, 1000);
-    }, 500);
       $w("#textscroll").postMessage("Under\nConstruction");
+      setTimeout(function(){
+      $w("#FAQ").expand();
+      },500);
     //   $w("#webs").hide("fade",{duration:500});
     //   setTimeout(function(){
     //   $w("#bountyfg").hide("fade",{delay:500,duration:500});
