@@ -17,7 +17,14 @@ $w.onReady(function () {
     $w("#logo").hide("fade",{duration:100});
   });
      $w("#bountyfg").onClick(function () {
-      $w("#webs").postMessage("Under\nConstruction");
+      const showFAQ = timeline().add($w("#FAQ"), {duration: 1000, x: -400 , easing: "easeInOutSine"});
+      setTimeout(function () {
+      showFAQ.play();
+      setTimeout(function () {
+        showFAQ.pause();
+      }, 1000);
+    }, 500);
+      $w("#textscroll").postMessage("Under\nConstruction");
     //   $w("#webs").hide("fade",{duration:500});
     //   setTimeout(function(){
     //   $w("#bountyfg").hide("fade",{delay:500,duration:500});
@@ -107,6 +114,8 @@ let bountybuttons = [
 $w("#bgvideo").onEnded(function () {
 $w("#logo").collapse();
 $w("#webs").collapse();
+$w("#FAQ").collapse();
+$w("#textscroll").collapse();
 $w("#profilescreen").postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
 $w("#bountyscreen").postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
 $w("#bg").show("fade",{duration:200});
