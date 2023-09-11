@@ -705,13 +705,7 @@ $w("#postbountyamount").onChange(() => {
         $w("#bountyscreen").show("fade",{duration:500});
         $w('#profilescreen').show("fade", {duration: 500});
         if (element.text !="+"){
-            if(wixUsers.currentUser.loggedIn) {
-            claimbounty(element,bounties[i]);
-            }else{
-            $w("#newbountybutton").disable();
-        $w("#currentkarma").hide();
-        authentication.promptLogin();
-        }
+        claimbounty(element,bounties[i]);
         }else{
         if(wixUsers.currentUser.loggedIn) {
           $w("#postbountydisc").expand();
@@ -727,8 +721,7 @@ $w("#postbountyamount").onChange(() => {
           $w("#currentkarma").html = `<h3 class="wixui-rich-text__text" style="text-align:right;font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:${bright}" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${$w("#currentkarma").text}</span></span></span></span></h3>`;
           $w("#bountyamounttext").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:${bright}" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${$w("#bountyamounttext").text}</span></span></span></span></h3>`;
           }
-          }else{$w("#newbountybutton").disable();
-          }
+          }else{$w("#newbountybutton").disable();$w("#currentkarma").hide();}
         }
         changing=false
         selected = element;
