@@ -48,22 +48,6 @@ $w.onReady(function () {
   let previousDifficultystring = "_";
 let userid=wixUsers.currentUser.id
 adduser(userid);
-$w("#hoverbutto").onMouseIn (function () {
-  if(wixUsers.currentUser.loggedIn) {
-      $w("#accountbox").expand();
-      $w("#logou").onClick( (event) => {
-wixUsers.logout()
-});
- $w("#hoverbutto").onMouseIn (function () {
- $w("#badge").show("slide",{direction:"left",duration: 200})
- $w("#currentkarma").show("slide",{direction:"right",duration: 200})
-});
-  $w("#accountbox").onMouseOut (function () {
-  $w("#badge").hide("slide",{delay:200,direction:"left",duration: 200})
-  $w("#currentkarma").hide("slide",{delay:200,direction:"right",duration: 200})
-});
-  }else{$w("#hoverbutto").collapse();}
-});
 let bountybuttons = [
   $w(`#bounty01`),
   $w(`#bounty02`),
@@ -463,6 +447,11 @@ $w("#postbountyamount").onChange(() => {
   $w("#claimbountyupload").enable();
   $w("#claimbountyupload").fileType = fileType;
   $w("#claimbountyupload").onChange(function() {
+    if(!wixUsers.currentUser.loggedIn) {
+        authentication.promptLogin();
+        $w("#claimbountyupload").reset();
+        return;
+    }
     changing=true;
     $w("#loadinggif").show();
     $w("#claimbountyupload").uploadFiles()
@@ -739,9 +728,6 @@ $w("#postbountyamount").onChange(() => {
           $w("#bountyamounttext").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:${bright}" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${$w("#bountyamounttext").text}</span></span></span></span></h3>`;
           }
           }else{$w("#newbountybutton").disable();
-
-          $w("#currentkarma").hide();
-          authentication.promptLogin();
           }
         }
         changing=false
@@ -792,20 +778,17 @@ function numberToRGB(number) {
       // });
       $w("#hoverbutto").onMouseIn (function () {
         if(wixUsers.currentUser.loggedIn) {
+          $w("#currentkarma").expand();
           $w("#hoverbutto").expand();
             $w("#accountbox").expand();
+            $w("#logou").show("slide",{direction:"bottom",duration: 200})
             $w("#logou").onClick( (event) => {
       wixUsers.logout()
     });
-       $w("#hoverbutto").onMouseIn (function () {
-       $w("#badge").show("slide",{direction:"left",duration: 200})
-       $w("#currentkarma").show("slide",{direction:"right",duration: 200})
-      });
         $w("#accountbox").onMouseOut (function () {
-        $w("#badge").hide("slide",{delay:200,direction:"left",duration: 200})
-        $w("#currentkarma").hide("slide",{delay:200,direction:"right",duration: 200})
+        $w("#logou").hide("slide",{direction:"top",duration: 200})
       });
-        }else{$w("#hoverbutto").collapse();}
+        }else{$w("#hoverbutto").collapse();$w("#currentkarma").collapse();}
       });
 $w("#leaderboarddown").onClick(function () {
 let dataset = $w("#dataset1");
