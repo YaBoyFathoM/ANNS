@@ -15,7 +15,7 @@ $w.onReady(function () {
     let urlId = url.split("/")[4];
     let width = resolution.split("x")[0];
     let height = resolution.split("x")[1];
-    src += urlId + "/" + name + "#originWidth=" + width + "&originHeight=" + height; // append the id, name and resolution to the src
+    src += urlId + "/" + name + "#originWidth=" + width + "&originHeight=" + height;
     return src;
   }
   let difffoundation = generateSrc('https://static.wixstatic.com/media/cef1ec_d26b49973d6e43758e58940aa9fdbacb~mv2.png','diffbg.png','3000x3000');
@@ -326,8 +326,6 @@ $w("#hardbutton").onClick(function () {
     // }
     $w("#postbountydisc").value="";
     $w("#postbountyname").value="";
-    $w("#badge").show("slide",{direction:"left",duration: 200})
-    $w("#currentkarma").show("slide",{direction:"right",duration: 200})
     $w("#postbountyamount").show();
     $w("#postbountydisc").show();
     $w("#postbountyname").show();
@@ -340,6 +338,10 @@ $w("#hardbutton").onClick(function () {
     $w("#bountyamounttext").text=($w("#postbountyamount").selectedIndex).toString();
     let tempwallet = (Number($w("#currentkarma").text)-$w("#postbountyamount").selectedIndex).toString();
     let t=0
+    if (wixUsers.currentUser.loggedIn) {
+        $w("#badge").show("slide",{direction:"left",duration: 200})
+        $w("#currentkarma").show("slide",{direction:"right",duration: 200})
+    }
   function updateText(added) {
   if (t<added){
     t++
@@ -404,6 +406,7 @@ $w("#postbountyamount").onChange(() => {
   }
   function claimbounty(element,bounty) {
   let t=0
+  console.log("nutsack")
   $w("#claimbountyupload").reset();
   element.hide("roll",{direction:"right",duration:200});
   $w('#bountyscreen').show();
@@ -413,14 +416,15 @@ $w("#postbountyamount").onChange(() => {
   $w("#claimbountyupload").show();
   $w("#postbountydisc").hide();
   $w("#postbountyname").hide();
-  $w("#badge").show("slide",{direction:"left",duration: 200})
-  $w("#currentkarma").show("slide",{direction:"right",duration: 200})
   $w("#accountbox").show("roll", { duration: 500,direction:"right"});
   $w("#bountyamounttext").show("roll", { duration: 500 });
   $w("#bountyscreen").postMessage(bounty);
   $w("#claimbountyupload").show("roll",{delay:200,duration:200});
   let tempwallet = Number($w("#currentkarma").text);
   let bountyAmount = Number($w("#bountyamounttext").text);
+  if(wixUsers.currentUser.loggedIn) {
+    $w("#currentkarma").show("slide",{direction:"right",duration: 200})
+  }
   function updateText(reward) {
   if (t<reward){
     t++;
@@ -436,6 +440,8 @@ $w("#postbountyamount").onChange(() => {
     }, 100);
     setTimeout(updateText,200,reward);
   } else {
+      bounty.bountytitle = "+";
+      bounty.bountydescription = "Bounty Complete";
       $w("#claimbountyupload").hide("roll",{direction:"top", duration: 200 });
       $w("#bountyscreen").postMessage(bounty);
       $w("#bountyamounttext").hide("roll",{delay:600,direction:"right", duration: 100 });
@@ -445,13 +451,13 @@ $w("#postbountyamount").onChange(() => {
       setTimeout(function() {
       $w("#bountyscreen").hide("fade",{delay:2000,duration:200});
       connector.hide("roll",{delay:2000,duration:300,direction:"right"});
-        }, 5000);
+      return;
+      }, 500);
       changing=false;
       $w("#currentkarma").html = `<h3 class="wixui-rich-text__text" style="text-align:right;font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:${bright}" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${$w("#currentkarma").text}</span></span></span></span></h3>`;
       $w("#bountyamounttext").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:${bright}" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${$w("#bountyamounttext").text}</span></span></span></span></h3>`;
       $w("#loadinggif").hide();
-    }, 5000);
-    return;
+    }, 1000);
   }
   }
   $w("#claimbountyupload").enable();
@@ -467,8 +473,8 @@ $w("#postbountyamount").onChange(() => {
                 "bounty": bounty,
             };
             claimBounty(collection, claim, userid);
-            $w("#claimbountyupload").hide("fade", {duration: 200});
             $w("#loadinggif").hide();
+            $w("#claimbountyupload").hide("fade", {duration: 200});
             updateText(reward);
         })
         })
@@ -477,7 +483,7 @@ $w("#postbountyamount").onChange(() => {
             console.log(uploadError.errorDescription);
         });
 });
-  }
+}
   function makethemdim(element) {
     if (changing === false) {
         for (let i = 0; i < bounties.length; i++){
@@ -581,12 +587,12 @@ $w("#postbountyamount").onChange(() => {
         for (let i = 0; i < bounties.length; i++) {
           bountybuttons[i].show("fade", { delay: (bounties.length - i) * delay, duration: delay });
           let element = bountybuttons[i];
-          // if (submittedids.includes(bounties[i]._id)){
-          //   element.collapse();
-          // }
-          // if (bounties[i]._owner===userid){
-          //   element.collapse();
-          // }
+          if (submittedids.includes(bounties[i]._id)){
+            element.collapse();
+          }
+          if (bounties[i]._owner===userid){
+            element.collapse();
+          }
           setTimeout(function () {
             element.text = "+";
             element.html = buildhtml("30", bright, "+");
@@ -710,9 +716,15 @@ $w("#postbountyamount").onChange(() => {
         $w("#bountyscreen").show("fade",{duration:500});
         $w('#profilescreen').show("fade", {duration: 500});
         if (element.text !="+"){
-        claimbounty(element,bounties[i]);
+            if(wixUsers.currentUser.loggedIn) {
+            claimbounty(element,bounties[i]);
+            }else{
+            $w("#newbountybutton").disable();
+        $w("#currentkarma").hide();
+        authentication.promptLogin();
+        }
         }else{
-          if(wixUsers.currentUser.loggedIn) {
+        if(wixUsers.currentUser.loggedIn) {
           $w("#postbountydisc").expand();
           $w("#postbountyname").expand();
           newbounty(element,difficultystring,bounties[i]._id);
@@ -727,6 +739,7 @@ $w("#postbountyamount").onChange(() => {
           $w("#bountyamounttext").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:${bright}" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${$w("#bountyamounttext").text}</span></span></span></span></h3>`;
           }
           }else{$w("#newbountybutton").disable();
+
           $w("#currentkarma").hide();
           authentication.promptLogin();
           }
@@ -747,7 +760,7 @@ $w("#postbountyamount").onChange(() => {
       $w('#profilescreen').show("fade", {duration: 500});
       if (selected.text ==="+"){
         newbounty(selected,difficultystring);
-      }else{$w("#newbountybutton").hide();}$w("#bounty00").collapse();
+      }else{claimbounty(selected);$w("#newbountybutton").hide();}$w("#bounty00").collapse();
       }else{$w("#bountyscreen").postMessage({bountytitle: "_", difficulty: difficultystring, bountydescription: "_"});}
       }, 1400);
   });

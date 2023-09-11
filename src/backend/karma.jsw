@@ -50,7 +50,6 @@ export function updateglobalkarma() {
                 .find()
                 .then((results) => {
                   const item = results.items[0];
-                  // If there is no Userkarma item for this user, create one with default values
                   if (!item) {
                     console.log(`No Userkarma item found for user ${userId}, creating one`);
                     let newItem = {
