@@ -12,6 +12,7 @@ $w.onReady(function () {
       $w("#bountybg").hide("fade",{duration:500});
       setTimeout(function(){
         $w("#textscroll").postMessage("Under\nConstruction");
+        $w("#bountyfg").collapse();
        },500);
      });
 });

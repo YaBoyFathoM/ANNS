@@ -45,7 +45,7 @@ $w.onReady(function () {
   let collection;
   let fileType;
   let submittedids;
-  let previousDifficultystring = "_";
+  let previousDifficultystring = "none";
 let userid=wixUsers.currentUser.id
 adduser(userid);
 let bountybuttons = [
@@ -206,7 +206,6 @@ const models = [
     $w("#easydark").show();
     $w("#cwbutton").hide();
     $w("#ccwbutton").hide();
-    $w("#currentkarma").show("fade",{duration:500});
     $w("#difficultywheel").show("fade",{duration:500});
     $w("#bountyscreen").postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
     $w("#profilescreen").postMessage({bountytitle: "_", difficulty: "none", bountyDescription: "_"});
@@ -218,6 +217,10 @@ const models = [
     $w("#claimbountyupload").hide("fade", { duration: 100 });
     $w("#newbountybutton").hide("fade", { duration: 100 });
     $w("#postbountydisc").hide("fade", { duration: 100 });
+    if (wixUsers.currentUser.loggedIn) {
+      $w("#badge").show("slide",{direction:"left",duration: 200})
+      $w("#currentkarma").show("slide",{direction:"right",duration: 200})
+  }
   }
   $w("#chatgptbutton").onClick(function () {
     hidestuff();
@@ -253,7 +256,7 @@ $w("#easybutton").onClick(function () {
       $w("#easybutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#00ff00 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#00ff00" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">EASY</span></span></span></span></h3>`;
       $w("#medbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">MED</span></span></span></span></h3>`;
       $w("#hardbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">HARD</span></span></span></span></h3>`;
-      $w("#bountyscreen").postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
+      $w("#bountyscreen").postMessage({bountytitle: "_", difficulty: "easy", bountydescription: "_"});
       $w("#profilescreen").postMessage({bountytitle: "_", difficulty: "none", bountydescription: "_"});
       $w("#meddark").hide();
       $w("#harddark").hide();
@@ -618,7 +621,6 @@ $w("#postbountyamount").onChange(() => {
       $w("#bountyamounttext").html = buildhtml("50",bright,$w("#bountyamounttext").text);
       $w("#currentkarma").html = `<h3 class="wixui-rich-text__text" style="text-align:right;font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:${bright}" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${$w("#currentkarma").text}</span></span></span></span></h3>`;
       $w("#accountbox").show("roll", { duration: 500,direction:"right"});
-      $w("#currentkarma").show("roll", { duration: 500,direction:"right"});
       $w("#newbountybutton").style.color = bright;
       $w("#postbountydisc").style.color = bright;
       $w("#postbountydisc").style.borderColor = bright;
@@ -626,6 +628,10 @@ $w("#postbountyamount").onChange(() => {
       $w("#postbountyname").style.borderColor = bright;
       $w("#claimbountyupload").style.color = bright;
       $w("#claimbountyupload").style.borderColor = bright;
+      if (wixUsers.currentUser.loggedIn) {
+        $w("#badge").show("slide",{direction:"left",duration: 200})
+        $w("#currentkarma").show("slide",{direction:"right",duration: 200})
+    }
       }, delay * bounties.length);
     for (let i = 0; i < bounties.length; i++) {
         let bountytitle = bounties[i].bountytitle
@@ -740,7 +746,7 @@ $w("#postbountyamount").onChange(() => {
       if (selected.text ==="+"){
         newbounty(selected,difficultystring);
       }else{claimbounty(selected);$w("#newbountybutton").hide();}$w("#bounty00").collapse();
-      }else{$w("#bountyscreen").postMessage({bountytitle: "_", difficulty: difficultystring, bountydescription: "_"});}
+      }else{$w("#bountyscreen").postMessage(bounties[0]);}
       }, 1400);
   });
   }
@@ -808,7 +814,21 @@ $w("#bountywheelbox").hide("fade",{duration:500});
   $w("#leaderboardup").show("fade",{delay:1200,duration:500});
   $w("#leaderboardvideo").show();
   $w("#leaderboardvideo").play();
+  $w("#profilescreen").hide("fade",{duration:500});
+  $w("#bountyscreen").hide("fade", {duration:500});
+  $w("#difficultybox").hide("fade", {duration:500});
+  $w("#accountbox").hide("fade", {duration:500});
   $w("#leaderboardrepeater").show("roll", {delay:1200,duration:1000,direction:"top"});
+  const leftLineTimeline = timeline().add($w("#profilecard"), {duration: 1000, x: -1000, easing: "easeInOutSine"});
+  const rightLineTimeline = timeline().add($w("#bountybox"), {duration: 1000, x: +1000, easing: "easeInOutSine"});
+  setTimeout(function () {
+  leftLineTimeline.play();
+  rightLineTimeline.play();
+  setTimeout(function () {
+    leftLineTimeline.pause();
+    rightLineTimeline.pause();
+  }, 1000);
+}, 500);
 });
 $w("#leaderboardup").onClick(function () {
   $w("#bingbutton").show("fade",{duration:200});
@@ -818,7 +838,19 @@ $w("#leaderboardup").onClick(function () {
   $w("#leaderboardup").hide("fade",{delay:1200,duration:500});
   $w("#leaderboarddown").show("fade",{delay:1200,duration:500});
   $w("#leaderboardvideo").hide("roll", {duration:1200,direction:"top"});
+  $w("#profilescreen").show("fade",{delay:1000,duration:500});
+  $w("#bountyscreen").show("fade", {delay:1000,duration:500});
+  $w("#difficultybox").show("fade", {delay:1000,duration:500});
+  $w("#accountbox").show("fade", {delay:1000,duration:500});
   $w("#leaderboardrepeater").hide("roll", {duration:1200,direction:"top"});
+  const leftLineTimeline = timeline().add($w("#profilecard"), {duration: 1000, x: 0, easing: "easeInOutSine"});
+  const rightLineTimeline = timeline().add($w("#bountybox"), {duration: 1000, x: 0, easing: "easeInOutSine"});
+  leftLineTimeline.play();
+  rightLineTimeline.play();
+  setTimeout(function () {
+    leftLineTimeline.pause();
+    rightLineTimeline.pause();
+  }, 1000);
   setTimeout(function () {
     $w("#leaderboardvideo").collapse();
     $w("#leaderboardrepeater").collapse();
@@ -848,7 +880,7 @@ $w("#leaderboardrepeater").onItemReady(($item,index) => {
     $item("#leaderboardbadge").hide("roll", {direction:"left",duration: 200});
     $item("#lbbg").hide("fade",{duration:100});
     const leftLineTimeline = timeline().add($item("#leftline"), {duration: 200, x: -20, easing: "easeInOutSine"});
-    const rightLineTimeline = timeline().add($item("#rightline"), {duration: 200, x: 20, easing: "easeInOutSine"});
+    const rightLineTimeline = timeline().add($item("#rightline"), {duration: 200, x: +20, easing: "easeInOutSine"});
     leftLineTimeline.play();
     rightLineTimeline.play();
     setTimeout(function () {
