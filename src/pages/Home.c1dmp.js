@@ -7,11 +7,13 @@ $w.onReady(function () {
     $w("#logo").hide("fade",{duration:100});
   });
      $w("#bountyfg").onClick(function () {
+      $w("#bountybg").show("fade",{duration:400});
       $w("#imageX7").hide("fade",{duration:500});
       $w("#sharplogo").hide("fade",{duration:500});
       $w("#bountybg").hide("fade",{duration:500});
+      //$w("#loadinggif").show("fade",{duration:100});
       setTimeout(function(){
-        $w("#textscroll").postMessage("Under\nConstruction");
+        $w("#webs").postMessage("Under\nConstruction");
         $w("#bountyfg").collapse();
        },500);
      });
