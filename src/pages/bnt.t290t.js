@@ -489,19 +489,33 @@ $w.onReady(function () {
     $w("#newbountybutton").onClick( () => {
       let spentkarma=Number($w("#bountyamounttext").text)
       changing=true
+      console.log(bounty._id)
       if (Number(tempwallet)-spentkarma >= 0) {
-        let newbountysubmission = {
-          "_id": bounty._id,
-          "reward": Number($w("#bountyamounttext").text),
-          "bountytitle": $w("#postbountyname").value,
-          "bountydescription": $w("#postbountydisc").value,
-          "difficulty":difficultystring,
-        };
-                  newsubmision(modelstring, newbountysubmission,spentkarma,UserID)
-                  $w("#loadinggif").show();
-                  updateText(Number($w("#bountyamounttext").text));
-                  }
+        wixData.query(modelstring)
+          .eq("ID", bounty._id)
+          .find()
+          .then((results) => {
+            if (results.items.length > 0) {
+              let item = results.items[0];
+              item.reward = spentkarma;
+              item.difficulty = difficultystring;
+              item.bountytitle = $w("#postbountyname").value;
+              item.bountydescription = $w("#postbountydisc").value;
+              item.bountytitle = $w("#postbountyname").value;
+              item._owner = wixUsers.currentUser.id;
+              wixData.update(modelstring, item)
+              .then(() => {
+                console.log("Update successful");
+                $w("#loadinggif").show();
+                updateText(Number($w("#bountyamounttext").text));
+              })
+              .catch((error) => {
+                console.error("Update failed:", error);
               });
+            }
+              });
+    }
+  });
     }
     function claimbounty(element,bounty) {
       let t=0
@@ -687,7 +701,9 @@ $w.onReady(function () {
           .then(results => {
             submittedids = results.items.map(item => item.bountyid);
             for (let i = 0; i < bounties.length; i++) {
-              bountybuttons[i].show("fade", { delay: (bounties.length - i) * delay, duration: delay });
+              console.log(i)
+              console.log(bountybuttons[i])
+              bountybuttons[i].show("fade", { delay: ((bounties.length - i) * delay), duration: delay });
               let element = bountybuttons[i];
               if (submittedids.includes(bounties[i]._id)){
                 element.collapse();
@@ -868,7 +884,7 @@ $w.onReady(function () {
           $w("#bountyscreen").show("fade",{duration:500});
           $w('#profilescreen').show("fade", {duration: 500});
           if (selected.text ==="+"){
-            newbounty(selected,difficultystring);
+            newbounty(selected,difficultystring,bounties[0]._id);
           }else{claimbounty(selected);$w("#newbountybutton").hide();}$w("#bounty00").collapse();
           }else{$w("#bountyscreen").postMessage(bounties[0]);}
           }, 1400);
