@@ -99,7 +99,7 @@ $w.onReady(function () {
   const medload= generateSrc('https://static.wixstatic.com/media/cef1ec_a25005cadb9e4957b5d23e8ffebb88ff~mv2.gif','medload.gif','200x200');
   const hardload= generateSrc('https://static.wixstatic.com/media/cef1ec_ecdcaa7bf32340fda6f5fd06a176688a~mv2.gif','hardload.gif','200x200');
   const easydiff= generateSrc('https://static.wixstatic.com/media/cef1ec_afb593aac8e7415da536a322f8b8692a~mv2.png','easydiff.png','714x736');
-  const meddiff= generateSrc('https://static.wixstatic.com/media/cef1ec_92619dc20d5f4ca6bc57db6ee74490f3~mv2.png','meddiff.png','1812x1868');
+  const meddiff= generateSrc('https://static.wixstatic.com/media/cef1ec_c2c3e55211c841d79b7fd3e1de0a1bfd~mv2.png','meddiff.png','1812x1868');
   const harddiff= generateSrc('https://static.wixstatic.com/media/cef1ec_17716182358a444d804a1905d764d91b~mv2.png','harddiff.png','714x736');
   const easysrc = generateSrc("https://static.wixstatic.com/media/cef1ec_95ed5648d7fa45f2bc7089605143079d~mv2.png",'easywheel.png','1080x1080');
   const medsrc = generateSrc("https://static.wixstatic.com/media/cef1ec_8d7ccaa7f2874aaf8368ae95b8f0e1c6~mv2.png",'medwheel.png', '1080x1080');
@@ -162,32 +162,6 @@ $w.onReady(function () {
     $w("#cwbutton").show("fade",{duration:100});
     $w("#ccwbutton").show("fade",{duration:100});
     $w("#modelwheel").show("fade",{duration:100});
-
-    //$w("#accountbox").show("fade",{duration:200});
-    //$w("#openaibountybutton").show("fade",{duration:200});
-    // $w("#bingdark").show("fade",{duration:100});
-    // $w("#spiderdark").show("fade",{duration:100});
-    // $w("#chatgptdark").show("fade",{duration:100});
-    // $w("#mjdark").show("fade",{duration:100});
-    // if(wixUsers.currentUser.loggedIn) {
-    // $w("#hoverbutton").onMouseIn (function () {
-    //  $w("#homebutton").show("roll",{direction:"top",duration: 200,delay:200})
-    //  $w("#badge").show("slide",{direction:"left",duration: 200})
-    //  });
-    //   $w("#accountbox").onMouseOut (function () {
-    //   $w("#badge").hide("slide",{direction:"left",duration: 200})
-    //   $w("#homebutton").hide("roll",{direction:"top",duration: 200})
-    // });
-    // }else{
-    //   $w("#currentkarma").collapse();
-    //   $w("#hoverbutton").onMouseIn (function () {
-    //    $w("#homebutton").show("roll",{direction:"top",duration: 200,delay:200})
-    //    });
-    //   $w("#accountbox").onMouseOut (function () {
-    //   $w("#homebutton").hide("roll",{direction:"top",duration: 200})
-    // });
-    // }
-
     function buildhtml(fontsize,color,text) {
         return `<h3 class="wixui-rich-text__text" style="font-size:${fontsize}px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:${color}" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${text}</span></span></span></span></h3>`;
     }
@@ -326,6 +300,7 @@ $w.onReady(function () {
         fileType = "Document";
         showDifficulty()
     });
+
     $w("#easybutton").onClick(function () {
       if (!changing){
         difficultystring = "easy";
@@ -341,8 +316,8 @@ $w.onReady(function () {
         showDifficulty();
       }
     }
-  });
-  $w("#medbutton").onClick(function () {
+    });
+    $w("#medbutton").onClick(function () {
       if (!changing){
         difficultystring = "med";
         if (difficultystring !== previousDifficultystring) {
@@ -357,8 +332,8 @@ $w.onReady(function () {
         showDifficulty();
       }
     }
-  });
-  $w("#hardbutton").onClick(function () {
+    });
+    $w("#hardbutton").onClick(function () {
       if (!changing){
         difficultystring = "hard";
         if (difficultystring !== previousDifficultystring) {
@@ -373,30 +348,30 @@ $w.onReady(function () {
         showDifficulty();
         }
       }
-  });
-  $w("#easybutton").onMouseIn(function () {
+    });
+    $w("#easybutton").onMouseIn(function () {
     if (!changing){
       $w("#easybutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#00ff00 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#00ff00" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">EASY</span></span></span></span></h3>`;
       $w("#medbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">MED</span></span></span></span></h3>`;
       $w("#hardbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">HARD</span></span></span></span></h3>`;
   }
-});
-$w("#medbutton").onMouseIn(function () {
+    });
+    $w("#medbutton").onMouseIn(function () {
     if (!changing){
       $w("#medbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#ffff00 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#ffff00" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">MED</span></span></span></span></h3>`;
       $w("#easybutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">EASY</span></span></span></span></h3>`;
       $w("#hardbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">HARD</span></span></span></span></h3>`;
   }
-});
-$w("#hardbutton").onMouseIn(function () {
+    });
+    $w("#hardbutton").onMouseIn(function () {
     if (!changing){
       $w("#hardbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#ff0000 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#ff0000" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">HARD</span></span></span></span></h3>`;
       $w("#easybutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">EASY</span></span></span></span></h3>`;
       $w("#medbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">MED</span></span></span></span></h3>`;
     }
-});
+    });
 
-$w("#difficultybox").onMouseIn(function () {
+    $w("#difficultybox").onMouseIn(function () {
   if (difficultystring == "easy") {
     $w("#easybutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#00ff00 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#00ff00" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">EASY</span></span></span></span></h3>`;
     $w("#medbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">MED</span></span></span></span></h3>`;
@@ -412,8 +387,8 @@ $w("#difficultybox").onMouseIn(function () {
     $w("#easybutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">EASY</span></span></span></span></h3>`;
     $w("#medbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">MED</span></span></span></span></h3>`;
   }
-});
-$w("#difficultybox").onMouseOut(function () {
+    });
+    $w("#difficultybox").onMouseOut(function () {
   if (difficultystring == "easy") {
     $w("#easybutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="text-shadow:#00ff00 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#00ff00" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">EASY</span></span></span></span></h3>`;
     $w("#medbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">MED</span></span></span></span></h3>`;
@@ -429,7 +404,7 @@ $w("#difficultybox").onMouseOut(function () {
     $w("#easybutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">EASY</span></span></span></span></h3>`;
     $w("#medbutton").html = `<h3 class="wixui-rich-text__text" style="font-size:50px"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#333333" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">MED</span></span></span></span></h3>`;
   }
-});
+    });
     function newbounty(element,difficultystring,bounty,position) {
       $w("#bountyscreen").postMessage({bountytitle: " ", difficulty: difficultystring, bountydescription: " "});
       $w("#costup").show("roll",{direction:"bottom",duration:100});
@@ -774,7 +749,7 @@ $w("#difficultybox").onMouseOut(function () {
             $w("#badge").show("slide",{direction:"left",duration: 200})
             $w("#currentkarma").show("slide",{direction:"right",duration: 200})
         }
-          }, delay * bounties.length);
+          }, delay * bounties.length+1);
         for (let i = 0; i < bounties.length; i++) {
             let element = bountybuttons[i];
             if (element === selected&&selected.text !== "+"){
