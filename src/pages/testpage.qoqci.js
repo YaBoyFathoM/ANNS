@@ -1,10 +1,10 @@
-// API Reference: https://www.wix.com/velo/reference/api-overview/introduction
-// “Hello, World!” Example: https://learn-code.wix.com/en/article/1-hello-world
-
 $w.onReady(function () {
-    // Write your JavaScript here
-
-    // To select an element by ID use: $w('#elementID')
-
-    // Click 'Preview' to run your code
+$w("#nutsack").postMessage("https://static.wixstatic.com/media/cef1ec_9bac447d536041678c57a1cf6310142e~mv2.jpg");
+$w("#nutsack").onMessage( (event) => {
+    let receivedData = event.data;
+    console.log(receivedData);
+  } );
+$w("#nutsack").onMouseIn(function() {
+    $w("#nutsack").postMessage("https://static.wixstatic.com/media/cef1ec_9bac447d536041678c57a1cf6310142e~mv2.jpg");
+  });
 });

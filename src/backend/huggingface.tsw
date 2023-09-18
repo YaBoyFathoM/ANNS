@@ -1,2 +1,0 @@
-import { HfInference } from "@huggingface/inference";
-import { HfAgent } from "@huggingface/agents";

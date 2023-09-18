@@ -1,4 +1,5 @@
 import wixData from 'wix-data';
+
 export function updateglobalkarma() {
   wixData.query("Forum/Posts")
     .find()
