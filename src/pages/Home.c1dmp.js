@@ -7,7 +7,7 @@ $w.onReady(function () {
     $w("#logo").hide("fade",{duration:100});
   });
      $w("#bountyfg").onClick(function () {
-      $w("#bountybg").show("fade",{duration:400});
+      $w("#bountybg").hide("fade",{duration:500});
       $w("#imageX7").hide("fade",{duration:500});
       $w("#sharplogo").hide("fade",{duration:500});
       $w("#bountybg").hide("fade",{duration:500});

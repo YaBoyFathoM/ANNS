@@ -896,7 +896,7 @@ $w.onReady(function () {
           .uploadFiles()
           .then((uploadedFiles) => {
             uploadedFiles.forEach((uploadedFile) => {
-              if (screenbounty(uploadedFile.fileUrl)) {
+              if (await screenbounty(uploadedFile.fileUrl)) {
               let claim = {
                 file: uploadedFile.fileUrl,
                 bounty: bounty,
