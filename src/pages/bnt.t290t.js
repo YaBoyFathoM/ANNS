@@ -1,37 +1,28 @@
 import wixUsers from "wix-users";
-import * as tf from "@tensorflow/tfjs";
 import wixData from "wix-data";
 import { timeline } from "wix-animations";
 import { authentication } from "wix-members-frontend";
+import * as tf from "@tensorflow/tfjs";
 $w.onReady(function () {
-  async function loadModel() {
-    const modelUrl = 'https://storage.cloud.google.com/classifier_tfjs/model_tfjs/model.json';
-    try {
-        const model = await tf.loadLayersModel(modelUrl);
-        return model;
-    } catch (error) {
-        console.error('Failed to load model:', error);
-        console.log(error);
-    }
-}
-async function classify() {
-    try {
-        const model = await loadModel();
-        if (model) {
-            const tensor = tf.browser.fromPixels('https://static.wixstatic.com/media/cef1ec_9bac447d536041678c57a1cf6310142e~mv2.jpg')
-                .resizeNearestNeighbor([500, 500])
-                .toFloat()
-                .expandDims();
-            const predictions = model.predict(tensor).toString();
-            console.log(predictions);
+  const screen_model = tf.loadLayersModel(tf.io.browserHTTPRequest('https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/classifier_tfjs/model.json'));
+  async function screenbounty(url) {
+      const response = await fetch(url);
+      const buffer = await response.arrayBuffer();
+      const imageData = new Uint8Array(buffer);
+      const imagePixels = new Uint8Array(500 * 500 * 3);
+      for (let i = 0; i < 500 * 500; i++) {
+        for (let channel = 0; channel < 3; ++channel) {
+          imagePixels[i * 3 + channel] = imageData[i * 4 + channel];
         }
-    } catch (error) {
-        console.error('Failed to classify image:', error);
-        console.log(error);
-        return null;
+      }
+      const tensor = tf.tensor4d(imagePixels, [1,500, 500, 3]);
+      const predictions = await screen_model.predict(tensor);
+      if (tf.argMax(predictions,1).dataSync().toString() == '0') {
+        return false;
+      } else {
+        return true;
+      }
     }
-}
-classify();
   $w("#foundation").expand();
   if (wixUsers.currentUser.loggedIn) {
     $w("#loginbutton").collapse();
@@ -243,16 +234,6 @@ classify();
     $w(`#bounty23`),
   ];
   $w("#bgvideo").onEnded(function () {
-    $w("#profilescreen").postMessage({
-      bountytitle: "_",
-      difficulty: "none",
-      bountydescription: "_",
-    });
-    $w("#bountyscreen").postMessage({
-      bountytitle: "_",
-      difficulty: "none",
-      bountydescription: "_",
-    });
     $w("#bg").show("fade", { duration: 200 });
     let changing = false;
     $w("#bgvideo").delete();
@@ -264,6 +245,17 @@ classify();
     $w("#cwbutton").show("fade", { duration: 100 });
     $w("#ccwbutton").show("fade", { duration: 100 });
     $w("#modelwheel").show("fade", { duration: 100 });
+    $w("#profilescreen").postMessage({
+      bountytitle: "_",
+      difficulty: "none",
+      bountydescription: "_",
+    });
+    $w("#bountyscreen").postMessage({
+      bountytitle: "_",
+      difficulty: "none",
+      bountydescription: "_",
+    });
+
     function buildhtml(fontsize, color, text) {
       return `<h3 class="wixui-rich-text__text" style="font-size:${fontsize}px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:${color}" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${text}</span></span></span></span></h3>`;
     }
@@ -904,6 +896,7 @@ classify();
           .uploadFiles()
           .then((uploadedFiles) => {
             uploadedFiles.forEach((uploadedFile) => {
+              if (screenbounty(uploadedFile.fileUrl)) {
               let claim = {
                 file: uploadedFile.fileUrl,
                 bounty: bounty,
@@ -913,12 +906,15 @@ classify();
               $w("#loadinggif").hide();
               $w("#claimbountyupload").hide("fade", { duration: 200 });
               updateText(reward);
+            } else {
+              return;
+            }
             });
           })
           .catch((uploadError) => {
-            console.log(`Error: ${uploadError.errorCode}`);
-            console.log(uploadError.errorDescription);
-          });
+            console.log(uploadError);
+          }
+        );
       });
     }
     function makethemdim(element) {
