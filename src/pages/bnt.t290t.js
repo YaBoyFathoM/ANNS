@@ -4,25 +4,21 @@ import { timeline } from "wix-animations";
 import { authentication } from "wix-members-frontend";
 import * as tf from "@tensorflow/tfjs";
 $w.onReady(function () {
-  const screen_model = tf.loadLayersModel(tf.io.browserHTTPRequest('https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/classifier_tfjs/model.json'));
-  async function screenbounty(url) {
-      const response = await fetch(url);
-      const buffer = await response.arrayBuffer();
-      const imageData = new Uint8Array(buffer);
-      const imagePixels = new Uint8Array(500 * 500 * 3);
-      for (let i = 0; i < 500 * 500; i++) {
-        for (let channel = 0; channel < 3; ++channel) {
-          imagePixels[i * 3 + channel] = imageData[i * 4 + channel];
-        }
-      }
-      const tensor = tf.tensor4d(imagePixels, [1,500, 500, 3]);
-      const predictions = await screen_model.predict(tensor);
-      if (tf.argMax(predictions,1).dataSync().toString() == '0') {
-        return false;
-      } else {
-        return true;
-      }
+  async function screenbounty(image,h,w) {
+    const screen_model = await tf.loadLayersModel(tf.io.browserHTTPRequest('https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/classifier_tfjs/model.json'));
+    let imageData = new Uint8Array(image);
+    let tensor = tf.browser.fromPixels({data: imageData, width: w, height: h}).toFloat();
+    let resized = tf.image.resizeBilinear(tensor, [500, 500]).div(tf.scalar(255));
+    let batched = resized.reshape([1, 500, 500, 3]);
+    let pred = screen_model.predict(batched);
+    const probabilities = await pred.data();
+    const classes = await pred.argMax(-1).data();
+    for (let i = 0; i < probabilities.length; i++) {
+      console.log(`Class ${i}: Probability ${probabilities[i]}`);
     }
+  }
+
+
   $w("#foundation").expand();
   if (wixUsers.currentUser.loggedIn) {
     $w("#loginbutton").collapse();
@@ -203,7 +199,6 @@ $w.onReady(function () {
   let modelstring;
   let reward;
   let collection;
-  let fileType;
   let submittedids;
   let difficultystring = "easy";
   let previousDifficultystring = "none";
@@ -379,18 +374,15 @@ $w.onReady(function () {
       $w("#mjbutton").collapse();
       modelstring = "chatgpt";
       collection = "ChatGPTSubmissions";
-      fileType = "URL";
       showDifficulty();
     });
     $w("#mjbutton").onClick(function () {
       hidestuff();
       difficultystring = "easy";
-
       $w("#bingbutton").collapse();
       $w("#chatgptbutton").collapse();
       modelstring = "mj";
       collection = "MJSubmissions";
-      fileType = "Image";
       showDifficulty();
     });
     $w("#bingbutton").onClick(function () {
@@ -400,7 +392,6 @@ $w.onReady(function () {
       $w("#chatgptbutton").collapse();
       modelstring = "bing";
       collection = "BingSubmissions";
-      fileType = "Document";
       showDifficulty();
     });
 
@@ -769,7 +760,6 @@ $w.onReady(function () {
       $w("#newbountybutton").onClick(() => {
         let spentkarma = Number($w("#bountyamounttext").text);
         changing = true;
-        console.log(bounty._id);
         if (Number(tempwallet) - spentkarma >= 0) {
           bounty.reward = spentkarma;
           bounty.difficulty = difficultystring;
@@ -883,7 +873,6 @@ $w.onReady(function () {
         }
       }
       $w("#claimbountyupload").enable();
-      $w("#claimbountyupload").fileType = fileType;
       $w("#claimbountyupload").onChange(function () {
         if (!wixUsers.currentUser.loggedIn) {
           authentication.promptLogin();
@@ -895,18 +884,20 @@ $w.onReady(function () {
         $w("#claimbountyupload")
           .uploadFiles()
           .then((uploadedFiles) => {
-            uploadedFiles.forEach((uploadedFile) => {
-              if (await screenbounty(uploadedFile.fileUrl)) {
+            uploadedFiles.forEach(async (uploadedFile) => {
+              if (await screenbounty(uploadedFile.fileUrl.toString(),uploadedFile.height,uploadedFile.width) === true) {
               let claim = {
                 file: uploadedFile.fileUrl,
                 bounty: bounty,
                 reward: Number($w("#bountyamounttext").text),
               };
               claimBounty(collection, claim, UserID);
-              $w("#loadinggif").hide();
               $w("#claimbountyupload").hide("fade", { duration: 200 });
               updateText(reward);
             } else {
+              $w("#claimbountyupload").reset();
+              $w("#loadinggif").hide();
+              changing = false;
               return;
             }
             });
@@ -1037,8 +1028,6 @@ $w.onReady(function () {
             .then((results) => {
               submittedids = results.items.map((item) => item.bountyid);
               for (let i = 0; i < bounties.length; i++) {
-                console.log(i);
-                console.log(bountybuttons[i]);
                 bountybuttons[i].show("fade", {
                   delay: (bounties.length - i) * delay,
                   duration: delay,
