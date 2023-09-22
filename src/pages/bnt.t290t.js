@@ -3,21 +3,30 @@ import wixData from "wix-data";
 import { timeline } from "wix-animations";
 import { authentication } from "wix-members-frontend";
 import * as tf from "@tensorflow/tfjs";
-$w.onReady(function () {
-  async function screenbounty(image,h,w) {
-    const screen_model = await tf.loadLayersModel(tf.io.browserHTTPRequest('https://cors-anywhere.herokuapp.com/https://storage.googleapis.com/classifier_tfjs/model.json'));
-    let imageData = new Uint8Array(image);
-    let tensor = tf.browser.fromPixels({data: imageData, width: w, height: h}).toFloat();
-    let resized = tf.image.resizeBilinear(tensor, [500, 500]).div(tf.scalar(255));
-    let batched = resized.reshape([1, 500, 500, 3]);
-    let pred = screen_model.predict(batched);
-    const probabilities = await pred.data();
-    const classes = await pred.argMax(-1).data();
-    for (let i = 0; i < probabilities.length; i++) {
-      console.log(`Class ${i}: Probability ${probabilities[i]}`);
-    }
+import { Image } from "image-js";
+async function classifyImage(fileUrl,w,h) {
+  function convertToStaticUrl(imageUrl) {
+    let urlId = imageUrl.split("/")[3].split(".")[0];
+    let urlExtension = imageUrl.split("/")[4].split(".")[1].split("#")[0];
+    let staticUrl = `https://static.wixstatic.com/media/${urlId}.${urlExtension}`;
+    return staticUrl;
   }
-
+  const screen_model = await tf.loadLayersModel(
+    tf.io.browserHTTPRequest("https://storage.googleapis.com/classifier_tfjs/model.json")
+  );
+  let staticUrl = convertToStaticUrl(fileUrl);
+  const image = await Image.load(staticUrl);
+  const imageTensor = tf.browser.fromPixels(image).div(tf.scalar(255));
+  const resized = tf.image.resizeBilinear(imageTensor, [500, 500]).expandDims(0);
+  const predictions = screen_model.predict(resized);
+  const predictedclass = predictions.argMax(1).dataSync()[0];
+  if (predictedclass === 1) {
+    return true;
+  } else {
+    return false;
+  }
+}
+$w.onReady(function () {
 
   $w("#foundation").expand();
   if (wixUsers.currentUser.loggedIn) {
@@ -883,9 +892,12 @@ $w.onReady(function () {
         $w("#loadinggif").show();
         $w("#claimbountyupload")
           .uploadFiles()
-          .then((uploadedFiles) => {
-            uploadedFiles.forEach(async (uploadedFile) => {
-              if (await screenbounty(uploadedFile.fileUrl.toString(),uploadedFile.height,uploadedFile.width) === true) {
+          .then(async (uploadedFiles) => {
+            let uploadedFile = uploadedFiles[0];
+            let w=uploadedFile.width
+            let h=uploadedFile.height
+            const isImageClassified = await classifyImage(uploadedFile.fileUrl,w,h);
+            if (typeof isImageClassified === 'boolean' && isImageClassified) {
               let claim = {
                 file: uploadedFile.fileUrl,
                 bounty: bounty,
@@ -900,12 +912,7 @@ $w.onReady(function () {
               changing = false;
               return;
             }
-            });
-          })
-          .catch((uploadError) => {
-            console.log(uploadError);
-          }
-        );
+          });
       });
     }
     function makethemdim(element) {

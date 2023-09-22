@@ -3,7 +3,8 @@
     "@tensorflow/tfjs": "^3.6.0",
     "@wix/cli": "^1.0.0",
     "@wix/eslint-plugin-cli": "^1.0.0",
-    "eslint": "^8.25.0"
+    "eslint": "^8.25.0",
+    "image-js": "^0.21.8"
   },
   "scripts": {
     "postinstall": "wix sync-types",
