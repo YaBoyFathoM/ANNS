@@ -59,7 +59,7 @@ $w.onReady(function () {
           $w("#currentkarma").text = results.items[0].karma.toString();
           console.log(`User ${userid} already exists`);
           return;
-        }
+        }else{
         wixData
           .query("Userkarma")
           .descending("rank")
@@ -81,9 +81,11 @@ $w.onReady(function () {
             };
             wixData.insert("Userkarma", newItem).then((item) => {
               console.log("Userkarma item created");
+
             });
           });
-      });
+        }
+        });
   }
   function claimBounty(collection, claim, userid) {
     console.log(claim.bounty);
@@ -1336,7 +1338,9 @@ $w.onReady(function () {
               }
               $w("#bounty00").collapse();
             } else {
-              $w("#bountyscreen").postMessage(bounties[0]);
+              $w("#bountyscreen").postMessage({bountytitle: "_",
+              difficulty: difficultystring,
+              bountydescription: "_",});
             }
             $w("#profilescreen").postMessage({
               bountytitle: "_",
