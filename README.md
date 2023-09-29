@@ -1,9 +1,8 @@
 <div style="display: flex; align-items: center; justify-content: center;">
   <img src="https://static.wixstatic.com/media/cef1ec_991a7546c9964e3487062bb405395c4b~mv2.png" alt="Logo">
   <p style="margin-left: 20px;">
-    <strong>Building a Constitutional Reward Model</strong><br>
+    <strong>Building a Constitutional Reward Model via gamified penetration testing.</strong><br>
     <img src="https://static.wixstatic.com/media/cef1ec_bac6c990ad67420abfe8fd7ca10924bc~mv2.png" alt="Logo">
-    <strong>via gamified penetration testing.</strong><br><br>
     RHLF has proven an effective alignment strategy for LLMs, but remains limited by the cost of contract labeling and a scarcity of relevant datasets.<br><br>
     <strong>Motivation:</strong><br>
     <ul>
