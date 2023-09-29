@@ -15,11 +15,9 @@
     <ul>
       <li>Provide an infrastructure for the public to post and complete “bounties” by invoking specific behavior in their chosen model</li>
       <li>Evaluate user submissions in three steps:
-        <ol>
           <li>Is a chat conversation</li>
           <li>Is the specified model</li>
           <li>Is pass/fail</li>
-        </ol>
       </li>
       <li>Clean submission and divide text into human and model, labeling goal prompt as the bounty description.</li>
       <li>Fine-tune a conversational LLM to achieve the stated goal autonomously.</li>
