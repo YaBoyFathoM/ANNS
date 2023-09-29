@@ -9,20 +9,20 @@ Here I describe my theory for crowd-sourced penetrative testing of LLMs, and the
 
 Motivation:
 
-To improve our understanding of LLMs vulnerabilities via a diverse, organized dataset of successful exploits.
+- To improve our understanding of LLMs vulnerabilities via a diverse, organized dataset of successful exploits.
 
-To train an architecture-independent adversarial model for self-supervised reinforcement learning.
+- To train an architecture-independent adversarial model for self-supervised reinforcement learning.
 
-To establish a standard metric for LLM behavior evaluation.
+- To establish a standard metric for LLM behavior evaluation.
 
 Methodology:
 
-Provide an infrastructure for the public to post and complete “bounties” by invoking specific behavior in their chosen model
-
-Evaluate user submissions in three steps:
-Is a chat conversation
-Is the specified model
-Is pass/fail
+  Provide an infrastructure for the public to post and complete “bounties” by invoking specific behavior in their chosen model
+  
+  Evaluate user submissions in three steps:
+  - Is a chat conversation
+  - Is the specified model
+  - Is pass/fail
 
 Clean submission and divide text into human and model, labeling goal prompt as the bounty description.
 
