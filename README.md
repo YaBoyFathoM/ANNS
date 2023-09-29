@@ -14,8 +14,8 @@
     <ul>
       <li>Provide an infrastructure for the public to post and complete “bounties” by invoking specific behavior in their chosen model</li>
       <li>
-      <ul>
       Evaluate user submissions in three steps:
+      <ul>
           <li>Is a chat conversation</li>
           <li>Is the specified model</li>
           <li>Is pass/fail</li>
