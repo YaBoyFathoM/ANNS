@@ -18,7 +18,7 @@
           <li>Is a chat conversation</li>
           <li>Is the specified model</li>
           <li>Is pass/fail</li>
-      <ul>
+      </ul>
       <li>Clean submission and divide text into human and model, labeling goal prompt as the bounty description.</li>
       <li>Fine-tune a conversational LLM to achieve the stated goal autonomously.</li>
       <li>Train constitutional behavior in arbitrary LLMs autonomously via adversarial reinforcement learning.</li>
