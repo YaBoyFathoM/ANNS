@@ -1,17 +1,15 @@
 import wixUsers from "wix-users";
 import wixData from "wix-data";
+import wixLocation from 'wix-location';
 import { authentication } from "wix-members-frontend";
 import { timeline } from "wix-animations";
+import { getAllPosts } from "backend/blogposts";
 let menushown = false;
 let lock = false;
 let UserID = wixUsers.currentUser.id;
 $w.onReady(function () {
-setTimeout(function(){
-setTimeout(function(){
-  $w("#blocker").hide("fade",{duration:200});
-$w("#loadinggif").hide("fade",{duration:200});
-$w("#post1button").show("fade",{duration:200});
-$w("#accountbox").show("fade",{duration:200});
+$w("#blocker").hide("fade",{duration:800});
+$w("#loadinggif").hide("fade",{duration:800});
 function getkarma() {
         wixData
         .query("Userkarma")
@@ -41,6 +39,8 @@ function showmenu() {
         $w("#tabsmenu").show("roll", { delay:400, direction: "top", duration: 200 });
         $w("#currentkarma").show("roll", { direction: "right", duration: 400 });
         $w("#badge").show("roll", { direction: "left", duration: 400 });
+        $w("#menuleftline").show("roll", { direction: "top", duration: 200 });
+        $w("#menurightline").show("roll", { direction: "top", duration: 200 });
         const leftdownTimeline = timeline().add($w("#leftdown"), {
           duration: 200,
           y: 67,
@@ -58,8 +58,6 @@ function showmenu() {
         rightdownTimeline.play();
         $w("#leaderboarddown").show("roll", {direction: "top", duration: 200 });
         $w("#rlhfdown").show("roll", {direction: "top", duration: 200 });
-        $w("#menuleftline").show("roll", { direction: "top", duration: 200 });
-        $w("#menurightline").show("roll", { direction: "top", duration: 200 });
         setTimeout(function () {
           leftdownTimeline.pause();
           rightdownTimeline.pause();
@@ -88,8 +86,8 @@ function hidemenu() {
         $w("#rlhfdown").hide("roll", {direction: "bottom", duration: 200 });
         $w("#leaderboarddown").hide("roll", {direction: "bottom", duration: 200 });
         $w("#tabsmenu").hide("roll", { direction: "bottom", duration: 200 });
-        $w("#menuleftline").hide("roll", { direction: "bottom", duration: 200 });
-        $w("#menurightline").hide("roll", { direction: "bottom", duration: 200 });
+        $w("#menuleftline").hide("roll", { direction: "top", duration: 200 });
+        $w("#menurightline").hide("roll", { direction: "top", duration: 200 });
         setTimeout(function () {
         setTimeout(function () {
           $w("#rightdown").collapse();
@@ -125,6 +123,13 @@ $w("#hoverbutto").onClick(function(){
 authentication.promptLogin();
 });
 }
-},500);
-},1000);
+async function sendblogs(){
+  const Allposts=await getAllPosts()
+  console.log(Allposts);
+$w("#blogpage").postMessage(Allposts);
+}
+sendblogs();
+$w("#blogpage").onMessage((event) => {
+  wixLocation.to(event.data);
+});
 });

@@ -1,23 +1,21 @@
 import wixUsers from "wix-users";
 import wixData from "wix-data";
+import wixLocation from 'wix-location';
 import { authentication } from "wix-members-frontend";
 import { timeline } from "wix-animations";
+import {getPost} from "backend/blogposts";
+let postslug= wixLocation.path[0];
 let menushown = false;
 let lock = false;
 let UserID = wixUsers.currentUser.id;
+function convertToStaticUrl(imageUrl) {
+let staticUrl = imageUrl.replace("image://v1/", "https://static.wixstatic.com/media/");
+staticUrl = staticUrl.substring(0, staticUrl.indexOf("#"));
+staticUrl = staticUrl.substring(4);
+return staticUrl;
+  }
 $w.onReady(function () {
-$w("#blocker").hide("fade",{delay:1200,duration:1000});
-$w("#loadinggif").hide("fade",{delay:1200,duration:1000});
-$w("#mobilecenterbutton").onClick(function(){
-$w("#mobilecenterbutton").hide("fade",{duration:400});
-$w("#FAQ").show("slide",{direction:"bottom",duration:500});
-});
-$w("#webs").onMessage(function(){
-  $w("#FAQ").show("slide",{direction:"right",duration:500});
-  });
-  $w("#imageX40").onClick(function(){
-  $w("#FAQ").show("slide",{direction:"right",duration:500});
-  });
+$w("#loadinggif").hide("fade",{duration:800});
 function getkarma() {
         wixData
         .query("Userkarma")
@@ -64,8 +62,8 @@ function showmenu() {
         $w("#leftdown").show();
         leftdownTimeline.play();
         rightdownTimeline.play();
-        $w("#bountiesbutton").show("roll", {direction: "top", duration: 200 });
-        $w("#blogbutton").show("roll", {direction: "top", duration: 200 });
+        $w("#leaderboarddown").show("roll", {direction: "top", duration: 200 });
+        $w("#rlhfdown").show("roll", {direction: "top", duration: 200 });
         setTimeout(function () {
           leftdownTimeline.pause();
           rightdownTimeline.pause();
@@ -91,11 +89,11 @@ function hidemenu() {
         });
         leftdownTimeline.play();
         rightdownTimeline.play();
-        $w("#blogbutton").hide("roll", {direction: "bottom", duration: 200 });
-        $w("#bountiesbutton").hide("roll", {direction: "bottom", duration: 200 });
+        $w("#rlhfdown").hide("roll", {direction: "bottom", duration: 200 });
+        $w("#leaderboarddown").hide("roll", {direction: "bottom", duration: 200 });
         $w("#tabsmenu").hide("roll", { direction: "bottom", duration: 200 });
-        $w("#menuleftline").hide("roll", { direction: "bottom", duration: 200 });
-        $w("#menurightline").hide("roll", { direction: "bottom", duration: 200 });
+        $w("#menuleftline").hide("roll", { direction: "top", duration: 200 });
+        $w("#menurightline").hide("roll", { direction: "top", duration: 200 });
         setTimeout(function () {
         setTimeout(function () {
           $w("#rightdown").collapse();
@@ -131,7 +129,6 @@ $w("#hoverbutto").onClick(function(){
 authentication.promptLogin();
 });
 }
+getPost(postslug).then((result) => {$w("#webs").postMessage(result);
 });
-
-
-
+});

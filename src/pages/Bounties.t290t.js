@@ -30,7 +30,7 @@ $w.onReady(function () {
   let menushown = false;
   let lock = true;
   const difffoundation = generateSrc(
-    "https://static.wixstatic.com/media/cef1ec_d26b49973d6e43758e58940aa9fdbacb~mv2.png",
+    "https://static.wixstatic.com/media/cef1ec_6ab2951eb8564d4982a16d2d1da41114~mv2.png",
     "diffbg.png",
     "3000x3000",
   );
@@ -2090,6 +2090,7 @@ $w.onReady(function () {
     });
     });
     $w("#rlhfdown").onClick(function () {
+    lock=true;
     $w("#rlswipe").expand();
     $w("#rlswipe").show();
     $w("#bingbutton").hide();
@@ -2150,6 +2151,7 @@ $w.onReady(function () {
       $w("#bountyamounttext").expand();
       $w("#claimbountyupload").expand();
       showDifficulty();
+      lock=false;
     }, 1200);
     });
   }
