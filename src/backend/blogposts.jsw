@@ -52,7 +52,7 @@ export async function getAllPosts() {
             title: post.title,
             image: postimage,
             date: postdate,
-            exerpt: post.excerpt,
+            excerpt: post.excerpt,
             authorname: authresult[0],
             authorimage: authresult[1],
             URL: `https://www.anns.ai/posts/${post.slug}`,
