@@ -16,7 +16,7 @@ $w("#webs").onMessage(function(){
   $w("#FAQ").show("slide",{direction:"right",duration:500});
   });
   $w("#imageX40").onClick(function(){
-  $w("#FAQ").show("slide",{direction:"right",duration:500});
+  $w("#FAQ").show("fade",{duration:500});
   });
 function getkarma() {
         wixData

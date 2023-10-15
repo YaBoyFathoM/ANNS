@@ -28,7 +28,7 @@ $w.onReady(function () {
   let changing = false;
   let wheelAngle = 0;
   let menushown = false;
-  let lock = true;
+  let lock = false;
   const difffoundation = generateSrc(
     "https://static.wixstatic.com/media/cef1ec_6ab2951eb8564d4982a16d2d1da41114~mv2.png",
     "diffbg.png",
@@ -367,6 +367,8 @@ $w.onReady(function () {
   function hidestuff() {
     initapps();
     lock=false;
+    $w("#rlhfdown").expand();
+    $w("#leaderboarddown").expand();
     $w("#wheel").hide("fade", { duration: 300 });
     for (let i = 0; i < bountybuttons.length; i++) {
       bountybuttons[i].hide();

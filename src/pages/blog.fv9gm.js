@@ -57,7 +57,6 @@ function showmenu() {
         leftdownTimeline.play();
         rightdownTimeline.play();
         $w("#leaderboarddown").show("roll", {direction: "top", duration: 200 });
-        $w("#rlhfdown").show("roll", {direction: "top", duration: 200 });
         setTimeout(function () {
           leftdownTimeline.pause();
           rightdownTimeline.pause();
@@ -83,7 +82,6 @@ function hidemenu() {
         });
         leftdownTimeline.play();
         rightdownTimeline.play();
-        $w("#rlhfdown").hide("roll", {direction: "bottom", duration: 200 });
         $w("#leaderboarddown").hide("roll", {direction: "bottom", duration: 200 });
         $w("#tabsmenu").hide("roll", { direction: "bottom", duration: 200 });
         $w("#menuleftline").hide("roll", { direction: "top", duration: 200 });
