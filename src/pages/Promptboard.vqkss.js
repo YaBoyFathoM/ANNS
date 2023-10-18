@@ -6,7 +6,6 @@ let menushown = false;
 let lock = false;
 let UserID = wixUsers.currentUser.id;
 $w.onReady(function () {
-$w("#loadinggif").hide("fade",{duration:800});
 function getkarma() {
         wixData
         .query("Userkarma")

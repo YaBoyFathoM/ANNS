@@ -2328,6 +2328,16 @@ $w.onReady(function () {
       });
     });
     $w("#rlhfup").onClick(function () {
+      $w("#profilescreen").postMessage({
+        bountytitle: " ",
+        difficulty: difficultystring,
+        bountydescription: " ",
+      });
+      $w("#bountyscreen").postMessage({
+        bountytitle: " ",
+        difficulty: difficultystring,
+        bountydescription: " ",
+      });
     $w("#rlswipe").hide("fade", { duration: 500 });
     $w("#currlhf").hide("fade", { duration: 500 });
     $w("#nextrlhf").hide("fade", { duration: 500 });

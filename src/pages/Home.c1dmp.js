@@ -8,17 +8,10 @@ let UserID = wixUsers.currentUser.id;
 $w.onReady(function () {
 $w("#blocker").hide("fade",{delay:1200,duration:1000});
 $w("#loadinggif").hide("fade",{delay:1200,duration:1000});
-$w("#mobilecenterbutton").onClick(function(){
-$w("#mobilecenterbutton").hide("fade",{duration:400});
-$w("#FAQ").show("slide",{direction:"bottom",duration:500});
-});
 $w("#webs").onMessage((event) => {
   console.log(event.data);
   $w("#FAQ").show("slide",{direction:"left",delay:1000, duration:500});
 });
-  $w("#imageX40").onClick(function(){
-  $w("#FAQ").show("fade",{duration:500});
-  });
 function getkarma() {
         wixData
         .query("Userkarma")
@@ -133,6 +126,5 @@ authentication.promptLogin();
 });
 }
 });
-
 
 
