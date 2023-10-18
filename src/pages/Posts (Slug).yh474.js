@@ -139,22 +139,22 @@ getPost(postslug).then((result) => {
   postimage = convertToStaticUrl(post.media.wixMedia.image);
   }
   let authorId=post.memberId;
-  getauthor(authorId).then((result) => {
+    getauthor(authorId).then((result) => {
       let authorname=result[0];
       let authorimage=result[1];
       let title=post.title;
       let content=post.richContent;
-      let date=post.lastPublishedDate;
+      let date = new Date(post.lastPublishedDate).toDateString();
       const postdata = {
-          title: title,
-          content: content,
-          image: postimage,
-          date: date,
-          authorname: authorname,
-          authorimage: authorimage
+        title: title,
+        content: content,
+        image: postimage,
+        date: date,
+        authorname: authorname,
+        authorimage: authorimage
       };
       console.log(postdata);
       $w("#webs").postMessage(postdata);
-  });
+    });
 });
 });
