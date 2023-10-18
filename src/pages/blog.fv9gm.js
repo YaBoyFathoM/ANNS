@@ -8,8 +8,8 @@ let menushown = false;
 let lock = false;
 let UserID = wixUsers.currentUser.id;
 $w.onReady(function () {
-$w("#blocker").hide("fade",{duration:800});
-$w("#loadinggif").hide("fade",{duration:800});
+$w("#blocker").hide("fade",{delay:500,duration:1000});
+$w("#loadinggif").hide("fade",{delay:500,duration:1000});
 function getkarma() {
         wixData
         .query("Userkarma")
@@ -108,12 +108,6 @@ function hidemenu() {
 if (wixUsers.currentUser.loggedIn) {
         getkarma();
         $w("#hoverbutto").label=""
-        $w("#hoverbutto").onMouseIn(function () {
-          showmenu();
-        });
-        $w("#accountbox").onMouseOut(function () {
-          hidemenu();
-        });
 }
 else{
 $w("#currentkarma").collapse();$w("#badge").collapse();$w("#hoverbutto").label="+";
@@ -121,6 +115,12 @@ $w("#hoverbutto").onClick(function(){
 authentication.promptLogin();
 });
 }
+$w("#hoverbutto").onMouseIn(function () {
+  showmenu();
+});
+$w("#accountbox").onMouseOut(function () {
+  hidemenu();
+});
 async function sendblogs(){
   const Allposts=await getAllPosts()
   console.log(Allposts);

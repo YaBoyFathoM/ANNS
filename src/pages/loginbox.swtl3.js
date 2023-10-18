@@ -46,7 +46,7 @@ $w("#loginbutton").onClick(async() => {
                 $w("#passwordinput").style.borderColor = "#00ff0050";
                 setTimeout(() => {
                     wixWindow.lightbox.close();
-                    wixLocation.to("https://www.anns.ai/btesting");
+                    wixLocation.to("https://www.anns.ai");
                 }, 1000);
             })
             .catch((error) => {
@@ -123,7 +123,7 @@ $w("#loginbutton").onClick(async() => {
         });
         setTimeout(() => {
         wixWindow.lightbox.close();
-        wixLocation.to("https://www.anns.ai/btesting");
+        wixLocation.to("https://www.anns.ai");
     }, 1000);
     })
       .catch((error) => {

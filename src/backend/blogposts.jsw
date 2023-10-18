@@ -12,28 +12,9 @@ async function getauthor(authorId){
     return [result.nickname, result.picture];
 }
 
-export async function getPost(slug) {
-    await posts.getPostBySlug(slug,  {fieldsets: ['RICH_CONTENT']}).then((result) => {
-        const post=result.post;
-        const postimage=convertToStaticUrl(post.coverMedia.image);
-        let authorId=post.memberId;
-        getauthor(authorId).then((result) => {
-            let authorname=result[0];
-            let authorimage=result[1];
-            let title=post.title;
-            let content=post.richContent;
-            let date=post.lastPublishedDate;
-            const postdata = {
-                title: title,
-                content: content,
-                image: postimage,
-                date: date,
-                authorname: authorname,
-                authorimage: authorimage
-            };
-            return postdata;
-        });
-    });
+export async function getPost(postslug) {
+    const post = await posts.getPostBySlug(postslug,  {fieldsets: ['RICH_CONTENT']});
+    return post;
 }
 
 export async function getAllPosts() {
@@ -55,7 +36,7 @@ export async function getAllPosts() {
             excerpt: post.excerpt,
             authorname: authresult[0],
             authorimage: authresult[1],
-            URL: `https://www.anns.ai/posts/${post.slug}`,
+            posturl: `https://www.anns.ai/posts/${post.slug}`,
             minutesToRead: post.minutesToRead
         };
         allposts.push(postdata);

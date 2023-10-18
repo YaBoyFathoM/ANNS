@@ -12,9 +12,10 @@ $w("#mobilecenterbutton").onClick(function(){
 $w("#mobilecenterbutton").hide("fade",{duration:400});
 $w("#FAQ").show("slide",{direction:"bottom",duration:500});
 });
-$w("#webs").onMessage(function(){
-  $w("#FAQ").show("slide",{direction:"right",duration:500});
-  });
+$w("#webs").onMessage((event) => {
+  console.log(event.data);
+  $w("#FAQ").show("slide",{direction:"left",delay:1000, duration:500});
+});
   $w("#imageX40").onClick(function(){
   $w("#FAQ").show("fade",{duration:500});
   });

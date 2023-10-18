@@ -18,7 +18,7 @@ $w.onReady(function () {
   let bright;
   let dim;
   let bounties = [];
-  let modelstring;
+  let modelstring="";
   let reward;
   let collection;
   let submittedids = [];
@@ -165,9 +165,17 @@ $w.onReady(function () {
     $w("#topleft").show("roll", { direction: "right", duration: 400 });
     $w("#bottomright").show("roll", { direction: "left", duration: 400 });
     $w("#bottomleft").show("roll", { direction: "right", duration: 400 });
+    if (modelstring===""){
+      $w("#logoutbutton").hide();
+      $w("#blogtab").hide();
+      $w("#currentkarma").show("roll", { direction: "right", duration: 400 });
+      $w("#badge").show("roll", { direction: "left", duration: 400 });
+      $w("#cwbutton").show("roll", { delay:400, direction: "top", duration: 400 });
+      $w("#brighttext").show("roll", { delay:400, direction: "top", duration: 400 });
+      $w("#ccwbutton").show("roll", {delay:400, direction: "top", duration: 400 });
+      $w("#tabsmenu").show("roll", { delay:400, direction: "top", duration: 200 });
+    }
     $w("#tabsmenu").show("roll", { delay:400, direction: "top", duration: 200 });
-    // $w("#currentkarma").show("roll", { direction: "right", duration: 400 });
-    // $w("#badge").show("roll", { direction: "left", duration: 400 });
     const leftdownTimeline = timeline().add($w("#leftdown"), {
       duration: 200,
       y: 67,
@@ -199,7 +207,7 @@ $w.onReady(function () {
     }
   }
   function hidemenu() {
-    if (menushown&&!lock) {
+    if (menushown&&!lock&&modelstring!=="") {
     const leftdownTimeline = timeline().add($w("#leftdown"), {
       duration: 200,
       y: 0,
@@ -248,7 +256,7 @@ $w.onReady(function () {
     });
   }
   else{
-    $w("#currentkarma").collapse();$w("#badge").collapse();$w("#claimbountyupload").collapse();$w("#hoverbutto").label="+";
+    $w("#currentkarma").collapse();$w("#badge").collapse();$w("#hoverbutto").label="+";
     $w("#hoverbutto").onClick(function(){
     authentication.promptLogin();
     });
@@ -304,13 +312,11 @@ $w.onReady(function () {
     $w("#bgvideo").hide("fade", { duration: 200 });
     $w("#loadinggif").hide("fade", { duration: 100 });
     $w("#bingbutton").show("fade", { duration: 500 });
-    $w("#brighttext").show("fade", { duration: 100 });
-    $w("#cwbutton").show("fade", { duration: 100 });
-    $w("#ccwbutton").show("fade", { duration: 100 });
     $w("#modelwheel").show("fade", { duration: 100 });
     $w("#difficultybox").show("fade", { duration: 100 });
     $w("#profilescreen").postMessage(nonebounty);
     $w("#bountyscreen").postMessage(nonebounty);
+    showmenu();
   });
   function buildhtml(fontsize, color, text) {
     return `<h3 class="wixui-rich-text__text" style="font-size:${fontsize}px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:${color}" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${text}</span></span></span></span></h3>`;
@@ -367,12 +373,64 @@ $w.onReady(function () {
   function hidestuff() {
     initapps();
     lock=false;
-    $w("#rlhfdown").expand();
-    $w("#leaderboarddown").expand();
     $w("#wheel").hide("fade", { duration: 300 });
     for (let i = 0; i < bountybuttons.length; i++) {
       bountybuttons[i].hide();
     }
+      $w("#cwbutton").hide("roll", { direction: "top", duration: 400 });
+      $w("#ccwbutton").hide("roll", { direction: "top", duration: 400 });
+      $w("#brighttext").hide("roll", { direction: "top", duration: 400 });
+      const leftdownTimeline = timeline().add($w("#leftdown"), {
+        duration: 200,
+        y: 0,
+        easing: "easeInOutSine",
+      });
+      const rightdownTimeline =timeline().add($w("#rightdown"), {
+        duration: 200,
+        y: 0,
+        easing: "easeInOutSine",
+      });
+      leftdownTimeline.play();
+      rightdownTimeline.play();
+      setTimeout(function () {
+        $w("#rightdown").expand();
+        $w("#leftdown").expand();
+        $w("#topright").show("roll", { direction: "left", duration: 400 });
+        $w("#topleft").show("roll", { direction: "right", duration: 400 });
+        $w("#bottomright").show("roll", { direction: "left", duration: 400 });
+        $w("#bottomleft").show("roll", { direction: "right", duration: 400 });
+        const leftdownTimeline = timeline().add($w("#leftdown"), {
+          duration: 200,
+          y: 67,
+          easing: "easeInOutSine",
+        });
+        const rightdownTimeline =timeline().add($w("#rightdown"), {
+          duration: 200,
+          y: 67,
+          easing: "easeInOutSine",
+        });
+        $w("#rightdown").show();
+        $w("#leftdown").show();
+        leftdownTimeline.play();
+        rightdownTimeline.play();
+        $w("#rlhfdown").expand();
+        $w("#leaderboarddown").expand();
+        $w("#logoutbutton").show("roll", {direction: "top", duration: 100 });
+        $w("#blogtab").show("roll", { direction: "top", duration: 200 });
+        $w("#tabsmenu").show("roll", { direction: "top", duration: 200 });
+        $w("#leaderboarddown").show("roll", {direction: "top", duration: 200 });
+        $w("#rlhfdown").show("roll", {direction: "top", duration: 200 });
+        $w("#menuleftline").show("roll", { direction: "top", duration: 200 });
+        $w("#menurightline").show("roll", { direction: "top", duration: 200 });
+        setTimeout(function () {
+          leftdownTimeline.pause();
+          rightdownTimeline.pause();
+          menushown=true;
+        }, 200);
+          $w("#logoutbutton").onClick((event) => {
+            wixUsers.logout();
+          });
+      },400);
     $w(
       "#easybutton",
     ).html = `<h3 class="wixui-rich-text__text" style="font-size:40px"><span style="text-shadow:#00ff00 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#00ff00" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">EASY</span></span></span></span></h3>`;
@@ -403,8 +461,8 @@ $w.onReady(function () {
     $w("#bg").src = difffoundation;
     $w("#brighttext").hide("fade", { duration: 100 });
     $w("#easydark").show();
-    $w("#cwbutton").hide();
-    $w("#ccwbutton").hide();
+    $w("#cwbutton").hide("fade", { duration: 100 });
+    $w("#ccwbutton").hide("fade", { duration: 100 });
     $w("#difficultywheel").show("fade", { duration: 500 });
     $w("#costup").hide("fade", { duration: 100 });
     $w("#costdown").hide("fade", { duration: 100 });
@@ -942,7 +1000,7 @@ $w.onReady(function () {
     $w("#postbountyname").value = "";
     $w("#postbountydisc").show();
     $w("#postbountyname").show();
-    $w("#claimbountyupload").hide();
+    $w("#claimbountyupload").show("fade",{duration:200});
     $w("#newbountybutton").show("roll", {
       delay: 500,
       direction: "top",
@@ -1121,7 +1179,7 @@ $w.onReady(function () {
     $w("#bountyscreen").show();
     $w("#profilescreen").show();
     $w("#claimbountyupload").enable();
-    $w("#claimbountyupload").show();
+    $w("#claimbountyupload").show("roll",{duration:200,direction:"bottom"});
     $w("#postbountydisc").hide();
     $w("#postbountyname").hide();
     $w("#bountyamounttext").show("roll", { duration: 500 });
@@ -1208,10 +1266,123 @@ $w.onReady(function () {
     $w("#claimbountyupload").enable();
     $w("#claimbountyupload").onChange(function () {
       if (!wixUsers.currentUser.loggedIn) {
-        authentication.promptLogin();
-        $w("#claimbountyupload").reset();
+          $w("#easybutton").hide("roll",{duration:200,direction:"right"})
+          $w("#medbutton").hide("roll",{duration:200,direction:"right"})
+          $w("#hardbutton").hide("roll",{duration:200,direction:"right"})
+          const EasyLineTimeline = timeline().add($w("#easybuttonline"), {
+            duration: 200,
+            x: 0,
+            easing: "easeInOutSine",
+          });
+          const EasyButtonTimeline = timeline().add($w("#easybutton"), {
+            duration: 200,
+            x: 0,
+            easing: "easeInOutSine",
+          });
+          const MedLineTimeline = timeline().add($w("#medbuttonline"), {
+            duration: 200,
+            x: 0,
+            easing: "easeInOutSine",
+          });
+          const MedButtonTimeline = timeline().add($w("#medbutton"), {
+            duration: 200,
+            x: 0,
+            easing: "easeInOutSine",
+          });
+          const HardLineTimeline = timeline().add($w("#hardbuttonline"), {
+            duration: 200,
+            x: 0,
+            easing: "easeInOutSine",
+          });
+          const HardButtonTimeline = timeline().add($w("#hardbutton"), {
+            duration: 200,
+            x: 0,
+            easing: "easeInOutSine",
+          });
+          EasyButtonTimeline.play();
+          EasyLineTimeline.play();
+          MedButtonTimeline.play();
+          MedLineTimeline.play();
+          HardButtonTimeline.play();
+          HardLineTimeline.play();
+          setTimeout(function () {
+            EasyButtonTimeline.pause();
+            EasyLineTimeline.pause();
+            MedButtonTimeline.pause();
+            MedLineTimeline.pause();
+            HardButtonTimeline.pause();
+            HardLineTimeline.pause();
+          }, 200);
+          setTimeout(function(){
+          $w("#profilescreen").postMessage({bountytitle: " ",difficulty: difficultystring,bountydescription: "Sign in to post your bounty"});
+          $w("#claimbountyupload").reset();
+          $w("#claimbountyupload").disable();
+          setTimeout(() => {
+            $w("#profilescreen").postMessage({bountytitle: " ",difficulty: difficultystring,bountydescription: " "});
+            setTimeout(() => {
+              $w("#easybutton").show("roll",{duration:200,direction:"right"})
+              $w("#medbutton").show("roll",{duration:200,direction:"right"})
+              $w("#hardbutton").show("roll",{duration:200,direction:"right"})
+              setTimeout(() => {
+              }, 400);
+              if (difficultystring == "easy") {
+              const EasyLineTimeline = timeline().add($w("#easybuttonline"), {
+                duration: 200,
+                x: -10,
+                easing: "easeInOutSine",
+              });
+              const EasyButtonTimeline = timeline().add($w("#easybutton"), {
+                duration: 200,
+                x: -10,
+                easing: "easeInOutSine",
+              });
+              EasyButtonTimeline.play();
+              EasyLineTimeline.play();
+              setTimeout(function () {
+                EasyButtonTimeline.pause();
+                EasyLineTimeline.pause();
+              },200);
+            }else if (difficultystring == "medium") {
+              const MedLineTimeline = timeline().add($w("#medbuttonline"), {
+                duration: 200,
+                x: -10,
+                easing: "easeInOutSine",
+              });
+              const MedButtonTimeline = timeline().add($w("#medbutton"), {
+                duration: 200,
+                x: -10,
+                easing: "easeInOutSine",
+              });
+              MedButtonTimeline.play();
+              MedLineTimeline.play();
+              setTimeout(function () {
+                MedButtonTimeline.pause();
+                MedLineTimeline.pause();
+              },200);
+            }else if (difficultystring == "hard") {
+              const HardLineTimeline = timeline().add($w("#hardbuttonline"), {
+                duration: 200,
+                x: -10,
+                easing: "easeInOutSine",
+              });
+              const HardButtonTimeline = timeline().add($w("#hardbutton"), {
+                duration: 200,
+                x: -10,
+                easing: "easeInOutSine",
+              });
+              HardButtonTimeline.play();
+              HardLineTimeline.play();
+              setTimeout(function () {
+                HardButtonTimeline.pause();
+                HardLineTimeline.pause();
+              },200);
+            }
+            $w("#claimbountyupload").enable();
+            }, 1000);
+          }, 3000);
+        },600);
         return;
-      }
+      }else{
       $w("#scanbox").style.borderColor = dim;
       $w("#claimbountyupload").style.color = bright;
       $w("#claimbountyupload").style.borderColor = bright;
@@ -1345,6 +1516,7 @@ $w.onReady(function () {
             }
           }
     });
+  }
     });
   }
   function makethemdim(element) {
@@ -1645,8 +1817,6 @@ $w.onReady(function () {
                   $w("#postbountyname").style.borderColor = bright;
                   $w("#claimbountyupload").style.color = bright;
                   $w("#claimbountyupload").style.borderColor = bright;
-                  $w("#promptlogin").style.color = bright;
-                  $w("#promptlogin").style.borderColor = bright;
                   $w("#costup").style.color = bright;
                   $w("#costdown").style.color = bright;
                   $w("#difficultybox").style.borderColor = bright;
@@ -1698,15 +1868,6 @@ $w.onReady(function () {
                         direction: "top",
                         duration: 100,
                       });
-                      $w("#promptlogin").hide("roll", {
-                        direction: "left",
-                        duration: 200,
-                      });
-                      $w(
-                        "#currentkarma",
-                      ).html = `<h3 class="wixui-rich-text__text" style="text-align:right;font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:${bright}" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${
-                        $w("#currentkarma").text
-                      }</span></span></span></span></h3>`;
                       selected.show("roll", {
                         direction: "right",
                         duration: 200,
@@ -1722,14 +1883,6 @@ $w.onReady(function () {
                         bountytitle: " ",
                         difficulty: difficultystring,
                         bountydescription: " ",
-                      });
-                      $w("#badge").hide("slide", {
-                        direction: "left",
-                        duration: 200,
-                      });
-                      $w("#currentkarma").hide("slide", {
-                        direction: "right",
-                        duration: 200,
                       });
                       $w("#bountyamounttext").hide("fade", { duration: 100 });
                       $w("#claimbountyupload").hide("fade", { duration: 100 });
@@ -1828,18 +1981,7 @@ $w.onReady(function () {
                               }</span></span></span></span></h3>`;
                             }
                           } else {
-                            setTimeout(() => {
-                              $w("#promptlogin").show("roll", {
-                                direction: "left",
-                                duration: 200,
-                              });
-                            }, 1000);
                             $w("#newbountybutton").disable();
-                            $w("#bountyscreen").postMessage({
-                              bountytitle: " ",
-                              difficulty: difficultystring,
-                              bountydescription: "Sign in to post your bounty",
-                            });
                             $w("#currentkarma").hide();
                           }
                         }
@@ -2093,6 +2235,50 @@ $w.onReady(function () {
     });
     $w("#rlhfdown").onClick(function () {
     lock=true;
+    const EasyLineTimeline = timeline().add($w("#easybuttonline"), {
+      duration: 200,
+      x: 0,
+      easing: "easeInOutSine",
+    });
+    const EasyButtonTimeline = timeline().add($w("#easybutton"), {
+      duration: 200,
+      x: 0,
+      easing: "easeInOutSine",
+    });
+    const MedLineTimeline = timeline().add($w("#medbuttonline"), {
+      duration: 200,
+      x: 0,
+      easing: "easeInOutSine",
+    });
+    const MedButtonTimeline = timeline().add($w("#medbutton"), {
+      duration: 200,
+      x: 0,
+      easing: "easeInOutSine",
+    });
+    const HardLineTimeline = timeline().add($w("#hardbuttonline"), {
+      duration: 200,
+      x: 0,
+      easing: "easeInOutSine",
+    });
+    const HardButtonTimeline = timeline().add($w("#hardbutton"), {
+      duration: 200,
+      x: 0,
+      easing: "easeInOutSine",
+    });
+    EasyButtonTimeline.play();
+    EasyLineTimeline.play();
+    MedButtonTimeline.play();
+    MedLineTimeline.play();
+    HardButtonTimeline.play();
+    HardLineTimeline.play();
+    setTimeout(function () {
+      EasyButtonTimeline.pause();
+      EasyLineTimeline.pause();
+      MedButtonTimeline.pause();
+      MedLineTimeline.pause();
+      HardButtonTimeline.pause();
+      HardLineTimeline.pause();
+    }, 200);
     $w("#rlswipe").expand();
     $w("#rlswipe").show();
     $w("#bingbutton").hide();
@@ -2120,18 +2306,22 @@ $w.onReady(function () {
         let bountysubmission=items[counter];
         $w("#bountyscreen").postMessage(bountysubmission.bounty);
         $w("#rlswipe").onMessage((event) => {
+          if (wixUsers.currentUser.loggedIn) {
           if (event.data === '1' || event.data === '-1') {
             console.log(event.data);
             counter++;
             bountysubmission.score+=Number(event.data);
             wixData.update(collection, bountysubmission);
               voted.push(bountysubmission._id);
-              wixData.update("Userkarma", { "_id": UserID, "voted": voted });
+              wixData.update("Userkarma", { "userId": UserID, "voted": voted });
             if (counter === items.length) {
               counter = 0;
               return;
             }
         }
+      }else{
+        authentication.promptLogin();
+      }
       });
       console.log(counter);
       $w("#rlswipe").postMessage(items.map(item => item.file));

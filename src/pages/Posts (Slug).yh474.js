@@ -63,7 +63,6 @@ function showmenu() {
         leftdownTimeline.play();
         rightdownTimeline.play();
         $w("#leaderboarddown").show("roll", {direction: "top", duration: 200 });
-        $w("#rlhfdown").show("roll", {direction: "top", duration: 200 });
         setTimeout(function () {
           leftdownTimeline.pause();
           rightdownTimeline.pause();
@@ -89,7 +88,6 @@ function hidemenu() {
         });
         leftdownTimeline.play();
         rightdownTimeline.play();
-        $w("#rlhfdown").hide("roll", {direction: "bottom", duration: 200 });
         $w("#leaderboarddown").hide("roll", {direction: "bottom", duration: 200 });
         $w("#tabsmenu").hide("roll", { direction: "bottom", duration: 200 });
         $w("#menuleftline").hide("roll", { direction: "top", duration: 200 });
@@ -129,6 +127,34 @@ $w("#hoverbutto").onClick(function(){
 authentication.promptLogin();
 });
 }
-getPost(postslug).then((result) => {$w("#webs").postMessage(result);
+async function getauthor(authorId){
+  const result = await wixData.get("Members/PrivateMembersData", authorId);
+  return [result.nickname, result.picture];
+}
+console.log(postslug);
+getPost(postslug).then((result) => {
+  const post=result.post;
+  let postimage = "https://static.wixstatic.com/media/cef1ec_9758561209b54b7e8c371d3e7d1dfef8~mv2.png";
+  if (post.media) {
+  postimage = convertToStaticUrl(post.media.wixMedia.image);
+  }
+  let authorId=post.memberId;
+  getauthor(authorId).then((result) => {
+      let authorname=result[0];
+      let authorimage=result[1];
+      let title=post.title;
+      let content=post.richContent;
+      let date=post.lastPublishedDate;
+      const postdata = {
+          title: title,
+          content: content,
+          image: postimage,
+          date: date,
+          authorname: authorname,
+          authorimage: authorimage
+      };
+      console.log(postdata);
+      $w("#webs").postMessage(postdata);
+  });
 });
 });
