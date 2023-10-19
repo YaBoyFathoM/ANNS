@@ -149,7 +149,6 @@ $w.onReady(function () {
       if (results.items.length > 0) {
         $w("#currentkarma").text = results.items[0].karma.toString();
         let voted=results.items[0].voted || [];
-        console.log(`User ${UserID} already exists`);
         return;
       }
     }else{
@@ -178,12 +177,12 @@ $w.onReady(function () {
     $w("#tabsmenu").show("roll", { delay:400, direction: "top", duration: 200 });
     const leftdownTimeline = timeline().add($w("#leftdown"), {
       duration: 200,
-      y: 67,
+      y: 66,
       easing: "easeInOutSine",
     });
     const rightdownTimeline =timeline().add($w("#rightdown"), {
       duration: 200,
-      y: 67,
+      y: 66,
       easing: "easeInOutSine",
     });
     setTimeout(function () {
@@ -193,8 +192,6 @@ $w.onReady(function () {
     rightdownTimeline.play();
     $w("#leaderboarddown").show("roll", {direction: "top", duration: 200 });
     $w("#rlhfdown").show("roll", {direction: "top", duration: 200 });
-    $w("#menuleftline").show("roll", { direction: "top", duration: 200 });
-    $w("#menurightline").show("roll", { direction: "top", duration: 200 });
     setTimeout(function () {
       leftdownTimeline.pause();
       rightdownTimeline.pause();
@@ -223,8 +220,6 @@ $w.onReady(function () {
     $w("#rlhfdown").hide("roll", {direction: "bottom", duration: 200 });
     $w("#leaderboarddown").hide("roll", {direction: "bottom", duration: 200 });
     $w("#tabsmenu").hide("roll", { direction: "bottom", duration: 200 });
-    $w("#menuleftline").hide("roll", { direction: "bottom", duration: 200 });
-    $w("#menurightline").hide("roll", { direction: "bottom", duration: 200 });
     setTimeout(function () {
     setTimeout(function () {
       $w("#rightdown").collapse();
@@ -236,8 +231,6 @@ $w.onReady(function () {
     rightdownTimeline.pause();
     menushown=false;
     }, 200);
-    // $w("#currentkarma").hide("roll", { delay:300, direction: "right", duration: 200 });
-    // $w("#badge").hide("roll", { delay:300, direction: "left", duration: 200 });
     $w("#topright").hide("roll", { delay:300, direction: "left", duration: 400 });
     $w("#topleft").hide("roll", { delay:300, direction: "right", duration: 400 });
     $w("#bottomright").hide("roll", { delay:300, direction: "left", duration: 400 });
@@ -401,12 +394,12 @@ $w.onReady(function () {
         $w("#bottomleft").show("roll", { direction: "right", duration: 400 });
         const leftdownTimeline = timeline().add($w("#leftdown"), {
           duration: 200,
-          y: 67,
+          y: 66,
           easing: "easeInOutSine",
         });
         const rightdownTimeline =timeline().add($w("#rightdown"), {
           duration: 200,
-          y: 67,
+          y: 66,
           easing: "easeInOutSine",
         });
         $w("#rightdown").show();
@@ -420,8 +413,6 @@ $w.onReady(function () {
         $w("#tabsmenu").show("roll", { direction: "top", duration: 200 });
         $w("#leaderboarddown").show("roll", {direction: "top", duration: 200 });
         $w("#rlhfdown").show("roll", {direction: "top", duration: 200 });
-        $w("#menuleftline").show("roll", { direction: "top", duration: 200 });
-        $w("#menurightline").show("roll", { direction: "top", duration: 200 });
         setTimeout(function () {
           leftdownTimeline.pause();
           rightdownTimeline.pause();
@@ -2033,6 +2024,7 @@ $w.onReady(function () {
   }
   function initapps(){
     $w("#leaderboarddown").onClick(function () {
+      if (!lock){
     let dataset = $w("#dataset1");
     let sort = wixData.sort().ascending("rank");
     dataset.setSort(sort);
@@ -2082,8 +2074,10 @@ $w.onReady(function () {
         rightLineTimeline.pause();
       }, 1000);
     }, 500);
-    });
+  }
+  });
     $w("#leaderboardup").onClick(function () {
+      if (!lock){
     $w("#tabsmenu").show("roll", { delay: 1200, direction: "top", duration: 200 });
     $w("#bingbutton").show("fade", { duration: 500, delay: 1200 });
     $w("#chatgptbutton").show("fade", { duration: 500, delay: 1200 });
@@ -2129,6 +2123,7 @@ $w.onReady(function () {
       $w("#leaderboardrepeater").collapse();
       $w("#leaderboard").collapse();
     }, 1200);
+  }
     });
     $w("#leaderboardrepeater").onItemReady(($item, index) => {
     $item(
