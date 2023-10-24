@@ -1484,11 +1484,11 @@ $w.onReady(function () {
                 $w("#claimbountyupload").style.color = "#CCCCCC";
                 $w("#claimbountyupload").style.borderColor = "#ff0000";
                 $w("#submitpreview").show();
-                $w("#profilescreen").postMessage({
-                  bountytitle: " ",
-                  difficulty: difficultystring,
-                  bountydescription: "Submit a valid screenshot",
-                });
+                // $w("#profilescreen").postMessage({
+                //   bountytitle: " ",
+                //   difficulty: difficultystring,
+                //   bountydescription: "Submit a valid screenshot",
+                // });
               }, 550);
               setTimeout(function () {
                 $w("#scanbox").style.borderColor = bright;

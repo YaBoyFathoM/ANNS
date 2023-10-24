@@ -5,9 +5,11 @@ import { timeline } from "wix-animations";
 let menushown = false;
 let lock = false;
 let UserID = wixUsers.currentUser.id;
+$w("#blocker").show();
+$w("#loadinggif").show();
 $w.onReady(function () {
-$w("#blocker").hide("fade",{delay:1000,duration:800});
-$w("#loadinggif").hide("fade",{duration:1000});
+$w("#blocker").hide("fade",{delay:1200,duration:800});
+$w("#loadinggif").hide("fade",{duration:1200});
 function getkarma() {
   wixData
   .query("Userkarma")
@@ -115,6 +117,9 @@ $w("#hoverbutto").onClick(function(){
 authentication.promptLogin();
 });
 }
+$w("#bountiesbutton").onClick(function(){
+  $w("loadingbox").show("fade",{duration:500});
+});
 });
 
 
