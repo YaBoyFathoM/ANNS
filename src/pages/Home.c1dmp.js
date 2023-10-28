@@ -118,7 +118,7 @@ authentication.promptLogin();
 });
 }
 $w("#bountiesbutton").onClick(function(){
-  $w("loadingbox").show("fade",{duration:500});
+  $w("#loadinggif").show("fade",{duration:500});
 });
 });
 

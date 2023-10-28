@@ -1162,7 +1162,7 @@ $w.onReady(function () {
       }
     });
   }
-  function claimbounty(element, bounty) {
+  function processClaim(element, bounty) {
     let t = 0;
     $w("#scanbox").hide("fade", { duration: 200 });
     $w("#claimbountyupload").reset();
@@ -1489,6 +1489,7 @@ $w.onReady(function () {
                 //   difficulty: difficultystring,
                 //   bountydescription: "Submit a valid screenshot",
                 // });
+              $w("#scanbox").hide("fade", { duration: 200 });
               }, 550);
               setTimeout(function () {
                 $w("#scanbox").style.borderColor = bright;
@@ -1931,7 +1932,7 @@ $w.onReady(function () {
                         $w("#bountyscreen").show("fade", { duration: 500 });
                         $w("#profilescreen").show("fade", { duration: 500 });
                         if (element.text != "+") {
-                          claimbounty(bountybuttons[i], bounties[i]);
+                          processClaim(bountybuttons[i], bounties[i]);
                         } else {
                           if (wixUsers.currentUser.loggedIn) {
                             $w("#postbountydisc").expand();
@@ -1993,7 +1994,7 @@ $w.onReady(function () {
                 newbounty(selected, difficultystring, bounties[pos]._id);
               } else {
                 if (!selected.collapsed) {
-                  claimbounty(selected, bounties[pos]);
+                  processClaim(selected, bounties[pos]);
                   $w("#newbountybutton").hide();
                 }
               }
