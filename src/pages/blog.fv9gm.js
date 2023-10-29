@@ -7,9 +7,18 @@ import { getAllPosts } from "backend/blogposts";
 let menushown = false;
 let lock = false;
 let UserID = wixUsers.currentUser.id;
+async function sendblogs(){
+  const Allposts=await getAllPosts()
+  console.log(Allposts);
+$w("#blogpage").postMessage(Allposts);
+}
+sendblogs();
+$w("#blogpage").onMessage((event) => {
+  wixLocation.to(event.data);
+});
 $w.onReady(function () {
-$w("#blocker").hide("fade",{delay:600,duration:800});
-$w("#loadinggif").hide("fade",{duration:800});
+$w("#blocker").hide("fade",{delay:1200,duration:800});
+$w("#loadinggif").hide("fade",{duration:1200});
 function getkarma() {
   wixData
   .query("Userkarma")
@@ -113,13 +122,4 @@ $w("#hoverbutto").onClick(function(){
 authentication.promptLogin();
 });
 }
-async function sendblogs(){
-  const Allposts=await getAllPosts()
-  console.log(Allposts);
-$w("#blogpage").postMessage(Allposts);
-}
-sendblogs();
-$w("#blogpage").onMessage((event) => {
-  wixLocation.to(event.data);
-});
 });

@@ -991,7 +991,6 @@ $w.onReady(function () {
     $w("#postbountyname").value = "";
     $w("#postbountydisc").show();
     $w("#postbountyname").show();
-    $w("#claimbountyupload").show("fade",{duration:200});
     $w("#newbountybutton").show("roll", {
       delay: 500,
       direction: "top",
@@ -1175,7 +1174,6 @@ $w.onReady(function () {
     $w("#postbountyname").hide();
     $w("#bountyamounttext").show("roll", { duration: 500 });
     $w("#bountyscreen").postMessage(bounty);
-    $w("#claimbountyupload").show("roll", { delay: 200, duration: 200 });
     let tempwallet = Number($w("#currentkarma").text);
     let bountyAmount = Number($w("#bountyamounttext").text);
     if (wixUsers.currentUser.loggedIn) {
