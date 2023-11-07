@@ -165,14 +165,11 @@ $w.onReady(function () {
     $w("#bottomright").show("roll", { direction: "left", duration: 400 });
     $w("#bottomleft").show("roll", { direction: "right", duration: 400 });
     if (modelstring===""){
-      $w("#logoutbutton").hide();
-      $w("#blogtab").hide();
       $w("#currentkarma").show("roll", { direction: "right", duration: 400 });
       $w("#badge").show("roll", { direction: "left", duration: 400 });
-      $w("#cwbutton").show("roll", { delay:400, direction: "top", duration: 400 });
-      $w("#brighttext").show("roll", { delay:400, direction: "top", duration: 400 });
-      $w("#ccwbutton").show("roll", {delay:400, direction: "top", duration: 400 });
-      $w("#tabsmenu").show("roll", { delay:400, direction: "top", duration: 200 });
+      $w("#cwbutton").hide("roll", {direction: "top", duration: 400 });
+      $w("#brighttext").hide("roll", {direction: "top", duration: 400 });
+      $w("#ccwbutton").hide("roll",{direction: "top", duration: 400 });
     }
     $w("#tabsmenu").show("roll", { delay:400, direction: "top", duration: 200 });
     const leftdownTimeline = timeline().add($w("#leftdown"), {
@@ -204,7 +201,7 @@ $w.onReady(function () {
     }
   }
   function hidemenu() {
-    if (menushown&&!lock&&modelstring!=="") {
+    if (menushown&&!lock) {
     const leftdownTimeline = timeline().add($w("#leftdown"), {
       duration: 200,
       y: 0,
@@ -220,10 +217,16 @@ $w.onReady(function () {
     $w("#rlhfdown").hide("roll", {direction: "bottom", duration: 200 });
     $w("#leaderboarddown").hide("roll", {direction: "bottom", duration: 200 });
     $w("#tabsmenu").hide("roll", { direction: "bottom", duration: 200 });
+    $w("#cwbutton").show("roll", {direction: "top", duration: 400 });
+    $w("#brighttext").show("roll", {direction: "top", duration: 400 });
+    $w("#ccwbutton").show("roll",{direction: "top", duration: 400 });
     setTimeout(function () {
     setTimeout(function () {
       $w("#rightdown").collapse();
       $w("#leftdown").collapse();
+      $w("#cwbutton").show("roll", {direction: "top", duration: 400 });
+      $w("#brighttext").show("roll", {direction: "top", duration: 400 });
+      $w("#ccwbutton").show("roll",{direction: "top", duration: 400 });
     }, 400);
     $w("#rightdown").hide();
     $w("#leftdown").hide();
@@ -309,7 +312,9 @@ $w.onReady(function () {
     $w("#difficultybox").show("fade", { duration: 100 });
     $w("#profilescreen").postMessage(nonebounty);
     $w("#bountyscreen").postMessage(nonebounty);
-    showmenu();
+    $w("#cwbutton").show("roll", {delay: 800, direction: "left", duration: 400 });
+    $w("#brighttext").show("fade", {duration: 400 });
+    $w("#ccwbutton").show("roll",{delay: 800, direction: "right", duration: 400 });
   });
   function buildhtml(fontsize, color, text) {
     return `<h3 class="wixui-rich-text__text" style="font-size:${fontsize}px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:${color}" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${text}</span></span></span></span></h3>`;
