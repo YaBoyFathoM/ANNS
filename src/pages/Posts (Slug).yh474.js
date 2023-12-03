@@ -8,6 +8,7 @@ let postslug= wixLocation.path[0];
 let menushown = false;
 let lock = false;
 let UserID = wixUsers.currentUser.id;
+let currentUserKarma = 0;
 function convertToStaticUrl(imageUrl) {
 let staticUrl = imageUrl.replace("image://v1/", "https://static.wixstatic.com/media/");
 staticUrl = staticUrl.substring(0, staticUrl.indexOf("#"));
@@ -23,6 +24,7 @@ function getkarma() {
     .then((results) => {
       if (wixUsers.currentUser.loggedIn) {
       if (results.items.length > 0) {
+        currentUserKarma = results.items[0].karma;
         $w("#currentkarma").text = results.items[0].karma.toString();
         return;
       }
@@ -57,8 +59,8 @@ function showmenu() {
     $w("#leftdown").show();
     leftdownTimeline.play();
     rightdownTimeline.play();
-    $w("#bountiesbutton").show("roll", {direction: "top", duration: 100 });
-    $w("#blogbutton").show("roll", {direction: "top", duration: 100 });
+    $w("#downvotebutton").show("roll", {direction: "top", duration: 100 });
+    $w("#upvotebutton").show("roll", {direction: "top", duration: 100 });
     setTimeout(function () {
       leftdownTimeline.pause();
       rightdownTimeline.pause();
@@ -84,8 +86,8 @@ function hidemenu() {
     });
     leftdownTimeline.play();
     rightdownTimeline.play();
-    $w("#blogbutton").hide("roll", {direction: "top", duration: 200 });
-    $w("#bountiesbutton").hide("roll", {direction: "top", duration: 200 });
+    $w("#upvotebutton").hide("roll", {direction: "top", duration: 200 });
+    $w("#downvotebutton").hide("roll", {direction: "top", duration: 200 });
     $w("#tabsmenu").hide("roll", { direction: "top", duration: 200 });
     setTimeout(function () {
       setTimeout(function () {
@@ -126,29 +128,182 @@ async function getauthor(authorId){
   const result = await wixData.get("Members/PrivateMembersData", authorId);
   return [result.nickname, result.picture];
 }
+
 getPost(postslug).then((result) => {
-  const post=result.post;
+  const post = result.post;
+  const postid = post._id;
   let postimage = "https://static.wixstatic.com/media/cef1ec_9758561209b54b7e8c371d3e7d1dfef8~mv2.png";
   if (post.media) {
-  postimage = convertToStaticUrl(post.media.wixMedia.image);
+    postimage = convertToStaticUrl(post.media.wixMedia.image);
   }
-  let authorId=post.memberId;
-    getauthor(authorId).then((result) => {
-      let authorname=result[0];
-      let authorimage=result[1];
-      let title=post.title;
-      let content=post.richContent;
-      let date = new Date(post.lastPublishedDate).toDateString();
-      const postdata = {
-        title: title,
-        content: content,
-        image: postimage,
-        date: date,
-        authorname: authorname,
-        authorimage: authorimage
-      };
-      console.log(postdata);
-      $w("#webs").postMessage(postdata);
+  let authorId = post.memberId;
+  getauthor(authorId).then((result) => {
+    let authorname = result[0];
+    let authorimage = result[1];
+    let title = post.title;
+    let content = post.richContent;
+    let date = new Date(post.lastPublishedDate).toDateString();
+    const postdata = {
+      title: title,
+      content: content,
+      image: postimage,
+      date: date,
+      authorname: authorname,
+      authorimage: authorimage
+    };
+    console.log(postdata);
+    $w("#webs").postMessage(postdata);
+  });
+  const postKarma = wixData.query("postkarma").eq("postid", postid);
+  postKarma.find().then((results) => {
+      let currentPostKarma = 0;
+      results.items.forEach((item) => {
+        currentPostKarma += item.karma;
+      });
+      let karmastring = currentPostKarma.toString();
+      $w("#postdownvotekarmatext").html = `<h3 class="wixui-rich-text__text" style="text-align:left;font-size:50px"><span style="text-shadow:#444444 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#ff0000" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${
+        karmastring
+      }</span></span></span></span></h3>`;
+      $w("#postupvotekarmatext").html = `<h3 class="wixui-rich-text__text" style="text-align:right;font-size:50px"><span style="text-shadow:#444444 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#00ff00" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${
+        karmastring
+      }</span></span></span></span></h3>`;
+      if (wixUsers.currentUser.loggedIn) {
+      if(UserID != authorId)
+      {
+
+function animatedownvote(){
+  $w("#postdownvotekarmatext").show("roll", { direction: "left", duration: 500 });
+  setTimeout(function () {
+    $w("#postdownvotekarmatext").html = `<h3 class="wixui-rich-text__text" style="text-align:left;font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#ffffff" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${
+      (currentPostKarma).toString()
+    }</span></span></span></span></h3>`;
+    $w("#currentkarma").html = `<h3 class="wixui-rich-text__text" style="text-align:left;font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#ffffff" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${
+      (currentUserKarma).toString()
+    }</span></span></span></span></h3>`;
+    setTimeout(function () {
+      $w("#postdownvotekarmatext").html = `<h3 class="wixui-rich-text__text" style="text-align:left;font-size:50px"><span style="text-shadow:#444444 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#ff0000" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${
+        (currentPostKarma - 1).toString()
+      }</span></span></span></span></h3>`;
+      $w("#currentkarma").html = `<h3 class="wixui-rich-text__text" style="text-align:left;font-size:50px"><span style="text-shadow:#444444 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#ffffff" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${
+        (currentUserKarma - 1).toString()
+      }</span></span></span></span></h3>`;
+    }, 100);
+    setTimeout(function () {
+      $w("#postdownvotekarmatext").hide("roll", { direction: "left", duration: 500 });
+      currentPostKarma = currentPostKarma - 1;
+      currentUserKarma = currentUserKarma - 1;
+    }, 500);
+  }, 1000);
+}
+function animateupvote(){
+  $w("#postupvotekarmatext").show("roll", { direction: "right", duration: 500 });
+  setTimeout(function () {
+    $w("#postupvotekarmatext").html = `<h3 class="wixui-rich-text__text" style="text-align:right;font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#ffffff" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${
+      (currentPostKarma).toString()
+    }</span></span></span></span></h3>`;
+    $w("#currentkarma").html = `<h3 class="wixui-rich-text__text" style="text-align:right;font-size:50px"><span style="text-shadow:#ffffff 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#ffffff" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${
+      (currentUserKarma).toString()
+    }</span></span></span></span></h3>`;
+    setTimeout(function () {
+      $w("#postupvotekarmatext").html = `<h3 class="wixui-rich-text__text" style="text-align:right;font-size:50px"><span style="text-shadow:#444444 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#00ff00" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${
+        (currentPostKarma + 1).toString()
+      }</span></span></span></span></h3>`;
+      $w("#currentkarma").html = `<h3 class="wixui-rich-text__text" style="text-align:right;font-size:50px"><span style="text-shadow:#444444 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#ffffff" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${
+        (currentUserKarma - 1).toString()
+      }</span></span></span></span></h3>`;
+    }, 100);
+    setTimeout(function () {
+      $w("#postupvotekarmatext").hide("roll", { direction: "right", duration: 500 });
+      currentPostKarma = currentPostKarma - 1;
+      currentPostKarma = currentPostKarma + 1;
+    }, 500);
+  }, 1000);
+}
+      $w("#upvotebutton").onClick(() => {
+                $w("#postupvotekarmatext").html = `<h3 class="wixui-rich-text__text" style="text-align:right;font-size:50px"><span style="text-shadow:#444444 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#00ff00" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${
+                  (currentPostKarma).toString()
+                }</span></span></span></span></h3>`;
+                wixData.query("postkarma").eq("postid", postid).eq("_owner", UserID).find().then((results) => {
+                  if (results.items.length === 0) {
+                wixData
+                .insert("postkarma", {
+                  postid: postid,
+                  karma: currentPostKarma + 1,
+                })
+                  .then(() => {
+                    currentUserKarma = currentUserKarma - 1;
+                    animateupvote();
+                  });
+                }
+                else {
+                  wixData.update("postkarma", {
+                    _id: results.items[0]._id,
+                    postid: postid,
+                    karma: currentPostKarma + 1,
+                    _owner: UserID,
+                  })
+                    .then(() => {
+                      currentUserKarma = currentUserKarma - 1;
+                      animateupvote();
+                    });
+                }
+                wixData
+                .query("Userkarma")
+                .eq("userId", UserID)
+                .find()
+                .then((results) => {
+                    wixData.update("Userkarma", {
+                      _id: results.items[0]._id,
+                      userId: UserID,
+                      karma: currentUserKarma,
+                    });
+            })
+              });
+
+      });
+      $w("#downvotebutton").onClick(() => {
+          $w("#postdownvotekarmatext").html = `<h3 class="wixui-rich-text__text" style="text-align:left;font-size:50px"><span style="text-shadow:#444444 0px 0px 6px" class="wixui-rich-text__text"><span style="font-weight:bold" class="wixui-rich-text__text"><span style="color:#ff0000" class="wixui-rich-text__text"><span style="font-family:wfont_edfbfb_ee9003cfe4fb457aa3af4884ade40b22,wf_ee9003cfe4fb457aa3af4884a,orig_neon_sans" class="wixui-rich-text__text">${
+            (currentPostKarma).toString()
+          }</span></span></span></span></h3>`;
+          wixData.query("postkarma").eq("postid", postid).eq("_owner", UserID).find().then((results) => {
+            if (results.items.length === 0) {
+              wixData.insert("postkarma", {
+                postid: postid,
+                karma: currentPostKarma - 1,
+                _owner: UserID,
+              }).then(() => {
+                currentUserKarma = currentUserKarma - 1;
+                animatedownvote();
+              });
+
+            } else {
+              wixData.update("postkarma", {
+                _id: results.items[0]._id,
+                postid: postid,
+                karma: currentPostKarma - 1,
+                _owner: UserID,
+              }).then(() => {
+                currentUserKarma = currentUserKarma - 1;
+                animatedownvote();
+              });
+
+            }
+          });
+          wixData
+          .query("Userkarma")
+          .eq("userId", UserID)
+          .find()
+          .then((results) => {
+              wixData.update("Userkarma", {
+                _id: results.items[0]._id,
+                userId: UserID,
+                karma: currentUserKarma,
+              });
+      });
     });
+      }
+      }else{authentication.promptLogin();}
 });
 });
+});
+

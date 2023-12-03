@@ -17,6 +17,15 @@ export async function getPost(postslug) {
     return post;
 }
 
+async function getkarma(postId) {
+    const query = wixData.query("postkarma").eq("postid", postId);
+    const result = await query.find();
+    if (result.items.length > 0) {
+        return result.items[0].karma;
+    } else {
+        return 0;
+    }
+}
 export async function getAllPosts() {
     console.log("Getting all posts");
     const allposts = [];
@@ -27,9 +36,11 @@ export async function getAllPosts() {
         postimage = convertToStaticUrl(post.media.wixMedia.image);
         }
         let authorId = post.memberId;
-        const postdate = new Date(post.lastPublishedDate).toLocaleDateString('en-US', {month: 'short',day: 'numeric',year: 'numeric'});
-        const authresult = await getauthor(authorId);
-        const postdata = {
+        let karma = await getkarma(post._id);
+        let postdate = new Date(post.lastPublishedDate).toLocaleDateString('en-US', {month: 'short',day: 'numeric',year: 'numeric'});
+        let authresult = await getauthor(authorId);
+        let postdata = {
+            score: karma,
             title: post.title,
             image: postimage,
             date: postdate,
