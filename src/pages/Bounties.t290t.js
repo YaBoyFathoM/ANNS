@@ -2,15 +2,10 @@ import wixUsers from "wix-users";
 import wixData from "wix-data";
 import { timeline } from "wix-animations";
 import { authentication } from "wix-members-frontend";
-import * as tf from "@tensorflow/tfjs";
 import { Image } from "image-js";
+import * as tf from "@tensorflow/tfjs";
 let UserID;
 let voted=[];
-const screen_model = tf.loadLayersModel(
-  tf.io.browserHTTPRequest(
-    "https://storage.googleapis.com/classifier_tfjs/model.json",
-  ),
-);
 $w.onReady(function () {
   let counter=0;
   let connector = $w("#easyconnector");
@@ -29,6 +24,23 @@ $w.onReady(function () {
   let wheelAngle = 0;
   let menushown = false;
   let lock = false;
+  if (wixUsers.currentUser.loggedIn) {
+    UserID = wixUsers.currentUser.id;
+    getkarma();
+    $w("#hoverbutto").label=""
+  }
+  else{
+    $w("#currentkarma").collapse();$w("#badge").collapse();$w("#hoverbutto").label="+";
+    $w("#hoverbutto").onClick(function(){
+    authentication.promptLogin();
+    });
+  }
+  $w("#hoverbutto").onMouseIn(function () {
+    showmenu();
+  });
+  $w("#accountbox").onMouseOut(function () {
+    hidemenu();
+  });
   const difffoundation = generateSrc(
     "https://static.wixstatic.com/media/cef1ec_6ab2951eb8564d4982a16d2d1da41114~mv2.png",
     "diffbg.png",
@@ -126,6 +138,11 @@ $w.onReady(function () {
     return staticUrl;
   }
   async function classifyImage(staticUrl, w, h) {
+    const screen_model = tf.loadLayersModel(
+      tf.io.browserHTTPRequest(
+        "https://storage.googleapis.com/classifier_tfjs/model.json",
+      ),
+    );
     const image = await Image.load(staticUrl);
     const imageTensor = tf.browser.fromPixels(image).div(tf.scalar(255));
     const resized = tf.image
@@ -159,7 +176,7 @@ $w.onReady(function () {
   function showmenu() {
     if (!menushown&&!lock) {;
     $w("#rightdown").expand();
-    $w("#leftdown").expand();
+    $w("#leftdown"). expand();
     $w("#topright").show("roll", { direction: "left", duration: 400 });
     $w("#topleft").show("roll", { direction: "right", duration: 400 });
     $w("#bottomright").show("roll", { direction: "left", duration: 400 });
@@ -227,6 +244,8 @@ $w.onReady(function () {
       $w("#cwbutton").show("roll", {direction: "top", duration: 400 });
       $w("#brighttext").show("roll", {direction: "top", duration: 400 });
       $w("#ccwbutton").show("roll",{direction: "top", duration: 400 });
+      $w("#rlhfdown").hide();
+      $w("#leaderboarddown").hide();
     }, 400);
     $w("#rightdown").hide();
     $w("#leftdown").hide();
@@ -239,23 +258,6 @@ $w.onReady(function () {
     $w("#bottomright").hide("roll", { delay:300, direction: "left", duration: 400 });
     $w("#bottomleft").hide("roll", { delay:300, direction: "right", duration: 400 });
   }
-  }
-  if (wixUsers.currentUser.loggedIn) {
-    UserID = wixUsers.currentUser.id;
-    getkarma();
-    $w("#hoverbutto").label=""
-    $w("#hoverbutto").onMouseIn(function () {
-      showmenu();
-    });
-    $w("#accountbox").onMouseOut(function () {
-      hidemenu();
-    });
-  }
-  else{
-    $w("#currentkarma").collapse();$w("#badge").collapse();$w("#hoverbutto").label="+";
-    $w("#hoverbutto").onClick(function(){
-    authentication.promptLogin();
-    });
   }
   function generateSrc(url, name, resolution) {
     let src = "wix:image://v1/";
@@ -391,8 +393,8 @@ $w.onReady(function () {
       leftdownTimeline.play();
       rightdownTimeline.play();
       setTimeout(function () {
-        $w("#rightdown").expand();
-        $w("#leftdown").expand();
+        $w("#rightdown").show();
+        $w("#leftdown").show();
         $w("#topright").show("roll", { direction: "left", duration: 400 });
         $w("#topleft").show("roll", { direction: "right", duration: 400 });
         $w("#bottomright").show("roll", { direction: "left", duration: 400 });
@@ -2034,6 +2036,9 @@ $w.onReady(function () {
     dataset.setSort(sort);
     dataset.refresh();
     lock=true;
+    $w("#bottomleft").hide("fade", { duration: 500 });
+    $w("#leftdown").hide("fade", { duration: 500 });
+    $w("#rlhfdown").hide("fade", { duration: 500 });
     $w("#tabsmenu").hide("roll", { delay:1200, direction: "top", duration: 200 });
     $w("#bountyamounttext").collapse();
     $w("#claimbountyupload").collapse();
@@ -2081,6 +2086,21 @@ $w.onReady(function () {
   }
     });
     $w("#leaderboardup").onClick(function () {
+    $w("#leftdown"). expand();
+    $w("#bottomleft").show("fade", { duration: 500 });
+    const leftdownTimeline =timeline().add($w("#leftdown"), {
+      duration: 200,
+      y: 66,
+      easing: "easeInOutSine",
+    });
+    setTimeout(function () {
+    $w("#leftdown").show();
+    leftdownTimeline.play();
+    setTimeout(function () {
+      leftdownTimeline.pause();
+    }, 200);
+    }, 400);
+    $w("#rlhfdown").show("fade", { duration: 500 });
     $w("#tabsmenu").show("roll", { delay: 1200, direction: "top", duration: 200 });
     $w("#bingbutton").show("fade", { duration: 500, delay: 1200 });
     $w("#chatgptbutton").show("fade", { duration: 500, delay: 1200 });
@@ -2231,6 +2251,7 @@ $w.onReady(function () {
     });
     });
     function send_rlhf_up(){
+      $w("#rightdown").expand();
       $w("#profilescreen").postMessage({
         bountytitle: " ",
         difficulty: difficultystring,
@@ -2241,6 +2262,38 @@ $w.onReady(function () {
         difficulty: difficultystring,
         bountydescription: " ",
       });
+    const rightdownTimeline =timeline().add($w("#rightdown"), {
+      duration: 200,
+      y: 66,
+      easing: "easeInOutSine",
+    });
+    setTimeout(function () {
+    $w("#rightdown").show();
+    rightdownTimeline.play();
+    setTimeout(function () {
+      rightdownTimeline.pause();
+    }, 200);
+    }, 400);
+    const profileanim = timeline().add($w("#profilecard"), {
+      duration: 1000,
+      x: 0,
+      easing: "easeInOutSine",
+    });
+    const bountyanim = timeline().add($w("#bountybox"), {
+      duration: 1000,
+      x: 0,
+      easing: "easeInOutSine",
+    });
+    profileanim.play();
+    bountyanim.play();
+    setTimeout(function () {
+      profileanim.pause();
+      bountyanim.pause();
+    }, 1000);
+    $w("#rlbountydesc").hide("fade", { duration: 500 });
+    $w("#leaderboarddown").show("fade", { duration: 500 });
+    $w("#bottomright").show("fade", { duration: 500 });
+    $w("#rightdown").show("fade", { duration: 500 });
     $w("#rlswipe").hide("fade", { duration: 500 });
     $w("#currlhf").hide("fade", { duration: 500 });
     $w("#nextrlhf").hide("fade", { duration: 500 });
@@ -2257,9 +2310,11 @@ $w.onReady(function () {
       $w("#claimbountyupload").expand();
       showDifficulty();
       lock=false;
+      $w("#rlbountydesc").collapse();
     }, 1200);
     }
     function send_rlhf_down(){
+    $w("#rlbountydesc").expand();
     wixData.query(collection)
       .ne("_owner", UserID)
       .include('bounty')
@@ -2311,11 +2366,45 @@ $w.onReady(function () {
             HardButtonTimeline.pause();
             HardLineTimeline.pause();
           }, 200);
+          const leftdownTimeline =timeline().add($w("#leftdown"), {
+            duration: 200,
+            y: 66,
+            easing: "easeInOutSine",
+          });
+          setTimeout(function () {
+          $w("#leftdown").show();
+          leftdownTimeline.play();
+          setTimeout(function () {
+            leftdownTimeline.pause();
+          }, 200);
+          }, 400);
+          $w("#bottomright").hide("fade", { duration: 500 });
+          $w("#rightdown").hide("fade", { duration: 500 });
+          $w("#leaderboarddown").hide("fade", { duration: 500 });
           $w("#rlswipe").expand();
           $w("#rlswipe").show();
           $w("#bingbutton").hide();
           $w("#chatgptbutton").hide();
           $w("#mjbutton").hide();
+          const profileanim = timeline().add($w("#profilecard"), {
+            duration: 1000,
+            x: -1000,
+            easing: "easeInOutSine",
+          });
+          const bountyanim = timeline().add($w("#bountybox"), {
+            duration: 1000,
+            x: +1000,
+            easing: "easeInOutSine",
+          });
+          setTimeout(function () {
+            profileanim.play();
+            bountyanim.play();
+            setTimeout(function () {
+              profileanim.pause();
+              bountyanim.pause();
+            $w("#rlbountydesc").show("fade", { duration: 500 });
+            }, 1000);
+          }, 500);
           $w("#bountywheelbox").hide("fade", { duration: 500 });
           $w("#rlhfdown").hide("fade", { duration: 500 });
           $w("#rlhfup").show("fade", { duration: 500 });
@@ -2326,10 +2415,9 @@ $w.onReady(function () {
           $w("#costdown").hide();
           $w("#postbountydisc").hide();
           $w("#newbountybutton").hide();
-          $w("#bountyscreen").postMessage(nonebounty);
           const items = results.items;
           let bountysubmission = items[counter];
-          $w("#bountyscreen").postMessage(bountysubmission.bounty);
+          $w("#rlbountydesc").postMessage(bountysubmission.bounty);
           $w("#rlswipe").onMessage((event) => {
             if (wixUsers.currentUser.loggedIn) {
               if (event.data === '1' || event.data === '-1') {

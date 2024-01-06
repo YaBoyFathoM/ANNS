@@ -111,19 +111,20 @@ function hidemenu() {
 if (wixUsers.currentUser.loggedIn) {
     getkarma();
     $w("#hoverbutto").label=""
-    $w("#hoverbutto").onMouseIn(function () {
-      showmenu();
-    });
-    $w("#accountbox").onMouseOut(function () {
-      hidemenu();
-    });
 }
 else{
-$w("#currentkarma").collapse();$w("#badge").collapse();$w("#hoverbutto").label="+";
+$w("#currentkarma").collapse();$w("#badge").collapse();
+$w("#hoverbutto").label="+";
 $w("#hoverbutto").onClick(function(){
 authentication.promptLogin();
 });
 }
+$w("#hoverbutto").onMouseIn(function () {
+  showmenu();
+});
+$w("#accountbox").onMouseOut(function () {
+  hidemenu();
+});
 async function getauthor(authorId){
   const result = await wixData.get("Members/PrivateMembersData", authorId);
   return [result.nickname, result.picture];
@@ -151,7 +152,6 @@ getPost(postslug).then((result) => {
       authorname: authorname,
       authorimage: authorimage
     };
-    console.log(postdata);
     $w("#webs").postMessage(postdata);
   });
   const postKarma = wixData.query("postkarma").eq("postid", postid);

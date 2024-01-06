@@ -10,6 +10,11 @@ function convertToStaticUrl(imageUrl) {
     return staticUrl;
   }
 $w.onReady(function () {
+  let script = `
+  document.querySelector("#emailinput").autocomplete = "email";
+  document.querySelector("#passwordinput").autocomplete = "current-password";
+`;
+  wixWindow.postMessage(script);
   $w("#signupbutton").hide();
   $w("#profilepicupload").hide();
   $w("#forgotpasswordbutton").hide();

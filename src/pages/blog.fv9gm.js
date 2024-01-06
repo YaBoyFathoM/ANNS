@@ -9,7 +9,6 @@ let lock = false;
 let UserID = wixUsers.currentUser.id;
 async function sendblogs(){
   const Allposts=await getAllPosts()
-  console.log(Allposts);
 $w("#blogpage").postMessage(Allposts);
 }
 sendblogs();
@@ -109,17 +108,18 @@ function hidemenu() {
 if (wixUsers.currentUser.loggedIn) {
   getkarma();
   $w("#hoverbutto").label=""
-  $w("#hoverbutto").onMouseIn(function () {
-    showmenu();
-  });
-  $w("#accountbox").onMouseOut(function () {
-    hidemenu();
-  });
 }
 else{
-$w("#currentkarma").collapse();$w("#badge").collapse();$w("#hoverbutto").label="+";
+$w("#currentkarma").collapse();$w("#badge").collapse();
+$w("#hoverbutto").label="+";
 $w("#hoverbutto").onClick(function(){
 authentication.promptLogin();
 });
 }
+$w("#hoverbutto").onMouseIn(function () {
+  showmenu();
+});
+$w("#accountbox").onMouseOut(function () {
+  hidemenu();
+});
 });

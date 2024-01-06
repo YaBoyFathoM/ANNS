@@ -2,7 +2,9 @@ import wixUsers from "wix-users";
 import wixData from "wix-data";
 import { authentication } from "wix-members-frontend";
 import { timeline } from "wix-animations";
+import wixLocation from 'wix-location';
 let menushown = false;
+$w("#hoverbutto").label="+";
 let lock = false;
 let UserID = wixUsers.currentUser.id;
 $w("#blocker").show();
@@ -104,22 +106,27 @@ function hidemenu() {
 if (wixUsers.currentUser.loggedIn) {
   getkarma();
   $w("#hoverbutto").label=""
-  $w("#hoverbutto").onMouseIn(function () {
-    showmenu();
-  });
-  $w("#accountbox").onMouseOut(function () {
-    hidemenu();
-  });
 }
 else{
-$w("#currentkarma").collapse();$w("#badge").collapse();$w("#hoverbutto").label="+";
+$w("#currentkarma").collapse();$w("#badge").collapse();
 $w("#hoverbutto").onClick(function(){
 authentication.promptLogin();
 });
+$w("#profiletab").onClick(function(){
+authentication.promptLogin();
+});
 }
+$w("#hoverbutto").onMouseIn(function () {
+  showmenu();
+});
+$w("#accountbox").onMouseOut(function () {
+  hidemenu();
+});
 $w("#bountiesbutton").onClick(function(){
   $w("#loadinggif").show("fade",{duration:500});
+  wixLocation.to("https://www.anns.ai/bounties");
 });
+
 });
 
 

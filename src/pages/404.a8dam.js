@@ -104,12 +104,6 @@ function hidemenu() {
 if (wixUsers.currentUser.loggedIn) {
         getkarma();
         $w("#hoverbutto").label=""
-        $w("#hoverbutto").onMouseIn(function () {
-          showmenu();
-        });
-        $w("#accountbox").onMouseOut(function () {
-          hidemenu();
-        });
 }
 else{
 $w("#currentkarma").collapse();$w("#badge").collapse();$w("#hoverbutto").label="+";
@@ -117,4 +111,10 @@ $w("#hoverbutto").onClick(function(){
 authentication.promptLogin();
 });
 }
+$w("#hoverbutto").onMouseIn(function () {
+  showmenu();
+});
+$w("#accountbox").onMouseOut(function () {
+  hidemenu();
+});
 });
